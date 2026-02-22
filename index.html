@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thomas Traders</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+}
+
+/* ===== HEADER ===== */
+.header{
+    background:linear-gradient(to right, #c40000, #ff1a1a);
+    color:white;
+    padding:15px 30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+.logo img{
+    height:70px;
+    width:70px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid white;
+}
+
+.title{
+    text-align:center;
+    flex:1;
+}
+
+.title h1{
+    margin:0;
+    font-size:38px;
+    letter-spacing:2px;
+}
+
+.title p{
+    margin:5px 0;
+    font-size:16px;
+    opacity:0.9;
+}
+
+.phone{
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* ===== AD SECTION ===== */
+.ad-section{
+    background:#0d7aa5;
+    color:white;
+    text-align:center;
+    padding:40px 0;
+    font-size:30px;
+    font-family:cursive;
+}
+
+/* ===== SEARCH BAR ===== */
+.search-bar{
+    background:#9ac6c6;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+}
+
+.search-box{
+    background:white;
+    border-radius:25px;
+    height:40px;
+    width:70%;
+    border:none;
+    padding-left:15px;
+    font-size:16px;
+}
+
+/* MENU ICON */
+.menu-icon{
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* ===== DROPDOWN MENU ===== */
+.dropdown{
+    display:none;
+    position:absolute;
+    right:15px;
+    top:60px;
+    background:white;
+    width:220px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    border-radius:5px;
+}
+
+.dropdown a{
+    display:block;
+    padding:14px;
+    text-decoration:none;
+    color:#0d7aa5;
+    border-bottom:1px solid #eee;
+    font-size:18px;
+}
+
+.dropdown a:hover{
+    background:#f2f2f2;
+}
+
+/* ===== PRODUCT SECTION (Sample Cards) ===== */
+.products{
+    padding:30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:20px;
+}
+
+.product-card{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 3px 6px rgba(0,0,0,0.1);
+}
+
+.product-card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.product-card h3{
+    margin:10px 0 5px;
+}
+
+.product-card p{
+    margin:5px 0;
+    font-weight:bold;
+    color:#c40000;
+}
+
+.product-card button{
+    background:#c40000;
+    color:white;
+    border:none;
+    padding:8px 15px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.product-card button:hover{
+    background:#ff1a1a;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:600px){
+    .header{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .title h1{
+        font-size:26px;
+    }
+
+    .phone{
+        margin-top:8px;
+    }
+
+    .search-box{
+        width:60%;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">
+        <img src="logo.png" alt="Thomas Traders Logo">
+    </div>
+
+    <div class="title">
+        <h1>THOMAS TRADERS</h1>
+        <p>Punnathanam</p>
+    </div>
+
+    <div class="phone">
+        📞 769 5000 500
+    </div>
+</div>
+
+<!-- ADVERTISEMENT -->
+<div class="ad-section">
+    Special Discount on Cement & Paints!
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar">
+    🔍
+    <input type="text" class="search-box" placeholder="Search products...">
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+    <div class="dropdown" id="dropdownMenu">
+        <a href="#">Construction Materials</a>
+        <a href="#">Hardware Tools</a>
+        <a href="#">Paints</a>
+        <a href="#">Others</a>
+    </div>
+</div>
+
+<!-- SAMPLE PRODUCTS -->
+<div class="products">
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="">
+        <h3>ACC Cement</h3>
+        <p>₹450</p>
+        <button>Buy Now</button>
+    </div>
+
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="">
+        <h3>Asian Paints</h3>
+        <p>₹1200</p>
+        <button>Buy Now</button>
+    </div>
+
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="">
+        <h3>Hammer Tool</h3>
+        <p>₹350</p>
+        <button>Buy Now</button>
+    </div>
+</div>
+
+<script>
+function toggleMenu() {
+    var menu = document.getElementById("dropdownMenu");
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
