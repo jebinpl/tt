@@ -164,10 +164,36 @@ body{
 
 /* ===== MOBILE ===== */
 @media(max-width:600px){
+
     .header{
-        flex-direction:column;
-        text-align:center;
+        flex-direction:row;        /* Keep row */
+        padding:10px 15px;
     }
+
+    .logo img{
+        height:60px;
+        width:60px;
+        border-radius:50%;
+        object-fit:cover;
+    }
+
+    .title{
+        text-align:left;
+        margin-left:10px;
+    }
+
+    .title h1{
+        font-size:20px;
+    }
+
+    .title p{
+        font-size:12px;
+    }
+
+    .phone{
+        display:none;   /* Hide phone in top row */
+    }
+}
 
     .title h1{
         font-size:26px;
@@ -259,4 +285,5 @@ function toggleMenu() {
 </body>
 
 </html>
+
 
