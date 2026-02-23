@@ -19,7 +19,7 @@ body{
     background:rgba(196,0,0,0.9);
     backdrop-filter:blur(10px);
     color:white;
-    padding:18px 30px;
+    padding:10px 30px;
     display:flex;
     align-items:center;
     gap:20px;
@@ -238,6 +238,7 @@ body{
         height:140px;
     }
 }
+
 
 
 
