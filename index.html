@@ -21,10 +21,9 @@ body{
     align-items:center;
     box-shadow:0 4px 8px rgba(0,0,0,0.2);
 }
-
 /* Left section */
 .logo{
-    flex:1;
+    margin-right:20px;   /* space between logo and text */
 }
 
 .logo img{
@@ -38,7 +37,9 @@ body{
 /* Center section */
 .title{
     flex:1;
-    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;   /* This centers text horizontally */
 }
 
 .title h1{
@@ -254,6 +255,7 @@ function toggleMenu() {
 
 </body>
 </html>
+
 
 
 
