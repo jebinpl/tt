@@ -74,28 +74,10 @@ function toggleMenu() {
     menu.classList.toggle("active");
 }
 </script>
-
-<script>
-let timeout;
-const searchBar = document.querySelector(".search-bar");
-
-window.addEventListener("scroll", () => {
-
-    // hide while scrolling
-    searchBar.classList.add("hide");
-
-    clearTimeout(timeout);
-
-    // show when scroll stops
-    timeout = setTimeout(() => {
-        searchBar.classList.remove("hide");
-    }, 200);
-
-});
-</script>
     
 </body>
 </html>
+
 
 
 
