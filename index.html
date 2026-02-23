@@ -167,14 +167,24 @@ body{
 
 /* ===== MOBILE ===== */
 @media(max-width:600px){
-
+    .header{
+        padding:15px;
+    }
+    
     .logo img{
         height:60px;
         width:60px;
     }
-
+    .title{
+        flex:1;
+        display:flex;
+        flex-direction:column;
+        align-items:center;   /* ✅ keep centered */
+        text-align:center;    /* ✅ force text center */
+    }
     .title h1{
-        font-size:20px;
+        font-size:22px;
+        letter-spacing:2px;
     }
 
     .title p{
@@ -255,6 +265,7 @@ function toggleMenu() {
 
 </body>
 </html>
+
 
 
 
