@@ -8,7 +8,7 @@ body{
 .main-wrapper{
     background:white;
     max-width:1200px;
-    margin:30px auto;
+    margin:140px auto 30px auto;
     border-radius:25px;
     overflow:hidden;
     box-shadow:0 20px 40px rgba(0,0,0,0.08);
@@ -23,6 +23,11 @@ body{
     display:flex;
     align-items:center;
     gap:15px;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
 }
 
 .logo img{
@@ -73,7 +78,14 @@ body{
     display:flex;
     align-items:center;
     gap:15px;
-    position:relative;   
+    position:fixed;
+    top:80px; /* adjust if needed */
+    left:0;
+    width:100%;
+    background:white;
+    z-index:999;
+
+    transition:transform 0.3s ease, opacity 0.3s ease;
 }
 
 .search-wrapper{
@@ -94,6 +106,11 @@ body{
 
 .search-box:focus{
     box-shadow:0 6px 18px rgba(0,0,0,0.1);
+}
+
+.search-bar.hide{
+    transform:translateY(-100%);
+    opacity:0;
 }
 
 .menu-icon{
@@ -243,6 +260,7 @@ body{
         height:140px;
     }
 }
+
 
 
 
