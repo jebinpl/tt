@@ -18,41 +18,45 @@ body{
     padding:15px 30px;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    position:sticky;
-    top:0;
-    z-index:1000;
+    position:relative;
     box-shadow:0 4px 8px rgba(0,0,0,0.2);
 }
 
+/* Logo */
 .logo img{
-    height:85px;
-    width:85px;
+    height:80px;
+    width:80px;
     border-radius:50%;
     object-fit:cover;
     border:3px solid white;
 }
 
+/* Center Title (Perfect Center Trick) */
 .title{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
     text-align:center;
-    flex:1;
 }
 
 .title h1{
     margin:0;
-    font-size:38px;
+    font-size:34px;
     letter-spacing:2px;
+    white-space:nowrap;
 }
 
 .title p{
-    margin:5px 0;
-    font-size:16px;
+    margin:4px 0 0;
+    font-size:14px;
     opacity:0.9;
 }
 
+/* Phone (Right Side) */
 .phone{
-    font-size:18px;
+    margin-left:auto;
     font-weight:bold;
+    font-size:18px;
 }
 
 /* ===== AD SECTION ===== */
@@ -61,7 +65,7 @@ body{
     color:white;
     text-align:center;
     padding:40px 0;
-    font-size:30px;
+    font-size:28px;
     font-family:cursive;
 }
 
@@ -116,7 +120,7 @@ body{
     background:#f2f2f2;
 }
 
-/* ===== PRODUCT SECTION (Sample Cards) ===== */
+/* ===== PRODUCT SECTION ===== */
 .products{
     padding:30px;
     display:grid;
@@ -165,42 +169,31 @@ body{
 /* ===== MOBILE ===== */
 @media(max-width:600px){
 
-    .header{
-        flex-direction:column;   /* Stack items vertically */
-        align-items:center;      /* Center everything */
-        text-align:center;
-        padding:15px 10px;
-    }
-
     .logo img{
-        height:70px;
-        width:70px;
-    }
-
-    .title{
-        margin:8px 0;
+        height:60px;
+        width:60px;
     }
 
     .title h1{
-        font-size:22px;
-        white-space:nowrap;   /* Prevent line break */
+        font-size:20px;
     }
 
     .title p{
-        font-size:13px;
+        font-size:12px;
     }
 
     .phone{
-        display:none;   /* Hide phone in header */
+        display:none;
     }
 
     .search-box{
         width:60%;
     }
 }
-</style>
 
+</style>
 </head>
+
 <body>
 
 <!-- HEADER -->
@@ -265,17 +258,9 @@ body{
 <script>
 function toggleMenu() {
     var menu = document.getElementById("dropdownMenu");
-    if (menu.style.display === "block") {
-        menu.style.display = "none";
-    } else {
-        menu.style.display = "block";
-    }
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
 }
 </script>
 
 </body>
-
 </html>
-
-
-
