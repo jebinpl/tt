@@ -166,41 +166,32 @@ body{
 @media(max-width:600px){
 
     .header{
-        flex-direction:row;        /* Keep row */
-        padding:10px 15px;
+        flex-direction:column;   /* Stack items vertically */
+        align-items:center;      /* Center everything */
+        text-align:center;
+        padding:15px 10px;
     }
 
     .logo img{
-        height:60px;
-        width:60px;
-        border-radius:50%;
-        object-fit:cover;
+        height:70px;
+        width:70px;
     }
 
     .title{
-        text-align:left;
-        margin-left:10px;
+        margin:8px 0;
     }
 
     .title h1{
-        font-size:20px;
+        font-size:22px;
+        white-space:nowrap;   /* Prevent line break */
     }
 
     .title p{
-        font-size:12px;
+        font-size:13px;
     }
 
     .phone{
-        display:none;   /* Hide phone in top row */
-    }
-}
-
-    .title h1{
-        font-size:26px;
-    }
-
-    .phone{
-        margin-top:8px;
+        display:none;   /* Hide phone in header */
     }
 
     .search-box{
@@ -285,5 +276,6 @@ function toggleMenu() {
 </body>
 
 </html>
+
 
 
