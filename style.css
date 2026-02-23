@@ -52,7 +52,7 @@ body{
 }
 
 .title p{
-    margin-top:5px;
+    margin:3px 0;
     font-size:14px;
     opacity:0.85;
 }
@@ -195,3 +195,4 @@ body{
         height:140px;
     }
 }
+
