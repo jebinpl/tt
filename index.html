@@ -18,11 +18,15 @@ body{
     padding:15px 30px;
     display:flex;
     align-items:center;
-    position:relative;
+    justify-content:space-between;
     box-shadow:0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* Logo */
+/* Left section */
+.logo{
+    flex:1;
+}
+
 .logo img{
     height:80px;
     width:80px;
@@ -31,11 +35,9 @@ body{
     border:3px solid white;
 }
 
-/* Center Title (Perfect Center Trick) */
+/* Center section */
 .title{
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
+    flex:1;
     text-align:center;
 }
 
@@ -43,7 +45,7 @@ body{
     margin:0;
     font-size:34px;
     letter-spacing:2px;
-    white-space:nowrap;
+    white-space:nowrap; /* Prevent line break */
 }
 
 .title p{
@@ -52,9 +54,10 @@ body{
     opacity:0.9;
 }
 
-/* Phone (Right Side) */
+/* Right section */
 .phone{
-    margin-left:auto;
+    flex:1;
+    text-align:right;
     font-weight:bold;
     font-size:18px;
 }
@@ -190,7 +193,6 @@ body{
         width:60%;
     }
 }
-
 </style>
 </head>
 
