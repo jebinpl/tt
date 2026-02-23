@@ -112,22 +112,31 @@ body{
 
 /* ===== DROPDOWN MENU ===== */
 .dropdown{
-    display:none;
     position:absolute;
     top:100%;
-    right:30px;
+    right:20px;
     background:white;
     width:220px;
     border-radius:12px;
     box-shadow:0 10px 25px rgba(0,0,0,0.1);
     overflow:hidden;
     z-index:1000;
+
+    /* Animation */
     opacity:0;
-    transform:translateY(-10px);
-    transition:0.3s ease;
+    transform:translateY(-15px);
     pointer-events:none;
+    transition:all 0.3s ease;
 }
 
+/* When Active */
+.dropdown.active{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+}
+
+/* Menu Links */
 .dropdown a{
     display:block;
     padding:14px;
@@ -135,22 +144,12 @@ body{
     color:#0d7aa5;
     border-bottom:1px solid #eee;
     font-size:16px;
-    transition:0.2s;
+    transition:background 0.2s;
 }
 
 .dropdown a:hover{
     background:#f2f2f2;
 }
-.dropdown.active{
-    display:block;
-    opacity:1;
-    transform:translateY(0);
-    pointer-events:auto;
-}
-.menu-icon:hover{
-    transform:scale(1.1);
-}
-
 /* ===== PRODUCTS ===== */
 .products{
     padding:30px;
@@ -246,6 +245,7 @@ body{
         height:140px;
     }
 }
+
 
 
 
