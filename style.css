@@ -251,7 +251,10 @@ body{
 .header-inner::after{
         width:45px;
     }
-.search-box{
+    .search-bar{
+        padding:4px 15px;
+    }
+    .search-box{
     height:28px;
 }
     .ad-section{
@@ -306,6 +309,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
