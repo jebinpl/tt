@@ -93,7 +93,7 @@ body{
 
 /* ===== SEARCH BAR ===== */
 .search-bar{
-    padding:10px 20px;
+    padding:6px 20px;
     display:flex;
     align-items:center;
     gap:15px;
@@ -107,7 +107,7 @@ body{
 }
 .search-box{
     width:100%;
-    height:38px;
+    height:32px;
     border-radius:50px;
     border:none;
     padding:0 15px;
@@ -250,7 +250,9 @@ body{
 .header-inner::after{
         width:45px;
     }
-
+.search-box{
+    height:28px;
+}
     .ad-section{
         font-size:18px;
         padding:25px 10px;
@@ -303,6 +305,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
