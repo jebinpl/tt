@@ -38,7 +38,7 @@ body{
     width:100%;
     display:flex;
     align-items:center;
-    gap:15px;
+    position:relative;   /* IMPORTANT */
 }
 .logo img{
     height:75px;
@@ -53,8 +53,14 @@ body{
     transform:scale(1.08);
 }
 
+.logo{
+    z-index:2;
+}
+
 .title{
-    flex:1;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
     text-align:center;
 }
 
@@ -258,6 +264,7 @@ body{
         height:140px;
     }
 }
+
 
 
 
