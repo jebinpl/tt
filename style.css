@@ -36,9 +36,13 @@ body{
     max-width:1200px;
     margin:0 auto;
     width:100%;
-    display:flex;
+    display:grid;
+    grid-template-columns: auto 1fr auto;
     align-items:center;
-    position:relative;   /* IMPORTANT */
+}
+.header-inner::after{
+    content:"";
+    width:75px; /* same width as logo */
 }
 .logo img{
     height:75px;
@@ -58,10 +62,8 @@ body{
 }
 
 .title{
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
     text-align:center;
+    grid-column:2;
 }
 
 .title h1{
@@ -222,7 +224,6 @@ body{
 
 /* ===== MOBILE ===== */
 @media(max-width:600px){
-
     .main-wrapper{
         margin:0;
         border-radius:0;
@@ -245,6 +246,9 @@ body{
 .title p{
     font-size:12px;
 }
+.header-inner::after{
+        width:45px;
+    }
 
     .ad-section{
         font-size:18px;
@@ -264,6 +268,7 @@ body{
         height:140px;
     }
 }
+
 
 
 
