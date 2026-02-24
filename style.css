@@ -112,6 +112,7 @@ body{
     border:none;
     padding:0 15px;
     font-size:14px;
+    background:#adccdb;
     box-shadow:0 4px 12px rgba(0,0,0,0.05);
     outline:none;
 }
@@ -305,6 +306,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
