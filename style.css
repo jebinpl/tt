@@ -17,18 +17,17 @@ body{
 
 /* ===== HEADER ===== */
 .header{
-    position:fixed;           /* Make it fixed */
+    position:fixed;
     top:0;
-    left:50%;
-    transform:translateX(-50%);
+    left:0;
     width:100%;
-    max-width:1200px;         /* Same as main-wrapper */
     z-index:1000;
 
     background:rgba(196,0,0,0.95);
     backdrop-filter:blur(10px);
     color:white;
     padding:10px 25px;
+
     display:flex;
     align-items:center;
     gap:15px;
@@ -251,6 +250,7 @@ body{
         height:140px;
     }
 }
+
 
 
 
