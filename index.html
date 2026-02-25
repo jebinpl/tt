@@ -90,6 +90,12 @@ function toggleMenu() {
     const menu = document.getElementById("dropdownMenu");
     menu.classList.toggle("active");
 }
+    document.addEventListener("click", function(e){
+    const login = document.querySelector(".login-wrapper");
+    if(!login.contains(e.target)){
+        document.getElementById("loginDropdown").classList.remove("active");
+    }
+});
 
 let scrollTimer;
 const searchBar = document.querySelector(".search-bar");
@@ -114,6 +120,7 @@ window.addEventListener("scroll", function () {
 </div>   
 </body>
 </html>
+
 
 
 
