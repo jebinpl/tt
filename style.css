@@ -24,7 +24,8 @@ body{
 .header{
     position: fixed;
     top: 0;
- 
+    left: 50%;                 /* ADD THIS */
+    transform: translateX(-50%); /* ADD THIS */
     max-width: 1200px;
     width: 100%;
     z-index: 3000;
@@ -405,6 +406,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
