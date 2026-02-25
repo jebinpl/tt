@@ -286,7 +286,7 @@ body{
 }
 
 .cart-content{
-    background:linear-gradient(135deg,#c40000,#ff1a1a);
+    background: linear-gradient(135deg, #8B0000, #FF3B3B);
     width:55px;
     height:55px;
     border-radius:50%;
@@ -295,7 +295,7 @@ body{
     justify-content:center;
     color:white;
     font-size:24px;
-    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 18px rgba(139,0,0,0.4);
     cursor:pointer;
     transition:0.3s ease;
 }
@@ -303,6 +303,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
