@@ -1,109 +1,385 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thomas Traders</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-
-<!-- HEADER -->
-<div class="header">
-    <div class="header-inner">
-
-        <div class="logo">
-            <img src="logo.png" alt="Logo">
-        </div>
-
-        <div class="title">
-            <h1>THOMAS TRADERS</h1>
-            <p>Punnathanam Malaicode</p>
-            <p>Manjalumood Rd. K.K Dist.</p>
-            <p>☎ 769 5000 500</p>
-        </div>
-
-        <div class="login-container">
-            <div class="login-wrapper">
-                <div class="login-btn" onclick="toggleLoginMenu()">Login ▾</div>
-                <div class="login-dropdown" id="loginDropdown">
-                    <a href="#">Customer</a>
-                    <a href="#">Admin</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- SEARCH -->
-<div class="search-bar">
-    <div class="search-wrapper">
-        <input type="text" class="search-box" placeholder="🔍 Search products...">
-    </div>
-
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-
-    <div class="dropdown" id="dropdownMenu">
-        <a href="#">Electricals</a>
-        <a href="#">Plumbing</a>
-        <a href="#">Construction</a>
-        <a href="#">Tools</a>
-        <a href="#">Paints</a>
-        <a href="#">Others</a>
-    </div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div class="main-wrapper">
-
-    <div class="ad-section">
-        Special Discount on Cement & Paints!
-    </div>
-
-    <div class="products">
-
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <h3>ACC Cement</h3>
-            <p>₹450</p>
-            <button>Buy Now</button>
-        </div>
-
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <h3>Asian Paints</h3>
-            <p>₹1200</p>
-            <button>Buy Now</button>
-        </div>
-
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <h3>Hammer Tool</h3>
-            <p>₹350</p>
-            <button>Buy Now</button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- CART -->
-<div class="cart-bar">
-    🛒
-</div>
-
-<script>
-function toggleLoginMenu(){
-    document.getElementById("loginDropdown").classList.toggle("active");
+*{
+    box-sizing: border-box;
 }
-function toggleMenu(){
-    document.getElementById("dropdownMenu").classList.toggle("active");
+body{
+    margin:0;
+    background:linear-gradient(135deg,#f5f7fa,#e4ecf7);
+    font-family:'Montserrat', sans-serif;
 }
-</script>
 
-</body>
-</html>
+/* ===== MAIN WRAPPER ===== */
+.main-wrapper{
+    background:white;
+    max-width:1200px;
+    margin:30px auto;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    padding-top:170px;
+    padding-bottom:100px;
+}
+
+/* ===== HEADER ===== */
+.header{
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1200px;
+    width: 100%;
+    z-index: 3000;
+    background: rgba(196,0,0,0.95);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 10px 25px;
+    height:110px;
+}
+.header-inner{
+    max-width:1200px;
+    margin:0 auto;
+    width:100%;
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    align-items:center;
+}
+.header-inner::after{
+    content:"";
+    width:75px; /* same width as logo */
+}
+.logo img{
+    height:75px;
+    width:75px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid white;
+    transition:0.3s ease;
+}
+
+.logo img:hover{
+    transform:scale(1.08);
+}
+
+.logo{
+    z-index:2;
+}
+
+.title{
+    text-align:center;
+    grid-column:2;
+}
+
+.title h1{
+    font-family:'Playfair Display', serif;
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:3px;
+    margin:0;
+}
+
+.title p{
+    margin:3px 0;
+    font-size:14px;
+    opacity:0.85;
+}
+
+/* ===== AD SECTION ===== */
+.ad-section{
+    background:linear-gradient(135deg,#0d7aa5,#0099cc);
+    color:white;
+    text-align:center;
+    padding:35px 0;
+    font-size:24px;
+    font-weight:600;
+}
+
+/* ===== SEARCH BAR ===== */
+.search-bar{
+    position: fixed;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1200px;
+    width: 100%;
+    z-index: 2500;
+
+    background: white;
+    padding: 6px 20px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.search-bar.hide{
+    transform: translate(-50%, -120%);
+    opacity: 0;
+}
+
+.search-wrapper{
+    position:relative;
+    flex:1;
+    margin-right:25px;
+}
+.search-box{
+    width:100%;
+    height:32px;
+    border-radius:50px;
+    border:none;
+    padding:0 15px;
+    font-size:14px;
+    background:#adccdb;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    outline:none;
+}
+
+.search-box:focus{
+    box-shadow:0 6px 18px rgba(0,0,0,0.1);
+}
+
+.menu-icon{
+    font-size:26px;
+    cursor:pointer;
+    transition:0.3s;
+    flex-shrink:0;
+}
+
+/* ===== DROPDOWN MENU ===== */
+.dropdown{
+    position:absolute;
+    top:100%;
+    right:20px;
+    background:white;
+    width:220px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    overflow:hidden;
+    z-index:1000;
+
+    /* Animation */
+    opacity:0;
+    transform:translateY(-15px);
+    pointer-events:none;
+    transition:all 0.3s ease;
+}
+
+/* When Active */
+.dropdown.active{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+}
+
+/* Menu Links */
+.dropdown a{
+    display:block;
+    padding:14px;
+    text-decoration:none;
+    color:#0d7aa5;
+    border-bottom:1px solid #eee;
+    font-size:16px;
+    transition:background 0.2s;
+}
+
+.dropdown a:hover{
+    background:#f2f2f2;
+}
+/* ===== PRODUCTS ===== */
+.products{
+    padding:30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:25px;
+}
+
+.product-card{
+    background:white;
+    border-radius:20px;
+    padding:15px;
+    text-align:center;
+    transition:0.3s ease;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+.product-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.1);
+}
+
+.product-card img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
+    border-radius:15px;
+}
+
+.product-card h3{
+    margin:12px 0 6px;
+    font-size:18px;
+}
+
+.product-card p{
+    margin:5px 0 10px;
+    font-weight:bold;
+    color:#c40000;
+    font-size:16px;
+}
+
+.product-card button{
+    background:linear-gradient(135deg,#c40000,#ff1a1a);
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:50px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s ease;
+}
+
+.product-card button:hover{
+    transform:scale(1.05);
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:600px){
+
+    .main-wrapper{
+        margin:0;
+        border-radius:0;
+    }
+
+    .header{
+        padding:8px 15px;
+        gap:10px;
+    }
+
+    .logo img{
+        height:45px;
+        width:45px;
+    }
+
+    .title h1{
+        font-size:18px;
+    }
+
+    .title p{
+        font-size:12px;
+    }
+
+    .header-inner::after{
+        width:45px;
+    }
+
+.search-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 12px;
+}
+
+.search-wrapper{
+    flex: 1;
+    margin-right: 8px;
+    min-width:0;
+}
+
+.menu-icon{
+    width: 35px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.search-box{
+    width: 100%;
+}
+
+    .ad-section{
+        font-size:18px;
+        padding:25px 10px;
+    }
+
+    .products{
+        padding:15px;
+        gap:15px;
+    }
+
+    .product-card{
+        padding:12px;
+    }
+
+    .product-card img{
+        height:140px;
+    }
+}
+/* ===== FIXED CART FOOTER BAR ===== */
+.cart-bar{
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1200px;
+    width: 100%;
+    height: 70px;
+    background: #fdcaca;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-content{
+    background: linear-gradient(135deg, #dac5c5, #e7cfcf);
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:24px;
+    box-shadow: 0 6px 18px rgba(139,0,0,0.4);
+    cursor:pointer;
+    transition:0.3s ease;
+}
+
+.cart-content:hover{
+    transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
