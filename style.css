@@ -41,10 +41,7 @@ body{
     grid-template-columns: auto 1fr auto;
     align-items:center;
 }
-.header-inner::after{
-    content:"";
-    width:75px; /* same width as logo */
-}
+
 .logo img{
     height:75px;
     width:75px;
@@ -64,7 +61,6 @@ body{
 
 .title{
     text-align:center;
-    grid-column:2;
 }
 
 .title h1{
@@ -280,6 +276,7 @@ body{
     transform:translateY(-10px);
     pointer-events:none;
     transition:0.3s ease;
+    z-index:4000; 
 }
 
 .login-dropdown a{
@@ -406,6 +403,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
