@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+<div class="main-wrapper">
 <!-- HEADER -->
 <div class="header">
     <div class="header-inner">
@@ -22,18 +22,8 @@
         <p>Punnathanam Malaicode,</p> 
         <p>Manjalumood Rd. K.K Dist.</p>
         <p>☎ 769 5000 500</p>
-    </div>       
-    <!-- ADD LOGIN HERE -->
-    <div class="login-container">
-        <div class="login-wrapper">
-            <div class="login-btn" onclick="toggleLoginMenu()">Login ▾</div>
-
-            <div class="login-dropdown" id="loginDropdown">
-                <a href="customer-login.html">Customer</a>
-                <a href="admin-login.html">Admin</a>
-            </div>
-        </div>
     </div>
+</div>
 </div>
 <!-- SEARCH BAR -->
 <div class="search-bar">
@@ -51,7 +41,7 @@
         <a href="#">Others</a>
     </div>
 </div>
-<div class="main-wrapper">
+
 <!-- ADVERTISEMENT -->
 <div class="ad-section">
     Special Discount on Cement & Paints!
@@ -82,20 +72,10 @@
 </div>
 </div>
 <script>
-    function toggleLoginMenu() {
-    const menu = document.getElementById("loginDropdown");
-    menu.classList.toggle("active");
-}
 function toggleMenu() {
     const menu = document.getElementById("dropdownMenu");
     menu.classList.toggle("active");
 }
-    document.addEventListener("click", function(e){
-    const login = document.querySelector(".login-wrapper");
-    if(!login.contains(e.target)){
-        document.getElementById("loginDropdown").classList.remove("active");
-    }
-});
 
 let scrollTimer;
 const searchBar = document.querySelector(".search-bar");
@@ -120,9 +100,6 @@ window.addEventListener("scroll", function () {
 </div>   
 </body>
 </html>
-
-
-
 
 
 
