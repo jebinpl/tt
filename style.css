@@ -233,37 +233,53 @@ body{
 
 /* ===== MOBILE ===== */
 @media(max-width:600px){
+
     .main-wrapper{
         margin:0;
         border-radius:0;
     }
 
-.header{
-    padding:8px 15px;
-    gap:10px;
-}
+    .header{
+        padding:8px 15px;
+        gap:10px;
+    }
 
-.logo img{
-    height:45px;
-    width:45px;
-}
-
-.title h1{
-    font-size:18px;
-}
-
-.title p{
-    font-size:12px;
-}
-.header-inner::after{
+    .logo img{
+        height:45px;
         width:45px;
     }
-    .search-bar{
-        padding:4px 15px;
+
+    .title h1{
+        font-size:18px;
     }
+
+    .title p{
+        font-size:12px;
+    }
+
+    .header-inner::after{
+        width:45px;
+    }
+
+    .search-bar{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:5px 12px;
+    }
+
+    .search-wrapper{
+        margin-right:0;   /* 🔥 important fix */
+    }
+
+    .menu-icon{
+        flex-shrink:0;
+    }
+
     .search-box{
-    height:28px;
-}
+        height:28px;
+    }
+
     .ad-section{
         font-size:18px;
         padding:25px 10px;
@@ -317,6 +333,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
