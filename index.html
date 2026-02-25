@@ -22,8 +22,18 @@
         <p>Punnathanam Malaicode,</p> 
         <p>Manjalumood Rd. K.K Dist.</p>
         <p>☎ 769 5000 500</p>
+    </div>       
+    <!-- ADD LOGIN HERE -->
+    <div class="login-container">
+        <div class="login-wrapper">
+            <div class="login-btn" onclick="toggleLoginMenu()">Login ▾</div>
+
+            <div class="login-dropdown" id="loginDropdown">
+                <a href="customer-login.html">Customer</a>
+                <a href="admin-login.html">Admin</a>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 <!-- SEARCH BAR -->
 <div class="search-bar">
@@ -72,6 +82,10 @@
 </div>
 </div>
 <script>
+    function toggleLoginMenu() {
+    const menu = document.getElementById("loginDropdown");
+    menu.classList.toggle("active");
+}
 function toggleMenu() {
     const menu = document.getElementById("dropdownMenu");
     menu.classList.toggle("active");
@@ -100,6 +114,7 @@ window.addEventListener("scroll", function () {
 </div>   
 </body>
 </html>
+
 
 
 
