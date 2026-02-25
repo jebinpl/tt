@@ -14,7 +14,7 @@ body{
     margin:30px auto;
     border-radius:25px;
     box-shadow:0 20px 40px rgba(0,0,0,0.08);
-    padding-top:180px;
+    padding-top:170px;
     padding-bottom:120px;
 }
 
@@ -90,17 +90,15 @@ body{
 
 /* ===== SEARCH BAR ===== */
 .search-bar{
-    position: fixed;
-    top: 110px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: sticky;
+    top: 110px;   /* below header */
     max-width: 1200px;
+    margin: 0 auto;
     width: 100%;
     z-index: 2500;
 
     background: white;
     padding: 6px 20px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
 
     display:flex;
     align-items:center;
@@ -390,6 +388,7 @@ body{
     transform:translateY(0);
     pointer-events:auto;
 }
+
 
 
 
