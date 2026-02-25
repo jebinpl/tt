@@ -1,160 +1,109 @@
-*{
-    box-sizing:border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thomas Traders</title>
 
-body{
-    margin:0;
-    font-family:'Montserrat', sans-serif;
-    background:linear-gradient(135deg,#f5f7fa,#e4ecf7);
-}
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
-/* HEADER */
-.header{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    background:#c40000;
-    color:white;
-    z-index:1000;
-}
+</head>
+<body>
 
-.header-inner{
-    max-width:1200px;
-    margin:auto;
-    padding:15px;
-    display:grid;
-    grid-template-columns:auto 1fr auto;
-    align-items:center;
-}
+<!-- HEADER -->
+<div class="header">
+    <div class="header-inner">
 
-.logo img{
-    width:60px;
-    height:60px;
-    border-radius:50%;
-}
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
 
-.title{
-    text-align:center;
-}
+        <div class="title">
+            <h1>THOMAS TRADERS</h1>
+            <p>Punnathanam Malaicode</p>
+            <p>Manjalumood Rd. K.K Dist.</p>
+            <p>☎ 769 5000 500</p>
+        </div>
 
-.login-wrapper{
-    position:relative;
-}
+        <div class="login-container">
+            <div class="login-wrapper">
+                <div class="login-btn" onclick="toggleLoginMenu()">Login ▾</div>
+                <div class="login-dropdown" id="loginDropdown">
+                    <a href="#">Customer</a>
+                    <a href="#">Admin</a>
+                </div>
+            </div>
+        </div>
 
-.login-btn{
-    background:white;
-    color:#c40000;
-    padding:6px 14px;
-    border-radius:20px;
-    cursor:pointer;
-}
+    </div>
+</div>
 
-.login-dropdown{
-    position:absolute;
-    top:40px;
-    right:0;
-    background:white;
-    width:140px;
-    display:none;
-}
+<!-- SEARCH -->
+<div class="search-bar">
+    <div class="search-wrapper">
+        <input type="text" class="search-box" placeholder="🔍 Search products...">
+    </div>
 
-.login-dropdown a{
-    display:block;
-    padding:10px;
-    text-decoration:none;
-    color:#333;
-}
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
 
-.login-dropdown.active{
-    display:block;
-}
+    <div class="dropdown" id="dropdownMenu">
+        <a href="#">Electricals</a>
+        <a href="#">Plumbing</a>
+        <a href="#">Construction</a>
+        <a href="#">Tools</a>
+        <a href="#">Paints</a>
+        <a href="#">Others</a>
+    </div>
+</div>
 
-/* SEARCH */
-.search-bar{
-    position:fixed;
-    top:110px;
-    left:0;
-    width:100%;
-    background:white;
-    padding:10px;
-    z-index:900;
-    display:flex;
-    justify-content:space-between;
-}
+<!-- MAIN CONTENT -->
+<div class="main-wrapper">
 
-.search-wrapper{
-    flex:1;
-}
+    <div class="ad-section">
+        Special Discount on Cement & Paints!
+    </div>
 
-.search-box{
-    width:100%;
-    padding:8px;
-}
+    <div class="products">
 
-.dropdown{
-    position:absolute;
-    top:45px;
-    right:20px;
-    background:white;
-    display:none;
-}
+        <div class="product-card">
+            <img src="https://via.placeholder.com/300x200">
+            <h3>ACC Cement</h3>
+            <p>₹450</p>
+            <button>Buy Now</button>
+        </div>
 
-.dropdown.active{
-    display:block;
-}
+        <div class="product-card">
+            <img src="https://via.placeholder.com/300x200">
+            <h3>Asian Paints</h3>
+            <p>₹1200</p>
+            <button>Buy Now</button>
+        </div>
 
-.dropdown a{
-    display:block;
-    padding:10px;
-    text-decoration:none;
-    color:#333;
-}
+        <div class="product-card">
+            <img src="https://via.placeholder.com/300x200">
+            <h3>Hammer Tool</h3>
+            <p>₹350</p>
+            <button>Buy Now</button>
+        </div>
 
-/* MAIN */
-.main-wrapper{
-    max-width:1200px;
-    margin:170px auto 100px auto;
-    background:white;
-    border-radius:20px;
-    padding:20px;
-}
+    </div>
 
-.ad-section{
-    background:#0099cc;
-    color:white;
-    text-align:center;
-    padding:30px;
-    margin-bottom:30px;
-}
+</div>
 
-.products{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-}
+<!-- CART -->
+<div class="cart-bar">
+    🛒
+</div>
 
-.product-card{
-    padding:15px;
-    text-align:center;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+<script>
+function toggleLoginMenu(){
+    document.getElementById("loginDropdown").classList.toggle("active");
 }
+function toggleMenu(){
+    document.getElementById("dropdownMenu").classList.toggle("active");
+}
+</script>
 
-.product-card img{
-    width:100%;
-}
-
-/* CART */
-.cart-bar{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:70px;
-    background:#fdcaca;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
-    z-index:1000;
-}
+</body>
+</html>
