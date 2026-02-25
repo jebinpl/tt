@@ -76,6 +76,22 @@ function toggleMenu() {
     const menu = document.getElementById("dropdownMenu");
     menu.classList.toggle("active");
 }
+
+let scrollTimer;
+const searchBar = document.querySelector(".search-bar");
+
+window.addEventListener("scroll", function () {
+
+    // Hide immediately while scrolling
+    searchBar.classList.add("hide");
+
+    clearTimeout(scrollTimer);
+
+    // Show when scrolling stops
+    scrollTimer = setTimeout(function () {
+        searchBar.classList.remove("hide");
+    }, 200); // 200ms after scroll stops
+});
 </script>
 <div class="cart-bar">
     <div class="cart-content">
@@ -84,6 +100,7 @@ function toggleMenu() {
 </div>   
 </body>
 </html>
+
 
 
 
