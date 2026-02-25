@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Console - Thomas Traders</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:'Montserrat', sans-serif;
+    background:#f4f6f9;
+}
+
+/* ===== HEADER ===== */
+.admin-header{
+    background:#c40000;
+    color:white;
+    padding:15px 25px;
+    font-size:20px;
+    font-weight:600;
+}
+
+/* ===== MAIN CONTAINER ===== */
+.admin-container{
+    max-width:1000px;
+    margin:30px auto;
+    padding:20px;
+}
+
+/* ===== AD UPLOAD SECTION ===== */
+.ad-upload{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+    margin-bottom:30px;
+}
+
+.ad-upload h3{
+    margin-top:0;
+}
+
+.ad-upload input{
+    margin-top:10px;
+}
+
+/* ===== PRODUCT SECTION ===== */
+.product-form{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+    margin-bottom:30px;
+}
+
+.product-form input{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.product-form button{
+    background:#c40000;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* ===== PRODUCT LIST ===== */
+.product-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.product-card{
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+.product-card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.product-card h4{
+    margin:10px 0 5px;
+}
+
+.product-card p{
+    margin:5px 0;
+    font-weight:600;
+    color:#c40000;
+}
+
+.card-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+}
+
+.edit-btn{
+    background:#007bff;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.delete-btn{
+    background:#ff1a1a;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="admin-header">
+    Admin Console - Thomas Traders
+</div>
+
+<div class="admin-container">
+
+    <!-- Advertisement Upload -->
+    <div class="ad-upload">
+        <h3>Upload Scrolling Advertisement (PNG)</h3>
+        <input type="file" id="uploadAd" accept="image/png">
+    </div>
+
+    <!-- Product Add Form -->
+    <div class="product-form">
+        <h3>Add Product</h3>
+        <input type="file" id="productImage" accept="image/*">
+        <input type="text" id="productName" placeholder="Product Description">
+        <input type="number" id="productPrice" placeholder="Price">
+        <button onclick="addProduct()">Add Product</button>
+    </div>
+
+    <!-- Product List -->
+    <div class="product-list" id="productList"></div>
+
+</div>
+
+<script>
+let products = [];
+
+function addProduct(){
+    const imageInput = document.getElementById("productImage");
+    const name = document.getElementById("productName").value;
+    const price = document.getElementById("productPrice").value;
+
+    if(!imageInput.files[0] || !name || !price){
+        alert("Fill all fields");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+        const product = {
+            id: Date.now(),
+            image: e.target.result,
+            name,
+            price
+        };
+
+        products.push(product);
+        renderProducts();
+    };
+
+    reader.readAsDataURL(imageInput.files[0]);
+}
+
+function renderProducts(){
+    const container = document.getElementById("productList");
+    container.innerHTML = "";
+
+    products.forEach(product=>{
+        container.innerHTML += `
+            <div class="product-card">
+                <img src="${product.image}">
+                <h4>${product.name}</h4>
+                <p>₹ ${product.price}</p>
+                <div class="card-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn" onclick="deleteProduct(${product.id})">Delete</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function deleteProduct(id){
+    products = products.filter(p => p.id !== id);
+    renderProducts();
+}
+</script>
+
+</body>
+</html>
