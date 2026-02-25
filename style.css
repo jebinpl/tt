@@ -338,6 +338,59 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+.cart-content:hover{
+    transform: scale(1.1);
+}
+
+/* ===== LOGIN DROPDOWN ===== */
+.login-dropdown{
+    position:relative;
+    justify-self:end;
+}
+
+.login-btn{
+    background:white;
+    color:#c40000;
+    border:none;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.login-menu{
+    position:absolute;
+    top:40px;
+    right:0;
+    background:white;
+    border-radius:8px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    min-width:140px;
+
+    opacity:0;
+    transform:translateY(-10px);
+    pointer-events:none;
+    transition:0.3s ease;
+    z-index:4000;
+}
+
+.login-menu a{
+    display:block;
+    padding:10px;
+    text-decoration:none;
+    color:#333;
+}
+
+.login-menu a:hover{
+    background:#f2f2f2;
+}
+
+.login-dropdown:hover .login-menu{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+}
+
 
 
 
