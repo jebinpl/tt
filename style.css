@@ -261,24 +261,27 @@ body{
         width:45px;
     }
 
-    .search-bar{
-        display:flex;
-        align-items:center;
-        gap:10px;
-        padding:5px 12px;
-    }
+.search-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 12px;
+}
 
-    .search-wrapper{
-        margin-right:0;   /* 🔥 important fix */
-    }
+.search-wrapper{
+    flex: 1;
+    margin-right: 8px;   /* small space only */
+}
 
-    .menu-icon{
-        flex-shrink:0;
-    }
+.menu-icon{
+    width: 35px;
+    text-align: center;
+    flex-shrink: 0;
+}
 
-    .search-box{
-        height:28px;
-    }
+.search-box{
+    width: 100%;
+}
 
     .ad-section{
         font-size:18px;
@@ -333,6 +336,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
