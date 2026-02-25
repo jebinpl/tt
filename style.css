@@ -314,7 +314,7 @@ body{
     height: 70px;
     background: #fdcaca;
     box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
-    z-index: 2000;
+    z-index: 5000;   /* 🔥 higher than header & search */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -390,6 +390,7 @@ body{
     transform:translateY(0);
     pointer-events:auto;
 }
+
 
 
 
