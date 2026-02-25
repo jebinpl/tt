@@ -41,10 +41,7 @@ body{
     grid-template-columns: auto 1fr auto;
     align-items:center;
 }
-.header-inner::after{
-    content:"";
-    width:75px; /* same width as logo */
-}
+
 .logo img{
     height:75px;
     width:75px;
@@ -265,10 +262,6 @@ body{
         font-size:12px;
     }
 
-    .header-inner::after{
-        width:45px;
-    }
-
 .search-bar{
     display: flex;
     align-items: center;
@@ -345,6 +338,7 @@ body{
 .cart-content:hover{
     transform: scale(1.1);
 }
+
 
 
 
