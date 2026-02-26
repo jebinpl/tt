@@ -31,6 +31,7 @@ window.addEventListener("click", function(e) {
 });
 /*-------------------------------------------------------------------------------------------------*/
 /* ================= CUSTOMER MODAL ================= */
+
 const customerLink = document.getElementById("customerLink");
 const customerModal = document.getElementById("customerModal");
 const closeCustomer = document.getElementById("closeCustomer");
@@ -38,25 +39,65 @@ const getOtpBtn = document.getElementById("getOtpBtn");
 const phoneSection = document.getElementById("phoneSection");
 const otpSection = document.getElementById("otpSection");
 
-customerLink.addEventListener("click", function(e) {
+/* Open Customer Modal */
+customerLink.addEventListener("click", function (e) {
     e.preventDefault();
     customerModal.style.display = "block";
-    dropdown.style.display = "none";
 });
 
-closeCustomer.addEventListener("click", function() {
+/* Close Customer Modal */
+closeCustomer.addEventListener("click", function () {
     customerModal.style.display = "none";
 
-    // Reset back to phone section when closing
+    // Reset to phone section when closing
     phoneSection.style.display = "block";
     otpSection.style.display = "none";
 });
 
-getOtpBtn.addEventListener("click", function() {
+/* Show OTP Section */
+getOtpBtn.addEventListener("click", function () {
     phoneSection.style.display = "none";
     otpSection.style.display = "block";
+
+    // Focus first OTP box automatically
+    document.querySelector(".otp-boxes input").focus();
 });
 
+/* Close when clicking outside modal */
+window.addEventListener("click", function (e) {
+    if (e.target === customerModal) {
+        customerModal.style.display = "none";
+
+        phoneSection.style.display = "block";
+        otpSection.style.display = "none";
+    }
+});
+
+/* ================= OTP AUTO MOVE ================= */
+
+const otpInputs = document.querySelectorAll(".otp-boxes input");
+
+otpInputs.forEach((input, index) => {
+
+    input.addEventListener("input", function () {
+
+        // Allow only numbers
+        this.value = this.value.replace(/[^0-9]/g, '');
+
+        // Move to next box
+        if (this.value.length === 1 && index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
+        }
+    });
+
+    // Move back on backspace
+    input.addEventListener("keydown", function (e) {
+        if (e.key === "Backspace" && this.value === "" && index > 0) {
+            otpInputs[index - 1].focus();
+        }
+    });
+
+});
 
 /* ================= CLOSE MODAL WHEN CLICK OUTSIDE ================= */
 
@@ -74,5 +115,6 @@ window.addEventListener("click", function(e) {
         otpSection.style.display = "none";
     }
 });
+
 
 
