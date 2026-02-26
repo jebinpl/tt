@@ -3,15 +3,25 @@
     padding: 0;
     box-sizing: border-box;
 }
+body {
+    padding-top: 120px;
+}
 
 /* Header */
 .top-container {
-    position: relative;        /* IMPORTANT */
-    background: #f01818;
+    position: fixed;     /* make header fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 120px;
+
+    background: #f01818; /* your header color */
+
     display: flex;
     align-items: center;
     padding: 0 30px;
+
+    z-index: 9999;       /* always on top */
 }
 
 /* Logo */
@@ -114,5 +124,6 @@
         font-size: 14px;
     }
 }
+
 
 
