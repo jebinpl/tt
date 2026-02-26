@@ -1,0 +1,72 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Page background */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+/* Main wrapper */
+.admin-wrapper {
+    text-align: center;
+    margin-top: 80px;
+}
+
+/* Logo */
+.admin-logo {
+    width: 110px;
+    margin-bottom: 15px;
+}
+
+/* Titles */
+.admin-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+}
+
+.admin-subtitle {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Login box */
+.login-box {
+    width: 320px;
+    margin: auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Inputs */
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Button */
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background: #f01818;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-box button:hover {
+    background: #c81414;
+}
