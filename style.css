@@ -6,11 +6,12 @@
 
 /* Header */
 .top-container {
+    position: relative;        /* IMPORTANT */
     background: #f01818;
     height: 120px;
     display: flex;
     align-items: center;
-    padding: 0 15px;
+    padding: 0 30px;
 }
 
 /* Logo */
@@ -19,8 +20,8 @@
 }
 
 .logo {
-    height: 70px;
-    width: 70px;
+    height: 75px;
+    width: 75px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -30,24 +31,25 @@
     flex: 1;
     text-align: center;
     color: white;
-    padding: 0 10px;
 }
 
 .title-area h1 {
-    font-size: 26px;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .title-area p {
-    font-size: 16px;
+    font-size: 18px;
 }
 
-/* Login */
+/* Login - Bottom Right */
 .login-area {
     position: absolute;
-    right: 25px;   /* distance from right edge */
-    bottom: 20px;  /* distance from bottom edge */
+    right: 30px;
+    bottom: 20px;
 }
 
+/* Button */
 .login-btn {
     padding: 8px 20px;
     border-radius: 25px;
@@ -79,16 +81,17 @@
     background: #f2f2f2;
 }
 
-/* 🔥 Mobile Adjustments (IMPORTANT) */
+/* Mobile adjustment */
 @media (max-width: 600px) {
 
     .top-container {
         height: 100px;
+        padding: 0 15px;
     }
 
     .logo {
-        height: 50px;
-        width: 50px;
+        height: 55px;
+        width: 55px;
     }
 
     .title-area h1 {
@@ -97,6 +100,11 @@
 
     .title-area p {
         font-size: 12px;
+    }
+
+    .login-area {
+        right: 15px;
+        bottom: 15px;
     }
 
     .login-btn {
