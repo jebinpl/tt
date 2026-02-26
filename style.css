@@ -1,4 +1,3 @@
-/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -6,79 +5,81 @@
 }
 
 /* Header */
-.top-rectangle {
+.top-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100px;
-    background: #c40000;
+    background: #e76f5a;
 
     display: flex;
     align-items: center;
-    justify-content: center;  /* keeps title centered */
 
     padding: 0 20px;
     z-index: 1000;
 }
 
-/* Logo left */
-.logo {
-    position: absolute;
-    left: 20px;
-    height: 60px;
+/* 3 Sections */
+.logo-area {
+    flex: 0 0 auto;
+    padding-right: 20px;
+    border-right: 2px solid rgba(0,0,0,0.2);
 }
 
-/* Title center */
-.title {
-    color: white;
-    font-size: 24px;
+.title-area {
+    flex: 1;
     text-align: center;
+    border-right: 2px solid rgba(0,0,0,0.2);
 }
 
-/* Login wrapper */
-.login-wrapper {
-    position: absolute;
-    right: 20px;
-    bottom: 10px;
+.login-area {
+    flex: 0 0 auto;
+    padding-left: 20px;
 }
 
-/* Login button */
+/* Logo */
+.logo {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Title */
+.title-area h1 {
+    color: white;
+    font-size: 22px;
+    white-space: nowrap;
+}
+
+/* Login Button */
 .login-btn {
-    padding: 8px 14px;
+    padding: 8px 20px;
+    border-radius: 20px;
     border: none;
-    background: white;
-    color: #c40000;
-    border-radius: 6px;
+    background: #f2f2f2;
     cursor: pointer;
 }
 
-/* Dropdown */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    bottom: 100%;   /* appear above button */
-    background: white;
-    min-width: 120px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    border-radius: 6px;
-    margin-bottom: 5px;
-}
-
-.dropdown-content a {
-    display: block;
-    padding: 10px;
-    color: #c40000;
-    text-decoration: none;
-}
-
-.dropdown-content a:hover {
-    background: #f2f2f2;
-}
-
-/* Page content spacing */
+/* Page spacing */
 .content {
     margin-top: 120px;
     padding: 20px;
+}
+
+/* Mobile adjustment */
+@media (max-width: 600px) {
+    .top-container {
+        height: 80px;
+    }
+
+    .title-area h1 {
+        font-size: 18px;
+    }
+
+    .logo {
+        height: 45px;
+        width: 45px;
+    }
 }
