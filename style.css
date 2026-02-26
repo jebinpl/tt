@@ -10,8 +10,7 @@
     height: 120px;
     display: flex;
     align-items: center;
-    padding: 0 30px;
-    position: relative;
+    padding: 0 15px;
 }
 
 /* Logo */
@@ -20,10 +19,9 @@
 }
 
 .logo {
-    height: 80px;
-    width: 80px;
+    height: 70px;
+    width: 70px;
     border-radius: 50%;
-    background: #ddd;
     object-fit: cover;
 }
 
@@ -32,28 +30,29 @@
     flex: 1;
     text-align: center;
     color: white;
+    padding: 0 10px;
 }
 
 .title-area h1 {
-    font-size: 32px;
-    font-weight: bold;
+    font-size: 26px;
 }
 
 .title-area p {
-    font-size: 18px;
+    font-size: 16px;
 }
 
-/* Login Section */
+/* Login */
 .login-area {
-    position: relative;
+    position: absolute;
+    right: 25px;   /* distance from right edge */
+    bottom: 20px;  /* distance from bottom edge */
 }
 
 .login-btn {
-    padding: 10px 25px;
+    padding: 8px 20px;
     border-radius: 25px;
     border: none;
     background: #e5e5e5;
-    font-size: 16px;
     cursor: pointer;
 }
 
@@ -64,10 +63,9 @@
     right: 0;
     top: 110%;
     background: white;
-    min-width: 130px;
+    min-width: 120px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    overflow: hidden;
 }
 
 .dropdown a {
@@ -81,16 +79,28 @@
     background: #f2f2f2;
 }
 
-/* Responsive */
+/* 🔥 Mobile Adjustments (IMPORTANT) */
 @media (max-width: 600px) {
+
     .top-container {
-        height: auto;
-        flex-direction: column;
-        padding: 15px;
-        text-align: center;
+        height: 100px;
     }
 
-    .login-area {
-        margin-top: 10px;
+    .logo {
+        height: 50px;
+        width: 50px;
+    }
+
+    .title-area h1 {
+        font-size: 18px;
+    }
+
+    .title-area p {
+        font-size: 12px;
+    }
+
+    .login-btn {
+        padding: 6px 14px;
+        font-size: 14px;
     }
 }
