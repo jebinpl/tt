@@ -30,7 +30,7 @@ window.addEventListener("click", function(e) {
     }
 });
 /*-------------------------------------------------------------------------------------------------*/
-// Customer Modal
+/* ================= CUSTOMER MODAL ================= */
 const customerLink = document.getElementById("customerLink");
 const customerModal = document.getElementById("customerModal");
 const closeCustomer = document.getElementById("closeCustomer");
@@ -41,10 +41,15 @@ const otpSection = document.getElementById("otpSection");
 customerLink.addEventListener("click", function(e) {
     e.preventDefault();
     customerModal.style.display = "block";
+    dropdown.style.display = "none";
 });
 
 closeCustomer.addEventListener("click", function() {
     customerModal.style.display = "none";
+
+    // Reset back to phone section when closing
+    phoneSection.style.display = "block";
+    otpSection.style.display = "none";
 });
 
 getOtpBtn.addEventListener("click", function() {
@@ -52,9 +57,21 @@ getOtpBtn.addEventListener("click", function() {
     otpSection.style.display = "block";
 });
 
+
+/* ================= CLOSE MODAL WHEN CLICK OUTSIDE ================= */
+
 window.addEventListener("click", function(e) {
+
+    // Close Admin Modal
+    if (e.target === adminModal) {
+        adminModal.style.display = "none";
+    }
+
+    // Close Customer Modal
     if (e.target === customerModal) {
         customerModal.style.display = "none";
+        phoneSection.style.display = "block";
+        otpSection.style.display = "none";
     }
 });
 
