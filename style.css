@@ -1,10 +1,3 @@
-/* Remove default spacing */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-/*-------------------Module 1--------------------------------*/
 /* Reset default spacing */
 * {
     margin: 0;
@@ -12,46 +5,51 @@
     box-sizing: border-box;
 }
 
-/* Top fixed header */
+/* Fixed header */
 .top-rectangle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 3 columns */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100px;
+    padding: 0 20px;
     background: #c40000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* left, center, right */
-    padding: 0 20px; /* spacing inside the header */
     z-index: 1000;
 }
 
-/* Left section: logo */
-.left .logo {
+/* Column 1: Logo */
+.logo-column {
+    flex: 0 0 auto; /* size based on content */
+}
+
+.logo-column .logo {
     height: 60px;
 }
 
-/* Center section: title */
-.center {
-    flex: 1;              /* takes remaining space */
-    text-align: center;   /* center title text */
+/* Column 2: Title */
+.title-column {
+    flex: 1;            /* take remaining space */
+    text-align: center;
 }
 
-.title {
+.title-column .title {
     color: white;
     font-size: 22px;
 }
 
-/* Right section: login button container */
-.right {
-    position: absolute;  /* float inside header */
-    right: 20px;         /* distance from right edge */
-    bottom: 10px;        /* distance from bottom of header */
+/* Column 3: Login button */
+.login-column {
+    flex: 0 0 auto;     /* size based on content */
+    position: relative; /* for dropdown positioning */
 }
 
-/* Login button */
-.login-btn {
+.login-column .login-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
     padding: 8px 14px;
     border: none;
     background: white;
@@ -60,22 +58,21 @@
     cursor: pointer;
 }
 
-/* Dropdown menu (hidden by default) */
+/* Dropdown menu */
 .dropdown-content {
     display: none;
-    position: absolute; /* relative to .right */
-    right: 0;           /* align right edge */
-    bottom: 100%;       /* place above the button */
+    position: absolute;
+    right: 0;
+    bottom: 100%;       /* show above the button */
     background-color: white;
     min-width: 120px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     border-radius: 6px;
     overflow: hidden;
-    margin-bottom: 5px; /* small spacing above button */
-    z-index: 1001;      /* above header */
+    margin-bottom: 5px; /* gap between button and dropdown */
+    z-index: 1001;
 }
 
-/* Dropdown links */
 .dropdown-content a {
     display: block;
     padding: 10px;
@@ -86,10 +83,3 @@
 .dropdown-content a:hover {
     background-color: #f2f2f2;
 }
-}
-/*-----------------------------Module 1----------------------------*/
-
-
-
-
-
