@@ -6,7 +6,10 @@
 body {
     padding-top: 120px;
 }
-
+#tagline {
+    color: #222;
+    font-weight: 600;
+}
 /* Header */
 .top-container {
     position: fixed;     /* make header fixed */
@@ -124,6 +127,7 @@ body {
         font-size: 14px;
     }
 }
+
 
 
 
