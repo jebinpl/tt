@@ -7,7 +7,7 @@ body {
     padding-top: 120px;
 }
 #tagline {
-    color: #fff;
+    color: #fdfdfd;
     font-weight: 600;
 }
 /* Header */
@@ -127,6 +127,7 @@ body {
         font-size: 14px;
     }
 }
+
 
 
 
