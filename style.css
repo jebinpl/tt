@@ -18,22 +18,25 @@
     padding: 0 20px;           /* padding on both sides */
     z-index: 1000; 
 }
-.logo{
-    height:60px;   /* adjust size */
+.left .logo {
+    height: 60px;
+}
+.center {
+    flex: 1;              /* takes remaining space */
+    text-align: center;   /* centers the title text */
 }
 .title {
-    position: absolute;        /* float above flex */
-    left: 50%;
-    transform: translateX(-50%);
     color: white;
     font-size: 22px;
+}
+.right {
+    position: relative;  /* dropdown absolute inside */
 }
 .login-dropdown {
     margin-left: auto; /* pushes to right */
     position: relative; /* dropdown absolute inside */
 }
 .login-btn {
-    margin-left: auto;         /* pushes it to right */
     padding: 8px 14px;
     border: none;
     background: white;
@@ -61,5 +64,6 @@
     background-color: #f2f2f2;
 }
 /*-----------------------------Module 1----------------------------*/
+
 
 
