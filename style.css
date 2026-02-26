@@ -11,11 +11,12 @@
     height:100px;       /* Rectangle height */
     background:#c40000; /* Red color */
     display:flex;
-    justify-content:flex-end;
+    justify-content:flex-start;
     align-items:center;
     padding-right:20px;
 }
 .logo{
     height:60px;   /* adjust size */
 }
+
 
