@@ -195,7 +195,6 @@ body {
     z-index: 999;
 
     /* Perfect Centering */
-    display: flex;
     align-items: center;           /* vertical center */
     justify-content: center;       /* horizontal center */
 }
@@ -281,6 +280,7 @@ body {
 .admin-btn:hover {
     background-color: #c0392b;
 }
+
 
 
 
