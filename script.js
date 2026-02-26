@@ -42,7 +42,7 @@ const otpSection = document.getElementById("otpSection");
 /* Open Customer Modal */
 customerLink.addEventListener("click", function (e) {
     e.preventDefault();
-    customerModal.style.display = "block";
+    customerModal.style.display = "flex";
 });
 
 /* Close Customer Modal */
@@ -115,6 +115,7 @@ window.addEventListener("click", function(e) {
         otpSection.style.display = "none";
     }
 });
+
 
 
 
