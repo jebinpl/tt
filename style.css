@@ -5,37 +5,50 @@
     box-sizing:border-box;
 }
 /*-------------------Module 1--------------------------------*/
-/* Top Rectangle */
-.top-rectangle{
-    position: fixed;           /* stays on top */
-    top: 0;                    /* pinned to top of screen */
+/* Reset default spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Top fixed header */
+.top-rectangle {
+    position: fixed;
+    top: 0;
     left: 0;
-    width: 100%;               /* full width */
+    width: 100%;
     height: 100px;
     background: #c40000;
     display: flex;
-    align-items: center;       /* vertical centering */
-    padding: 0 20px;           /* padding on both sides */
-    z-index: 1000; 
+    align-items: center;
+    justify-content: space-between; /* left, center, right */
+    padding: 0 20px; /* spacing inside the header */
+    z-index: 1000;
 }
+
+/* Left section: logo */
 .left .logo {
     height: 60px;
 }
+
+/* Center section: title */
 .center {
     flex: 1;              /* takes remaining space */
-    text-align: center;   /* centers the title text */
+    text-align: center;   /* center title text */
 }
+
 .title {
     color: white;
     font-size: 22px;
 }
+
+/* Right section: login button container */
 .right {
-    position: relative;  /* dropdown absolute inside */
+    position: relative;   /* dropdown absolute inside */
 }
-.login-dropdown {
-    margin-left: auto; /* pushes to right */
-    position: relative; /* dropdown absolute inside */
-}
+
+/* Login button */
 .login-btn {
     padding: 8px 14px;
     border: none;
@@ -44,26 +57,35 @@
     border-radius: 6px;
     cursor: pointer;
 }
+
+/* Dropdown menu (hidden by default) */
 .dropdown-content {
-    display: none; /* hidden by default */
-    position: absolute;
-    right: 0;
+    display: none;
+    position: absolute; /* relative to .right */
+    right: 0;           /* align right edge */
     background-color: white;
     min-width: 120px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     border-radius: 6px;
     overflow: hidden;
+    margin-top: 5px;    /* small spacing below button */
+    z-index: 1001;      /* above header */
 }
+
+/* Dropdown links */
 .dropdown-content a {
     display: block;
     padding: 10px;
     color: #c40000;
     text-decoration: none;
 }
+
 .dropdown-content a:hover {
     background-color: #f2f2f2;
 }
+}
 /*-----------------------------Module 1----------------------------*/
+
 
 
 
