@@ -29,4 +29,33 @@ window.addEventListener("click", function(e) {
         adminModal.style.display = "none";
     }
 });
+/*-------------------------------------------------------------------------------------------------*/
+// Customer Modal
+const customerLink = document.getElementById("customerLink");
+const customerModal = document.getElementById("customerModal");
+const closeCustomer = document.getElementById("closeCustomer");
+const getOtpBtn = document.getElementById("getOtpBtn");
+const phoneSection = document.getElementById("phoneSection");
+const otpSection = document.getElementById("otpSection");
+
+customerLink.addEventListener("click", function(e) {
+    e.preventDefault();
+    customerModal.style.display = "block";
+});
+
+closeCustomer.addEventListener("click", function() {
+    customerModal.style.display = "none";
+});
+
+getOtpBtn.addEventListener("click", function() {
+    phoneSection.style.display = "none";
+    otpSection.style.display = "block";
+});
+
+window.addEventListener("click", function(e) {
+    if (e.target === customerModal) {
+        customerModal.style.display = "none";
+    }
+});
+
 
