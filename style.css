@@ -45,7 +45,9 @@
 
 /* Right section: login button container */
 .right {
-    position: relative;   /* dropdown absolute inside */
+    position: absolute;  /* float inside header */
+    right: 20px;         /* distance from right edge */
+    bottom: 10px;        /* distance from bottom of header */
 }
 
 /* Login button */
@@ -63,12 +65,13 @@
     display: none;
     position: absolute; /* relative to .right */
     right: 0;           /* align right edge */
+    bottom: 100%;       /* place above the button */
     background-color: white;
     min-width: 120px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     border-radius: 6px;
     overflow: hidden;
-    margin-top: 5px;    /* small spacing below button */
+    margin-bottom: 5px; /* small spacing above button */
     z-index: 1001;      /* above header */
 }
 
@@ -85,6 +88,7 @@
 }
 }
 /*-----------------------------Module 1----------------------------*/
+
 
 
 
