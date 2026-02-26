@@ -1,14 +1,12 @@
-
 const loginBtn = document.querySelector('.login-btn');
-const dropdown = document.querySelector('.dropdown-content');
+const dropdown = document.querySelector('.dropdown');
 
-loginBtn.addEventListener('click', () => {
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+loginBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    dropdown.style.display =
+        dropdown.style.display === 'block' ? 'none' : 'block';
 });
 
-// Optional: close dropdown if click outside
-window.addEventListener('click', (e) => {
-    if (!e.target.matches('.login-btn')) {
-        dropdown.style.display = 'none';
-    }
+window.addEventListener('click', function () {
+    dropdown.style.display = 'none';
 });
