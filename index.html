@@ -27,13 +27,13 @@
     <div class="login-area">
         <button class="login-btn">Login</button>
         <div class="dropdown">
-            <a href="#">Customer</a>
+            <a href="#" id="customerLink">Customer</a>
             <a href="#" id="adminLink">Admin</a>
         </div>
     </div>
 
 </div>
-<!---------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------->
 <!-- Admin Modal -->
 <div class="admin-modal" id="adminModal">
 
@@ -48,11 +48,49 @@
         <button>Login</button>
 
     </div>
+    
+</div>
+<!----------------------------------------------------------------------------------------------->
+    <!-- Customer Login Modal -->
+<div class="customer-modal" id="customerModal">
+
+    <div class="customer-modal-content">
+
+        <span class="close-btn" id="closeCustomer">&times;</span>
+
+        <!-- Phone Section -->
+        <div id="phoneSection">
+            <h2>Customer Login</h2>
+
+            <div class="phone-input">
+                <span>+91</span>
+                <input type="text" id="phoneNumber" placeholder="Enter mobile number">
+            </div>
+
+            <button id="getOtpBtn">Get OTP</button>
+        </div>
+
+        <!-- OTP Section -->
+        <div id="otpSection" style="display:none;">
+            <h2>Enter OTP</h2>
+
+            <div class="otp-boxes">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+            </div>
+
+            <button>Verify</button>
+        </div>
+
+    </div>
 
 </div>
 <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
