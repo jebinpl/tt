@@ -6,80 +6,91 @@
 
 /* Header */
 .top-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: #e76f5a;
-
+    background: #f01818;
+    height: 120px;
     display: flex;
     align-items: center;
-
-    padding: 0 20px;
-    z-index: 1000;
-}
-
-/* 3 Sections */
-.logo-area {
-    flex: 0 0 auto;
-    padding-right: 20px;
-    border-right: 2px solid rgba(0,0,0,0.2);
-}
-
-.title-area {
-    flex: 1;
-    text-align: center;
-    border-right: 2px solid rgba(0,0,0,0.2);
-}
-
-.login-area {
-    flex: 0 0 auto;
-    padding-left: 20px;
+    padding: 0 30px;
+    position: relative;
 }
 
 /* Logo */
+.logo-area {
+    flex: 0 0 auto;
+}
+
 .logo {
-    height: 60px;
-    width: 60px;
+    height: 80px;
+    width: 80px;
     border-radius: 50%;
+    background: #ddd;
     object-fit: cover;
 }
 
 /* Title */
-.title-area h1 {
+.title-area {
+    flex: 1;
+    text-align: center;
     color: white;
-    font-size: 22px;
-    white-space: nowrap;
 }
 
-/* Login Button */
+.title-area h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.title-area p {
+    font-size: 18px;
+}
+
+/* Login Section */
+.login-area {
+    position: relative;
+}
+
 .login-btn {
-    padding: 8px 20px;
-    border-radius: 20px;
+    padding: 10px 25px;
+    border-radius: 25px;
     border: none;
-    background: #f2f2f2;
+    background: #e5e5e5;
+    font-size: 16px;
     cursor: pointer;
 }
 
-/* Page spacing */
-.content {
-    margin-top: 120px;
-    padding: 20px;
+/* Dropdown */
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background: white;
+    min-width: 130px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    overflow: hidden;
 }
 
-/* Mobile adjustment */
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown a:hover {
+    background: #f2f2f2;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
     .top-container {
-        height: 80px;
+        height: auto;
+        flex-direction: column;
+        padding: 15px;
+        text-align: center;
     }
 
-    .title-area h1 {
-        font-size: 18px;
-    }
-
-    .logo {
-        height: 45px;
-        width: 45px;
+    .login-area {
+        margin-top: 10px;
     }
 }
