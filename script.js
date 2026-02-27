@@ -115,12 +115,16 @@ window.addEventListener("click", function(e) {
         otpSection.style.display = "none";
     }
 });
-/* ================= CART MODAL ================= */
+/* ================= CART SYSTEM ================= */
 
 const cartLink = document.getElementById("cartLink");
 const cartModal = document.getElementById("cartModal");
 const closeCart = document.getElementById("closeCart");
 const cartCount = document.getElementById("cartCount");
+const cartItemsContainer = document.getElementById("cartItems");
+const cartTotal = document.getElementById("cartTotal");
+
+let cart = [];
 
 /* Open Cart */
 cartLink.addEventListener("click", function(e){
@@ -133,12 +137,54 @@ closeCart.addEventListener("click", function(){
     cartModal.style.display = "none";
 });
 
-/* Close when clicking outside */
-window.addEventListener("click", function(e){
-    if (e.target === cartModal) {
-        cartModal.style.display = "none";
+/* Add To Cart */
+function addToCart(name, price){
+    cart.push({ name, price });
+    updateCart();
+}
+
+/* Update Cart UI */
+function updateCart(){
+
+    cartItemsContainer.innerHTML = "";
+
+    if(cart.length === 0){
+        cartItemsContainer.innerHTML = "<p class='empty-cart'>Your cart is empty</p>";
+        cartCount.textContent = 0;
+        cartTotal.textContent = 0;
+        return;
     }
-});
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+
+        total += item.price;
+
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("cart-item");
+
+        itemDiv.innerHTML = `
+            <div>
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">₹${item.price}</div>
+            </div>
+            <button class="remove-btn" onclick="removeItem(${index})">X</button>
+        `;
+
+        cartItemsContainer.appendChild(itemDiv);
+    });
+
+    cartCount.textContent = cart.length;
+    cartTotal.textContent = total;
+}
+
+/* Remove Item */
+function removeItem(index){
+    cart.splice(index,1);
+    updateCart();
+}
+
 
 
 
