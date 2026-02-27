@@ -92,7 +92,7 @@
 
   </div>
 </div>
-    <!-- CART MODAL -->
+<!-- ================= CART MODAL ================= -->
 <div id="cartModal" class="modal">
   <div class="modal-content">
 
@@ -101,7 +101,12 @@
     <h2>Your Cart</h2>
 
     <div id="cartItems">
-        <p>No items added yet.</p>
+      <p class="empty-cart">Your cart is empty</p>
+    </div>
+
+    <div class="cart-footer">
+      <h3>Total: ₹<span id="cartTotal">0</span></h3>
+      <button class="admin-btn">Proceed to Checkout</button>
     </div>
 
   </div>
@@ -109,6 +114,7 @@
 <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
