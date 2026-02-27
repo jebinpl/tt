@@ -158,7 +158,12 @@ body {
 
 /* Mobile adjustment */
 @media (max-width: 600px) {
+    .modal {
+        align-items: flex-start;   /* Move modal up */
+        padding-top: 80px;         /* Push slightly down */
+    }
 
+}
     .top-container {
         height: 100px;
         padding: 0 15px;
@@ -176,6 +181,7 @@ body {
     .title-area p {
         font-size: 12px;
     }
+    
 
     .login-area {
         right: 15px;
@@ -252,27 +258,34 @@ body {
 
 /* Background Overlay */
 .modal {
-    display: none;                 /* hidden by default */
+    display: none;
     position: fixed;
-    inset: 0;                      /* top, right, bottom, left = 0 */
+    inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
 
-    /* Perfect Centering */
-    align-items: center;           /* vertical center */
-    justify-content: center;       /* horizontal center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow-y: auto;          /* IMPORTANT */
+    padding: 20px;             /* Space for small screens */
 }
 
 /* Modal Box */
 .modal-content {
     background: #ffffff;
-    width: 90%;                    /* responsive for mobile */
-    max-width: 350px;              /* desktop size */
+    width: 100%;
+    max-width: 350px;
     padding: 25px;
     border-radius: 15px;
     text-align: center;
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+    margin: auto;              /* helps with keyboard */
+    max-height: 90vh;     /* prevents keyboard cut */
+    overflow-y: auto;     /* enables scrolling */
 }
 
 /* Close Button */
@@ -385,6 +398,7 @@ body {
     text-align: center;
     color: #777;
 }
+
 
 
 
