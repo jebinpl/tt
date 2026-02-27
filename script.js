@@ -187,22 +187,42 @@ function removeItem(index){
 /*----------------------------------------------------------------*/
 function goHome() {
 
-    // Scroll to top smoothly
+    // Scroll to top
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
 
+    // Show red message
     const message = document.getElementById("welcomeMessage");
-
-    // Show message
     message.classList.add("show");
 
-    // Hide after 2 seconds
     setTimeout(function() {
         message.classList.remove("show");
     }, 2000);
+
+    // 🎙 Voice Welcome
+    if ('speechSynthesis' in window) {
+        const speech = new SpeechSynthesisUtterance(
+            "Welcome to Thomas Traders Online Shopping Portal."
+        );
+
+        speech.lang = "en-IN";     // Indian English
+        speech.rate = 1;           // Speed (1 = normal)
+        speech.pitch = 1;          // Voice tone
+
+        const voices = window.speechSynthesis.getVoices();
+        speech.voice = voices.find(v => v.lang === "en-IN") || voices[0];
+
+        window.speechSynthesis.cancel(); // stop previous if clicking repeatedly
+        window.speechSynthesis.speak(speech);
+    }
 }
+
+window.speechSynthesis.onvoiceschanged = function () {
+    window.speechSynthesis.getVoices();
+};
+
 
 
 
