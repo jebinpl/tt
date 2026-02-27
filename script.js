@@ -184,6 +184,25 @@ function removeItem(index){
     cart.splice(index,1);
     updateCart();
 }
+/*----------------------------------------------------------------*/
+function goHome() {
+
+    // Scroll to top smoothly
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    const message = document.getElementById("welcomeMessage");
+
+    // Show message
+    message.classList.add("show");
+
+    // Hide after 2 seconds
+    setTimeout(function() {
+        message.classList.remove("show");
+    }, 2000);
+}
 
 
 
