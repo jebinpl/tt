@@ -222,6 +222,32 @@ function goHome() {
 window.speechSynthesis.onvoiceschanged = function () {
     window.speechSynthesis.getVoices();
 };
+/*----------------------------------------------------------------------------------------------------------------------------*/
+function toggleMenu() {
+    const menu = document.getElementById("menuDropdown");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+let scrollTimeout;
+let lastScrollY = window.scrollY;
+
+window.addEventListener("scroll", function () {
+
+    const searchBar = document.getElementById("searchBar");
+
+    // Hide while scrolling down
+    if (window.scrollY > lastScrollY) {
+        searchBar.style.transform = "translateY(-100%)";
+    }
+
+    lastScrollY = window.scrollY;
+
+    // Show again when scrolling stops
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function () {
+        searchBar.style.transform = "translateY(0)";
+    }, 200);
+});
+
 
 
 
