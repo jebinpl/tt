@@ -158,12 +158,12 @@ body {
 
 /* Mobile adjustment */
 @media (max-width: 600px) {
+
     .modal {
-        align-items: flex-start;   /* Move modal up */
-        padding-top: 80px;         /* Push slightly down */
+        align-items: flex-start;
+        padding-top: 80px;
     }
 
-}
     .top-container {
         height: 100px;
         padding: 0 15px;
@@ -181,22 +181,23 @@ body {
     .title-area p {
         font-size: 12px;
     }
-    
 
     .login-area {
         right: 15px;
         bottom: 15px;
     }
+
     .cart-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-}
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
 
     .login-btn {
         padding: 6px 14px;
         font-size: 14px;
     }
+
 }
 /*----------------------------------------------------------------------------------*/
 /* ============================= */
@@ -258,18 +259,18 @@ body {
 
 /* Background Overlay */
 .modal {
-    display: none;
+    display: none;          /* keep this */
+
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
 
-    display: flex;
     justify-content: center;
     align-items: center;
 
-    overflow-y: auto;          /* IMPORTANT */
-    padding: 20px;             /* Space for small screens */
+    overflow-y: auto;
+    padding: 20px;
 }
 
 /* Modal Box */
@@ -398,6 +399,7 @@ body {
     text-align: center;
     color: #777;
 }
+
 
 
 
