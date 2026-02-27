@@ -6,6 +6,7 @@
 body {
     padding-top: 120px;
     padding-bottom: 80px;
+    padding-top: 180px; /* 120 + 60 */
 }
 #tagline {
     color: #fdfdfd;
@@ -156,50 +157,8 @@ body {
 .dropdown a:hover {
     background: #f2f2f2;
 }
+/*------------------------------------------------------------------------------------------------------------------------------------*/
 
-/* Mobile adjustment */
-@media (max-width: 600px) {
-
-    .modal {
-        align-items: flex-start;
-        padding-top: 80px;
-    }
-
-    .top-container {
-        height: 100px;
-        padding: 0 15px;
-    }
-
-    .logo {
-        height: 55px;
-        width: 55px;
-    }
-
-    .title-area h1 {
-        font-size: 18px;
-    }
-
-    .title-area p {
-        font-size: 12px;
-    }
-
-    .login-area {
-        right: 15px;
-        bottom: 15px;
-    }
-
-    .cart-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-    }
-
-    .login-btn {
-        padding: 6px 14px;
-        font-size: 14px;
-    }
-
-}
 /*----------------------------------------------------------------------------------*/
 /* ============================= */
 /* ADMIN MODAL */
@@ -255,7 +214,6 @@ body {
     font-size: 22px;
     cursor: pointer;
 }
-/*--------------------------------------------------------------------------------------------*/
 /* ================= CUSTOMER MODAL ================= */
 
 /* Background Overlay */
@@ -401,6 +359,69 @@ body {
     color: #777;
 }
 
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* ================= SEARCH BAR ================= */
+
+.search-bar-container {
+    position: fixed;
+    top: 120px; /* same as header height */
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 9998;
+    transition: transform 0.3s ease;
+}
+.search-input {
+    flex: 1;
+    height: 40px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    padding: 0 15px;
+    font-size: 14px;
+}
+.menu-wrapper {
+    position: relative;
+    margin-left: 10px;
+}
+
+.menu-btn {
+    height: 40px;
+    width: 45px;
+    border: none;
+    background: #f01818;
+    color: white;
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: white;
+    min-width: 150px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.menu-dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.menu-dropdown a:hover {
+    background: #f2f2f2;
+}
+
 /* ================= BOTTOM NAV ================= */
 
 .bottom-nav {
@@ -481,6 +502,50 @@ body {
 .home-btn:active {
     transform: scale(0.9);
     box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+/*--------------------------------------------------------------------------------------------------------*/
+/* Mobile adjustment */
+@media (max-width: 600px) {
+
+    .modal {
+        align-items: flex-start;
+        padding-top: 80px;
+    }
+
+    .top-container {
+        height: 100px;
+        padding: 0 15px;
+    }
+
+    .logo {
+        height: 55px;
+        width: 55px;
+    }
+
+    .title-area h1 {
+        font-size: 18px;
+    }
+
+    .title-area p {
+        font-size: 12px;
+    }
+
+    .login-area {
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .cart-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .login-btn {
+        padding: 6px 14px;
+        font-size: 14px;
+    }
+
 }
 
 
