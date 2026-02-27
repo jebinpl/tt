@@ -517,6 +517,21 @@ body {
         padding: 0 15px;
     }
 
+    /* Adjust header height */
+.top-container {
+    height: 100px;
+}
+
+/* Move search bar up */
+.search-bar-container {
+    top: 100px;  /* match mobile header height */
+}
+
+/* Adjust body padding */
+body {
+    padding-top: 160px; /* 100 header + 60 search */
+}
+
     .logo {
         height: 55px;
         width: 55px;
@@ -547,6 +562,7 @@ body {
     }
 
 }
+
 
 
 
