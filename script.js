@@ -115,6 +115,30 @@ window.addEventListener("click", function(e) {
         otpSection.style.display = "none";
     }
 });
+/* ================= CART MODAL ================= */
+
+const cartLink = document.getElementById("cartLink");
+const cartModal = document.getElementById("cartModal");
+const closeCart = document.getElementById("closeCart");
+const cartCount = document.getElementById("cartCount");
+
+/* Open Cart */
+cartLink.addEventListener("click", function(e){
+    e.preventDefault();
+    cartModal.style.display = "flex";
+});
+
+/* Close Cart */
+closeCart.addEventListener("click", function(){
+    cartModal.style.display = "none";
+});
+
+/* Close when clicking outside */
+window.addEventListener("click", function(e){
+    if (e.target === cartModal) {
+        cartModal.style.display = "none";
+    }
+});
 
 
 
