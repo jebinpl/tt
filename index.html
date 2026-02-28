@@ -1,179 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thomas Traders</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thomas Traders</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- ================= HEADER ================= -->
 <div class="top-container">
-
-    <!-- Logo -->
     <div class="logo-area">
-        <img src="logo.png" class="logo" alt="Logo">
+        <img src="logo.png" alt="Logo" class="logo">
     </div>
-
-    <!-- Title Section -->
     <div class="title-area">
-        <h1>Thomas Traders</h1>
-        <p>Punnathanam,</p>
-        <p>Malaicode, kk Dist</p>
-        <p id="tagline">+91 769 5000 500.</p>
+        <h1>THOMAS TRADERS</h1>
+        <p id="tagline">Best Products Everyday</p>
     </div>
-
-    <!-- Login Dropdown -->
     <div class="login-area">
-            <!-- Cart Link -->
-<!-- Cart Icon -->
-<div class="cart-wrapper" id="cartLink">
-    <div class="cart-icon">
-        🛒
-        <span class="cart-badge" id="cartCount">0</span>
-    </div>
-</div>
-        <button class="login-btn">Login</button>
-        <div class="dropdown">
-            <a href="#" id="customerLink">Customer</a>
-            <a href="#" id="adminLink">Admin</a>
+        <a href="#" class="cart-link">Cart</a>
+        <div class="cart-wrapper">
+            <div class="cart-icon" id="cartIcon">🛒
+                <span class="cart-badge" id="cartCount">0</span>
+            </div>
         </div>
+        <button class="login-btn" id="adminBtn">Admin</button>
     </div>
 </div>
-<!------------------------------------------------------------------------------------------------------>
-<!-- SEARCH BAR SECTION -->
-<div class="search-bar-container" id="searchBar">
-    
-    <input type="text" placeholder="Search products..." class="search-input">
 
+<!-- ================= SEARCH BAR ================= -->
+<div class="search-bar-container">
+    <input type="text" placeholder="Search..." class="search-input" id="searchInput">
     <div class="menu-wrapper">
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-
+        <button class="menu-btn" id="menuBtn">☰</button>
         <div class="menu-dropdown" id="menuDropdown">
-            <a href="#">Electricals</a>
-            <a href="#">Plumbing</a>
-            <a href="#">Constructions</a>
-            <a href="#">Paints</a>
-            <a href="#">Others</a>
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
         </div>
     </div>
-
-</div>        
-<!----------------------------------------------------------------------------------------------->
-<!-- Admin Panel Container -->
-<div id="adminPanel" style="display:none; text-align:center; margin: 20px 0;">
-    <button id="addProductBtn" class="admin-btn">Add Product</button>
-    <button id="customerOrdersBtn" class="admin-btn">Customer Orders</button>
-</div>
-<!-- Admin Modal -->
-<div class="admin-modal" id="adminModal">
-
-    <div class="admin-modal-content">
-
-        <!-- Close Button -->
-        <span class="close-btn" id="closeAdmin">&times;</span>
-
-        <h2>Admin Login</h2>
-
-        <!-- Added IDs for JS -->
-        <input type="text" id="adminUsername" placeholder="Username">
-        <input type="password" id="adminPassword" placeholder="Password">
-        <button id="adminLoginBtn">Login</button>
-
-    </div>
-    
-</div>
-<!----------------------------------------------------------------------------------------------->
-<!-- CUSTOMER LOGIN MODAL -->
-<div id="customerModal" class="modal">
-  <div class="modal-content">
-
-    <!-- Close Button -->
-    <span id="closeCustomer" class="close">&times;</span>
-
-    <h2>Customer Login</h2>
-
-    <!-- Phone Input Section -->
-    <div id="phoneSection">
-      <div class="phone-input">
-        <span class="country-code">+91</span>
-        <input type="tel" id="phoneNumber" placeholder="Enter phone number">
-      </div>
-
-      <button id="getOtpBtn" class="admin-btn">Get OTP</button>
-    </div>
-
-    <!-- OTP Section -->
-    <div id="otpSection" style="display:none;">
-      <div class="otp-boxes">
-        <input type="text" maxlength="1">
-        <input type="text" maxlength="1">
-        <input type="text" maxlength="1">
-        <input type="text" maxlength="1">
-      </div>
-
-      <button class="admin-btn">Verify OTP</button>
-    </div>
-
-  </div>
-</div>
-<!-- ================= CART MODAL ================= -->
-<div id="cartModal" class="modal">
-  <div class="modal-content">
-
-    <span id="closeCart" class="close">&times;</span>
-
-    <h2>Your Cart</h2>
-
-    <div id="cartItems">
-      <p class="empty-cart">Your cart is empty</p>
-    </div>
-
-    <div class="cart-footer">
-      <h3>Total: ₹<span id="cartTotal">0</span></h3>
-      <button class="admin-btn">Proceed to Checkout</button>
-    </div>
-
-  </div>
-</div>
-<script src="script.js"></script>
-<!-- Bottom Navigation -->
-<div id="welcomeMessage" class="welcome-message">
-    Welcome to Thomas Traders Online Shopping Portal.
 </div>
 
-<!-- Welcome Message -->
+<!-- ================= ADMIN PANEL BUTTONS ================= -->
+<div id="adminPanel">
+    <button class="admin-btn" id="viewOrdersBtn">View Orders</button>
+    <button class="admin-btn" id="manageProductsBtn">Manage Products</button>
+    <button class="admin-btn" id="settingsBtn">Settings</button>
+</div>
+
+<!-- ================= CUSTOMER MODAL ================= -->
+<div class="modal" id="customerModal">
+    <div class="modal-content">
+        <span class="close" id="closeCustomerModal">&times;</span>
+        <h2>Login / Sign Up</h2>
+        <div class="phone-input">
+            <span class="country-code">+91</span>
+            <input type="text" placeholder="Phone Number" id="customerPhone">
+        </div>
+        <button class="admin-btn" id="getOtpBtn">Get OTP</button>
+        <div class="otp-boxes" id="otpBoxes">
+            <input type="text" maxlength="1">
+            <input type="text" maxlength="1">
+            <input type="text" maxlength="1">
+            <input type="text" maxlength="1">
+        </div>
+        <button class="admin-btn" id="verifyOtpBtn">Verify OTP</button>
+    </div>
+</div>
+
+<!-- ================= WELCOME MESSAGE ================= -->
+<div class="welcome-message" id="welcomeMessage">Welcome back!</div>
+
+<!-- ================= HOME DROPUP ================= -->
+<div class="home-dropup" id="homeDropup">
+    <a href="#">Home</a>
+    <a href="#">Profile</a>
+    <a href="#">Settings</a>
+</div>
+
+<!-- ================= BOTTOM NAV ================= -->
 <div class="bottom-nav">
-
-    <!-- Dropup Menu -->
-    <div class="home-dropup" id="homeDropup">
-        <a href="#">My Profile</a>
-        <a href="#">My Orders</a>
-    </div>
-    <button class="home-btn" onclick="goHome()">🏠</button>
-
+    <button class="home-btn" id="homeBtn">🏠</button>
 </div>
+
+<script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
