@@ -9,7 +9,7 @@ import {
     deleteDoc, 
     doc 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-/*------------------------------------------------------------------------------------------------*/
+/*------------------------------------------Login Button------------------------------------------------------*/
 const loginBtn = document.querySelector('.login-btn');
 const dropdown = document.querySelector('.dropdown');
 
@@ -22,7 +22,7 @@ loginBtn.addEventListener('click', function (e) {
 window.addEventListener('click', function () {
     dropdown.style.display = 'none';
 });
-/*-----------------------------------------------------------------------------*/
+/*-----------------------------------Admin ------------------------------------------*/
 const adminLink = document.getElementById("adminLink");
 const adminModal = document.getElementById("adminModal");
 const closeAdmin = document.getElementById("closeAdmin");
@@ -370,6 +370,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
