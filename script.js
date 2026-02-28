@@ -193,7 +193,7 @@ function goHome() {
         behavior: "smooth"
     });
 
-    // Show red message
+    // Show welcome message
     const message = document.getElementById("welcomeMessage");
     message.classList.add("show");
 
@@ -207,21 +207,30 @@ function goHome() {
             "Welcome to Thomas Traders Online Shopping Portal."
         );
 
-        speech.lang = "en-IN";     // Indian English
-        speech.rate = 1;           // Speed (1 = normal)
-        speech.pitch = 1;          // Voice tone
+        speech.lang = "en-IN";
+        speech.rate = 1;
+        speech.pitch = 1;
 
         const voices = window.speechSynthesis.getVoices();
         speech.voice = voices.find(v => v.lang === "en-IN") || voices[0];
 
-        window.speechSynthesis.cancel(); // stop previous if clicking repeatedly
+        window.speechSynthesis.cancel();
         window.speechSynthesis.speak(speech);
     }
-}
 
-window.speechSynthesis.onvoiceschanged = function () {
-    window.speechSynthesis.getVoices();
-};
+    // ✅ Always SHOW dropup (not toggle)
+    const dropup = document.getElementById("homeDropup");
+    dropup.classList.add("show");
+}
+document.addEventListener("click", function (e) {
+
+    const dropup = document.getElementById("homeDropup");
+    const homeBtn = document.querySelector(".home-btn");
+
+    if (!dropup.contains(e.target) && !homeBtn.contains(e.target)) {
+        dropup.classList.remove("show");
+    }
+});
 /*----------------------------------------------------------------------------------------------------------------------------*/
 function toggleMenu() {
     const menu = document.getElementById("menuDropdown");
@@ -247,6 +256,7 @@ window.addEventListener("scroll", function () {
         searchBar.style.transform = "translateY(0)";
     }, 200);
 });
+
 
 
 
