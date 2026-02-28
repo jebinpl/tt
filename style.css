@@ -502,6 +502,40 @@ body {
     transform: scale(0.9);
     box-shadow: 0 3px 8px rgba(0,0,0,0.3);
 }
+/* ================= HOME DROPUP ================= */
+
+.home-dropup {
+    position: fixed;
+    bottom: 75px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    width: 170px;
+    display: none;
+    overflow: hidden;
+    z-index: 10000;
+    transition: 0.2s ease;
+}
+
+.home-dropup a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    font-weight: 500;
+}
+
+.home-dropup a:hover {
+    background: #f2f2f2;
+}
+
+.home-dropup.show {
+    display: block;
+    transform: translateX(-50%) scale(1);
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -567,6 +601,7 @@ body {
     }
 
 }
+
 
 
 
