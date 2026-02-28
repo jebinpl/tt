@@ -1,6 +1,10 @@
 // ================= FIREBASE IMPORTS =================
 
-import { db } from "./firebase.js";
+import { db, storage } from "./firebase.js";
+
+// ================= FIREBASE IMPORTS =================
+
+import { db, storage } from "./firebase.js";
 
 import { 
     collection, 
@@ -9,6 +13,12 @@ import {
     deleteDoc, 
     doc 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+import { 
+    ref, 
+    uploadBytes, 
+    getDownloadURL 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 const adminPanel = document.getElementById("adminPanel");
@@ -94,6 +104,8 @@ if (adminLoginBtn) {
 
 // ================= ADD PRODUCT =================
 
+// ================= ADD PRODUCT =================
+
 const addProductBtn = document.getElementById("addProductBtn");
 
 if (addProductBtn) {
@@ -104,21 +116,37 @@ if (addProductBtn) {
         const description = document.getElementById("productDescription").value;
         const price = document.getElementById("productPrice").value;
 
-        if(!category || !image || !description || !price){
+        if(!category || !file || !description || !price){
             alert("Fill all fields");
             return;
         }
 
         try {
 
+            // 🔹 Create image reference
+            const imageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
+
+            // 🔹 Upload image to Firebase Storage
+            await uploadBytes(imageRef, file);
+
+            // 🔹 Get image URL
+            const imageURL = await getDownloadURL(imageRef);
+
+            // 🔹 Save product to Firestore
             await addDoc(collection(db, "products"), {
                 category: category,
-                image: image,
+                image: imageURL,
                 description: description,
                 price: parseFloat(price)
             });
 
             alert("Product Added Successfully");
+
+            // Optional: Clear form
+            document.getElementById("productCategory").value = "";
+            document.getElementById("productImage").value = "";
+            document.getElementById("productDescription").value = "";
+            document.getElementById("productPrice").value = "";
 
         } catch (error) {
             alert(error.message);
@@ -129,6 +157,7 @@ if (addProductBtn) {
 const imageInput = document.getElementById("productImage");
 const previewImage = document.getElementById("previewImage");
 
+if(imageInput){
 imageInput.addEventListener("change", function() {
     const file = this.files[0];
 
@@ -136,7 +165,7 @@ imageInput.addEventListener("change", function() {
         previewImage.src = URL.createObjectURL(file);
         previewImage.style.display = "block";
     }
-});
+});}
 /*-------------------------------------------------------------------------------------------------*/
 /* ================= CUSTOMER MODAL ================= */
 
@@ -406,6 +435,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
