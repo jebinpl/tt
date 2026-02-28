@@ -158,7 +158,6 @@ body {
 }
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 
-/*----------------------------------------------------------------------------------*/
 /* ============================= */
 /* ADMIN MODAL */
 /* ============================= */
@@ -651,6 +650,42 @@ body {
     border-color: #f01818;
     box-shadow: 0 0 0 2px rgba(240, 24, 24, 0.2);
 }
+/* ===== CATEGORY CUSTOM DROPDOWN ===== */
+
+.category-dropdown {
+    width: 80%;
+    margin: 6px auto;
+    position: relative;
+}
+
+.category-selected {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+.category-options {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    margin-top: 5px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.category-options div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.category-options div:hover {
+    background: #f2f2f2;
+}
 /*------------------------------image preview close button-------------------*/
 .image-preview-wrapper {
     position: relative;
@@ -815,6 +850,7 @@ body {
     }
 
 }
+
 
 
 
