@@ -1,3 +1,21 @@
+// ================= FIREBASE IMPORTS =================
+
+import { auth, db } from "./firebase.js";
+
+import { 
+    signInWithEmailAndPassword 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import { 
+    collection, 
+    addDoc, 
+    onSnapshot, 
+    deleteDoc, 
+    doc 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+let isAdmin = false;
+/*------------------------------------------------------------------------------------------------*/
 const loginBtn = document.querySelector('.login-btn');
 const dropdown = document.querySelector('.dropdown');
 
@@ -28,6 +46,64 @@ window.addEventListener("click", function(e) {
     if (e.target === adminModal) {
         adminModal.style.display = "none";
     }
+});
+// ================= ADMIN LOGIN =================
+
+const adminLoginBtn = document.getElementById("adminLoginBtn");
+
+adminLoginBtn.addEventListener("click", async function(){
+
+    const email = document.getElementById("adminEmail").value;
+    const password = document.getElementById("adminPassword").value;
+
+    try {
+
+        await signInWithEmailAndPassword(auth, email, password);
+
+        isAdmin = true;
+
+        adminModal.style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+
+        alert("Admin Login Successful");
+
+    } catch (error) {
+        alert(error.message);
+    }
+
+});
+
+// ================= ADD PRODUCT =================
+
+const addProductBtn = document.getElementById("addProductBtn");
+
+addProductBtn.addEventListener("click", async function(){
+
+    const category = document.getElementById("productCategory").value;
+    const image = document.getElementById("productImage").value;
+    const description = document.getElementById("productDescription").value;
+    const price = document.getElementById("productPrice").value;
+
+    if(!category || !image || !description || !price){
+        alert("Fill all fields");
+        return;
+    }
+
+    try {
+
+        await addDoc(collection(db, "products"), {
+            category: category,
+            image: image,
+            description: description,
+            price: parseFloat(price)
+        });
+
+        alert("Product Added Successfully");
+
+    } catch (error) {
+        alert(error.message);
+    }
+
 });
 /*-------------------------------------------------------------------------------------------------*/
 /* ================= CUSTOMER MODAL ================= */
@@ -256,6 +332,41 @@ window.addEventListener("scroll", function () {
         searchBar.style.transform = "translateY(0)";
     }, 200);
 });
+// ================= LOAD PRODUCTS =================
+
+const productsContainer = document.getElementById("productsContainer");
+
+onSnapshot(collection(db, "products"), (snapshot) => {
+
+    productsContainer.innerHTML = "";
+
+    snapshot.forEach((docSnap) => {
+
+        const p = docSnap.data();
+        const id = docSnap.id;
+
+        const div = document.createElement("div");
+        div.classList.add("product-card");
+
+        div.innerHTML = `
+            <img src="${p.image}">
+            <h4>${p.description}</h4>
+            <p>₹${p.price}</p>
+            <small>${p.category}</small>
+            ${isAdmin ? `<button onclick="deleteProduct('${id}')">Delete</button>` : ""}
+            <button onclick="addToCart('${p.description}', ${p.price})">Buy Now</button>
+        `;
+
+        productsContainer.appendChild(div);
+    });
+
+});
+// ================= DELETE PRODUCT =================
+
+async function deleteProduct(id){
+    await deleteDoc(doc(db, "products", id));
+}
+
 
 
 
