@@ -11,23 +11,56 @@ window.addEventListener('click', function () {
     dropdown.style.display = 'none';
 });
 /*-----------------------------------------------------------------------------*/
+/* ================= ADMIN LOGIN BELOW SEARCH BAR ================= */
+
 const adminLink = document.getElementById("adminLink");
-const adminModal = document.getElementById("adminModal");
-const closeAdmin = document.getElementById("closeAdmin");
+const adminUsername = document.getElementById("adminUsername"); // make sure your modal inputs exist
+const adminPassword = document.getElementById("adminPassword");
+const adminLoginBtn = document.getElementById("adminLoginBtn");
 
-adminLink.addEventListener("click", function(e) {
+const adminPanel = document.getElementById("adminPanel");
+const addProductBtn = document.getElementById("addProductBtn");
+const customerOrdersBtn = document.getElementById("customerOrdersBtn");
+
+// Open Admin Modal (if you still want modal for login)
+adminLink.addEventListener("click", function(e){
     e.preventDefault();
-    adminModal.style.display = "block";
+    document.getElementById("adminModal").style.display = "block";
 });
 
-closeAdmin.addEventListener("click", function() {
-    adminModal.style.display = "none";
-});
+// Admin Login with Firebase
+adminLoginBtn.addEventListener("click", function() {
+    const email = adminUsername.value.trim();
+    const password = adminPassword.value;
 
-window.addEventListener("click", function(e) {
-    if (e.target === adminModal) {
-        adminModal.style.display = "none";
+    if (!email || !password) {
+        alert("Please enter username and password");
+        return;
     }
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            console.log("Admin logged in:", userCredential.user);
+
+            // ✅ Hide admin modal
+            document.getElementById("adminModal").style.display = "none";
+
+            // ✅ Show admin panel buttons below search bar
+            adminPanel.style.display = "block";
+        })
+        .catch((error) => {
+            console.error("Login error:", error.message);
+            alert("Login failed: " + error.message);
+        });
+});
+
+// Button Actions
+addProductBtn.addEventListener("click", function() {
+    alert("Redirect to Add Product page or open modal");
+});
+
+customerOrdersBtn.addEventListener("click", function() {
+    alert("Redirect to Customer Orders page or open modal");
 });
 /*-------------------------------------------------------------------------------------------------*/
 /* ================= CUSTOMER MODAL ================= */
@@ -256,6 +289,7 @@ window.addEventListener("scroll", function () {
         searchBar.style.transform = "translateY(0)";
     }, 200);
 });
+
 
 
 
