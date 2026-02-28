@@ -1,300 +1,62 @@
-const loginBtn = document.querySelector('.login-btn');
-const dropdown = document.querySelector('.dropdown');
+// ================= ELEMENTS =================
+const adminBtn = document.getElementById('adminBtn');
+const adminPanel = document.getElementById('adminPanel');
+const menuBtn = document.getElementById('menuBtn');
+const menuDropdown = document.getElementById('menuDropdown');
+const homeBtn = document.getElementById('homeBtn');
+const homeDropup = document.getElementById('homeDropup');
+const welcomeMessage = document.getElementById('welcomeMessage');
+const customerModal = document.getElementById('customerModal');
+const closeCustomerModal = document.getElementById('closeCustomerModal');
 
-loginBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    dropdown.style.display =
-        dropdown.style.display === 'block' ? 'none' : 'block';
+// ================= ADMIN PANEL =================
+adminBtn.addEventListener('click', () => {
+    adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
 });
 
-window.addEventListener('click', function () {
-    dropdown.style.display = 'none';
-});
-/*-----------------------------------------------------------------------------*/
-/* ================= ADMIN LOGIN BELOW SEARCH BAR ================= */
-
-const adminLink = document.getElementById("adminLink");
-const adminUsername = document.getElementById("adminUsername"); // make sure your modal inputs exist
-const adminPassword = document.getElementById("adminPassword");
-const adminLoginBtn = document.getElementById("adminLoginBtn");
-
-const adminPanel = document.getElementById("adminPanel");
-const addProductBtn = document.getElementById("addProductBtn");
-const customerOrdersBtn = document.getElementById("customerOrdersBtn");
-
-// Open Admin Modal (if you still want modal for login)
-adminLink.addEventListener("click", function(e){
-    e.preventDefault();
-    document.getElementById("adminModal").style.display = "block";
+// ================= MENU DROPDOWN =================
+menuBtn.addEventListener('click', () => {
+    menuDropdown.style.display = menuDropdown.style.display === 'block' ? 'none' : 'block';
 });
 
-// Admin Login with Firebase
-adminLoginBtn.addEventListener("click", function() {
-    const email = adminUsername.value.trim();
-    const password = adminPassword.value;
-
-    if (!email || !password) {
-        alert("Please enter username and password");
-        return;
+// Close menu if clicked outside
+document.addEventListener('click', (e) => {
+    if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+        menuDropdown.style.display = 'none';
     }
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            console.log("Admin logged in:", userCredential.user);
-
-            // ✅ Hide admin modal
-            document.getElementById("adminModal").style.display = "none";
-
-            // ✅ Show admin panel buttons below search bar
-            adminPanel.style.display = "block";
-        })
-        .catch((error) => {
-            console.error("Login error:", error.message);
-            alert("Login failed: " + error.message);
-        });
 });
 
-// Button Actions
-addProductBtn.addEventListener("click", function() {
-    alert("Redirect to Add Product page or open modal");
+// ================= HOME DROPUP =================
+homeBtn.addEventListener('click', () => {
+    homeDropup.classList.toggle('show');
 });
 
-customerOrdersBtn.addEventListener("click", function() {
-    alert("Redirect to Customer Orders page or open modal");
-});
-/*-------------------------------------------------------------------------------------------------*/
-/* ================= CUSTOMER MODAL ================= */
+// ================= WELCOME MESSAGE =================
+function showWelcome(msg) {
+    welcomeMessage.textContent = msg;
+    welcomeMessage.classList.add('show');
+    setTimeout(() => {
+        welcomeMessage.classList.remove('show');
+    }, 3000);
+}
 
-const customerLink = document.getElementById("customerLink");
-const customerModal = document.getElementById("customerModal");
-const closeCustomer = document.getElementById("closeCustomer");
-const getOtpBtn = document.getElementById("getOtpBtn");
-const phoneSection = document.getElementById("phoneSection");
-const otpSection = document.getElementById("otpSection");
-
-/* Open Customer Modal */
-customerLink.addEventListener("click", function (e) {
-    e.preventDefault();
-    customerModal.style.display = "flex";
+// Example: show welcome on page load
+window.addEventListener('load', () => {
+    showWelcome('Welcome back!');
 });
 
-/* Close Customer Modal */
-closeCustomer.addEventListener("click", function () {
-    customerModal.style.display = "none";
-
-    // Reset to phone section when closing
-    phoneSection.style.display = "block";
-    otpSection.style.display = "none";
+// ================= CUSTOMER MODAL =================
+adminBtn.addEventListener('dblclick', () => {
+    customerModal.style.display = 'flex';
 });
 
-/* Show OTP Section */
-getOtpBtn.addEventListener("click", function () {
-    phoneSection.style.display = "none";
-    otpSection.style.display = "block";
-
-    // Focus first OTP box automatically
-    document.querySelector(".otp-boxes input").focus();
+closeCustomerModal.addEventListener('click', () => {
+    customerModal.style.display = 'none';
 });
 
-/* Close when clicking outside modal */
-window.addEventListener("click", function (e) {
+// Close modal on outside click
+window.addEventListener('click', (e) => {
     if (e.target === customerModal) {
-        customerModal.style.display = "none";
-
-        phoneSection.style.display = "block";
-        otpSection.style.display = "none";
+        customerModal.style.display = 'none';
     }
 });
-
-/* ================= OTP AUTO MOVE ================= */
-
-const otpInputs = document.querySelectorAll(".otp-boxes input");
-
-otpInputs.forEach((input, index) => {
-
-    input.addEventListener("input", function () {
-
-        // Allow only numbers
-        this.value = this.value.replace(/[^0-9]/g, '');
-
-        // Move to next box
-        if (this.value.length === 1 && index < otpInputs.length - 1) {
-            otpInputs[index + 1].focus();
-        }
-    });
-
-    // Move back on backspace
-    input.addEventListener("keydown", function (e) {
-        if (e.key === "Backspace" && this.value === "" && index > 0) {
-            otpInputs[index - 1].focus();
-        }
-    });
-
-});
-
-/* ================= CLOSE MODAL WHEN CLICK OUTSIDE ================= */
-
-window.addEventListener("click", function(e) {
-
-    // Close Admin Modal
-    if (e.target === adminModal) {
-        adminModal.style.display = "none";
-    }
-
-    // Close Customer Modal
-    if (e.target === customerModal) {
-        customerModal.style.display = "none";
-        phoneSection.style.display = "block";
-        otpSection.style.display = "none";
-    }
-});
-/* ================= CART SYSTEM ================= */
-
-const cartLink = document.getElementById("cartLink");
-const cartModal = document.getElementById("cartModal");
-const closeCart = document.getElementById("closeCart");
-const cartCount = document.getElementById("cartCount");
-const cartItemsContainer = document.getElementById("cartItems");
-const cartTotal = document.getElementById("cartTotal");
-
-let cart = [];
-
-/* Open Cart */
-cartLink.addEventListener("click", function(e){
-    e.preventDefault();
-    cartModal.style.display = "flex";
-});
-
-/* Close Cart */
-closeCart.addEventListener("click", function(){
-    cartModal.style.display = "none";
-});
-
-/* Add To Cart */
-function addToCart(name, price){
-    cart.push({ name, price });
-    updateCart();
-}
-
-/* Update Cart UI */
-function updateCart(){
-
-    cartItemsContainer.innerHTML = "";
-
-    if(cart.length === 0){
-        cartItemsContainer.innerHTML = "<p class='empty-cart'>Your cart is empty</p>";
-        cartCount.textContent = 0;
-        cartTotal.textContent = 0;
-        return;
-    }
-
-    let total = 0;
-
-    cart.forEach((item, index) => {
-
-        total += item.price;
-
-        const itemDiv = document.createElement("div");
-        itemDiv.classList.add("cart-item");
-
-        itemDiv.innerHTML = `
-            <div>
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">₹${item.price}</div>
-            </div>
-            <button class="remove-btn" onclick="removeItem(${index})">X</button>
-        `;
-
-        cartItemsContainer.appendChild(itemDiv);
-    });
-
-    cartCount.textContent = cart.length;
-    cartTotal.textContent = total;
-}
-
-/* Remove Item */
-function removeItem(index){
-    cart.splice(index,1);
-    updateCart();
-}
-/*----------------------------------------------------------------*/
-function goHome() {
-
-    // Scroll to top
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-    // Show welcome message
-    const message = document.getElementById("welcomeMessage");
-    message.classList.add("show");
-
-    setTimeout(function() {
-        message.classList.remove("show");
-    }, 2000);
-
-    // 🎙 Voice Welcome
-    if ('speechSynthesis' in window) {
-        const speech = new SpeechSynthesisUtterance(
-            "Welcome to Thomas Traders Online Shopping Portal."
-        );
-
-        speech.lang = "en-IN";
-        speech.rate = 1;
-        speech.pitch = 1;
-
-        const voices = window.speechSynthesis.getVoices();
-        speech.voice = voices.find(v => v.lang === "en-IN") || voices[0];
-
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(speech);
-    }
-
-    // ✅ Always SHOW dropup (not toggle)
-    const dropup = document.getElementById("homeDropup");
-    dropup.classList.add("show");
-}
-document.addEventListener("click", function (e) {
-
-    const dropup = document.getElementById("homeDropup");
-    const homeBtn = document.querySelector(".home-btn");
-
-    if (!dropup.contains(e.target) && !homeBtn.contains(e.target)) {
-        dropup.classList.remove("show");
-    }
-});
-/*----------------------------------------------------------------------------------------------------------------------------*/
-function toggleMenu() {
-    const menu = document.getElementById("menuDropdown");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-let scrollTimeout;
-let lastScrollY = window.scrollY;
-
-window.addEventListener("scroll", function () {
-
-    const searchBar = document.getElementById("searchBar");
-
-    // Hide while scrolling down
-    if (window.scrollY > lastScrollY) {
-        searchBar.style.transform = "translateY(-100%)";
-    }
-
-    lastScrollY = window.scrollY;
-
-    // Show again when scrolling stops
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(function () {
-        searchBar.style.transform = "translateY(0)";
-    }, 200);
-});
-
-
-
-
-
-
-
-
-
