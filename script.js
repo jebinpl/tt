@@ -1,10 +1,6 @@
 // ================= FIREBASE IMPORTS =================
 
-import { auth, db } from "./firebase.js";
-
-import { 
-    signInWithEmailAndPassword 
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { db } from "./firebase.js";
 
 import { 
     collection, 
@@ -47,18 +43,19 @@ window.addEventListener("click", function(e) {
         adminModal.style.display = "none";
     }
 });
-// ================= ADMIN LOGIN =================
+
+// ================= LOCAL ADMIN LOGIN =================
+
+let isAdmin = false;
 
 const adminLoginBtn = document.getElementById("adminLoginBtn");
 
-adminLoginBtn.addEventListener("click", async function(){
+adminLoginBtn.addEventListener("click", function(){
 
     const email = document.getElementById("adminEmail").value;
     const password = document.getElementById("adminPassword").value;
 
-    try {
-
-        await signInWithEmailAndPassword(auth, email, password);
+    if(email === "admin@gmail.com" && password === "Admin@123"){
 
         isAdmin = true;
 
@@ -67,8 +64,10 @@ adminLoginBtn.addEventListener("click", async function(){
 
         alert("Admin Login Successful");
 
-    } catch (error) {
-        alert(error.message);
+        location.reload(); // refresh to show delete buttons
+
+    } else {
+        alert("Invalid Email or Password");
     }
 
 });
@@ -373,6 +372,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
