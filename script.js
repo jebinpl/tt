@@ -26,10 +26,21 @@ window.addEventListener('click', function () {
 const adminLink = document.getElementById("adminLink");
 const adminModal = document.getElementById("adminModal");
 const closeAdmin = document.getElementById("closeAdmin");
-
+// Change button text if already logged in
+if (isAdmin) {
+    adminLink.textContent = "Logout";
+}
 adminLink.addEventListener("click", function(e) {
     e.preventDefault();
-    adminModal.style.display = "block";
+
+    if (isAdmin) {
+        // Logout
+        localStorage.removeItem("isAdmin");
+        location.reload();
+    } else {
+        // Open login modal
+        adminModal.style.display = "block";
+    }
 });
 
 closeAdmin.addEventListener("click", function() {
@@ -44,7 +55,7 @@ window.addEventListener("click", function(e) {
 
 // ================= LOCAL ADMIN LOGIN =================
 
-let isAdmin = false;
+let isAdmin = localStorage.getItem("isAdmin") === "true";
 
 const adminLoginBtn = document.getElementById("adminLoginBtn");
 
@@ -55,14 +66,11 @@ adminLoginBtn.addEventListener("click", function(){
 
     if(email === "admin@gmail.com" && password === "Admin@123"){
 
-        isAdmin = true;
+localStorage.setItem("isAdmin", "true");
 
-        adminModal.style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
+adminModal.style.display = "none";
 
-        alert("Admin Login Successful");
-
-        location.reload(); // refresh to show delete buttons
+location.reload();
 
     } else {
         alert("Invalid Email or Password");
@@ -370,6 +378,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
