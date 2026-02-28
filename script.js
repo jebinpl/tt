@@ -11,6 +11,15 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 let isAdmin = localStorage.getItem("isAdmin") === "true";
+const adminPanel = document.getElementById("adminPanel");
+
+if (adminPanel) {
+    if (isAdmin) {
+        adminPanel.style.display = "block";
+    } else {
+        adminPanel.style.display = "none";
+    }
+}
 /*------------------------------------------Login Button------------------------------------------------------*/
 const loginBtn = document.querySelector('.login-btn');
 const dropdown = document.querySelector('.dropdown');
@@ -31,7 +40,7 @@ const adminLink = document.getElementById("adminLink");
 const adminModal = document.getElementById("adminModal");
 const closeAdmin = document.getElementById("closeAdmin");
 // Change button text if already logged in
-if (isAdmin) {
+if (adminLink && isAdmin) {
     adminLink.textContent = "Logout";
 }
 if (adminLink) {
@@ -385,6 +394,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
