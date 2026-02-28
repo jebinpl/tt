@@ -9,8 +9,6 @@ import {
     deleteDoc, 
     doc 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-let isAdmin = false;
 /*------------------------------------------------------------------------------------------------*/
 const loginBtn = document.querySelector('.login-btn');
 const dropdown = document.querySelector('.dropdown');
@@ -372,6 +370,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
