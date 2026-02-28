@@ -548,6 +548,135 @@ body {
     display: block;
     transform: translateX(-50%) scale(1);
 }
+/*---------------------------------------------------------------------------------------------admin Panel-----------------------------------------*/
+/* ================= ADMIN PANEL ================= */
+
+.admin-panel {
+    padding: 20px;
+    text-align: center;
+}
+
+.admin-welcome {
+    color: #4a4a7a;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.admin-buttons {
+    margin-bottom: 15px;
+}
+
+.admin-action-btn {
+    background: #f01818;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    margin: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.admin-action-btn:hover {
+    background: #c81414;
+}
+
+/* ================= ADD PRODUCT FORM ================= */
+
+.admin-section select,
+.admin-section input {
+    width: 80%;
+    padding: 8px;
+    margin: 6px auto;
+    display: block;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.add-btn {
+    background: #f01818;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.add-btn:hover {
+    background: #c81414;
+}
+/* ================= PRODUCT CARD ================= */
+
+#productsContainer {
+    padding: 10px;
+}
+
+.product-card {
+    background: #f2e7e7;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-card img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.product-info {
+    flex: 1;
+    margin-left: 10px;
+    text-align: left;
+}
+
+.product-info strong {
+    font-size: 16px;
+}
+
+.product-actions {
+    display: flex;
+    align-items: center;
+}
+
+.product-actions button {
+    margin-left: 6px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* Buttons */
+.buy-btn {
+    background: #ffea00;
+    font-weight: bold;
+}
+
+.edit-btn {
+    background: #3498db;
+    color: white;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+}
+.product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -613,6 +742,7 @@ body {
     }
 
 }
+
 
 
 
