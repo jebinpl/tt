@@ -438,23 +438,32 @@ body {
 
 /* ROUND BUTTON */
 .home-btn {
-    width: 50px;
-    height: 50px;
-    background: white;
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
+    background: white;
     border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    color: #f01818;
+    font-size: 26px;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.2s ease;
+
+    /* REMOVE square / focus effects */
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
+/* Remove focus outline completely */
+.home-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Press effect */
 .home-btn:active {
-    transform: scale(0.9);
+    transform: scale(0.92);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3) inset;
 }
 /* ================= WELCOME MESSAGE ================= */
 
@@ -601,6 +610,7 @@ body {
     }
 
 }
+
 
 
 
