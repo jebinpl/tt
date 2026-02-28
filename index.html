@@ -86,7 +86,10 @@
         </select>
 
         <input type="file" id="productImage" accept="image/*">
-        <img id="previewImage" style="width:150px; margin-top:10px; display:none;">
+        <div class="image-preview-wrapper">
+    <img id="previewImage">
+    <span class="remove-image" id="removeImageBtn">×</span>
+</div>
         <input type="text" id="productDescription" placeholder="Product Description">
         <input type="number" id="productPrice" placeholder="Price">
         <button id="addProductBtn" class="add-btn">Add</button>
@@ -191,6 +194,7 @@
 </div>
 </body>
 </html>
+
 
 
 
