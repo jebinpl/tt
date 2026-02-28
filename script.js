@@ -151,6 +151,30 @@ if (addProductBtn) {
         }
     });
 }
+/*-------------------------------cancel button--------------------*/
+const cancelProductBtn = document.getElementById("cancelProductBtn");
+
+if (cancelProductBtn) {
+    cancelProductBtn.addEventListener("click", function () {
+
+        // Clear form fields
+        document.getElementById("productCategory").value = "";
+        document.getElementById("productImage").value = "";
+        document.getElementById("productDescription").value = "";
+        document.getElementById("productPrice").value = "";
+
+        // Hide preview image
+        const previewImage = document.getElementById("previewImage");
+        previewImage.src = "";
+        previewImage.style.display = "none";
+
+        // Close modal (if using modal)
+        const adminModal = document.getElementById("adminModal");
+        if (adminModal) {
+            adminModal.style.display = "none";
+        }
+    });
+}
 /*----------------image upload preview----------------------------*/
 const imageInput = document.getElementById("productImage");
 const previewImage = document.getElementById("previewImage");
@@ -435,6 +459,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
