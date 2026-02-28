@@ -471,7 +471,7 @@ body {
 
 .welcome-message {
     position: fixed;
-    bottom: 140px;
+    bottom: 180px;
     left: 50%;
     transform: translateX(-50%);
     
@@ -610,6 +610,7 @@ body {
     }
 
 }
+
 
 
 
