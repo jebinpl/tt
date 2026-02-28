@@ -607,6 +607,35 @@ body {
 .add-btn:hover {
     background: #c81414;
 }
+/*------------------------------image preview close button-------------------*/
+.image-preview-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+#previewImage {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.remove-image {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: red;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+}
 /* ================= PRODUCT CARD ================= */
 
 #productsContainer {
@@ -742,6 +771,7 @@ body {
     }
 
 }
+
 
 
 
