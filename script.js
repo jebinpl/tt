@@ -256,6 +256,116 @@ window.addEventListener("scroll", function () {
         searchBar.style.transform = "translateY(0)";
     }, 200);
 });
+/* ===========================================================
+   ================== ADMIN + FIREBASE =======================
+   =========================================================== */
+
+// 🔹 Firebase Config (Replace with your own)
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+let isAdmin = false;
+
+// 🔹 ADMIN LOGIN
+const adminLoginBtn = document.getElementById("adminLoginBtn");
+
+adminLoginBtn.addEventListener("click", function(){
+
+    const email = document.getElementById("adminEmail").value;
+    const password = document.getElementById("adminPassword").value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(() => {
+
+        isAdmin = true;
+
+        adminModal.style.display = "none";
+
+        // Show Admin Panel below search
+        document.getElementById("adminPanel").style.display = "block";
+
+        alert("Admin Login Successful");
+
+    })
+    .catch(error => {
+        alert(error.message);
+    });
+
+});
+
+
+// 🔹 ADD PRODUCT
+const addProductBtn = document.getElementById("addProductBtn");
+
+addProductBtn.addEventListener("click", function(){
+
+    const category = document.getElementById("productCategory").value;
+    const image = document.getElementById("productImage").value;
+    const description = document.getElementById("productDescription").value;
+    const price = document.getElementById("productPrice").value;
+
+    if(!category || !image || !description || !price){
+        alert("Fill all fields");
+        return;
+    }
+
+    firebase.database().ref("products").push({
+        category: category,
+        image: image,
+        description: description,
+        price: parseFloat(price)
+    });
+
+    alert("Product Added Successfully");
+
+});
+
+
+// 🔹 LOAD PRODUCTS FOR ALL USERS
+const productsContainer = document.getElementById("productsContainer");
+
+firebase.database().ref("products").on("value", snapshot => {
+
+    productsContainer.innerHTML = "";
+
+    const products = snapshot.val() || {};
+
+    for(let id in products){
+
+        const p = products[id];
+
+        const div = document.createElement("div");
+        div.classList.add("product-card");
+
+        div.innerHTML = `
+            <img src="${p.image}">
+            <h4>${p.description}</h4>
+            <p>₹${p.price}</p>
+            <small>${p.category}</small>
+            ${isAdmin ? `<button onclick="deleteProduct('${id}')">Delete</button>` : ""}
+            <button onclick="addToCart('${p.description}', ${p.price})">Buy Now</button>
+        `;
+
+        productsContainer.appendChild(div);
+    }
+
+});
+
+
+// 🔹 DELETE PRODUCT
+function deleteProduct(id){
+    firebase.database().ref("products/" + id).remove();
+}
+
 
 
 
