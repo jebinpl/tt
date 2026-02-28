@@ -2,10 +2,6 @@
 
 import { db, storage } from "./firebase.js";
 
-// ================= FIREBASE IMPORTS =================
-
-import { db, storage } from "./firebase.js";
-
 import { 
     collection, 
     addDoc, 
@@ -67,9 +63,11 @@ if (adminLink) {
     }
 });
 }
-closeAdmin.addEventListener("click", function() {
-    adminModal.style.display = "none";
-});
+if (closeAdmin) {
+    closeAdmin.addEventListener("click", function() {
+        adminModal.style.display = "none";
+    });
+}
 
 window.addEventListener("click", function(e) {
     if (e.target === adminModal) {
@@ -177,10 +175,12 @@ const phoneSection = document.getElementById("phoneSection");
 const otpSection = document.getElementById("otpSection");
 
 /* Open Customer Modal */
-customerLink.addEventListener("click", function (e) {
-    e.preventDefault();
-    customerModal.style.display = "flex";
-});
+if (customerLink) {
+    customerLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        customerModal.style.display = "flex";
+    });
+}
 
 /* Close Customer Modal */
 closeCustomer.addEventListener("click", function () {
@@ -411,7 +411,7 @@ onSnapshot(collection(db, "products"), (snapshot) => {
         div.classList.add("product-card");
 
         div.innerHTML = `
-            <img src="${p.image}">
+            <img src="${p.image}" alt="Product Image">
             <h4>${p.description}</h4>
             <p>₹${p.price}</p>
             <small>${p.category}</small>
@@ -435,6 +435,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
