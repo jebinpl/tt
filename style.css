@@ -468,7 +468,6 @@ body {
     transform: scale(0.88);   /* small zoom press */
     box-shadow: 0 4px 10px rgba(0,0,0,0.3) inset;
 }
-/* ================= WELCOME MESSAGE ================= */
 
 /* ================= RED WELCOME MESSAGE ================= */
 
@@ -606,6 +605,51 @@ body {
 
 .add-btn:hover {
     background: #c81414;
+}
+
+/* ================= MODERN SELECT DROPDOWN ================= */
+
+.select-wrapper {
+    position: relative;
+    width: 80%;
+    margin: 6px auto;
+}
+
+#productCategory {
+    width: 100%;
+    padding: 10px 40px 10px 12px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    background: white;
+    appearance: none;          /* remove default arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+/* Custom Arrow */
+.select-wrapper::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #f01818;
+    pointer-events: none;
+}
+
+/* Hover Effect */
+#productCategory:hover {
+    border-color: #f01818;
+}
+
+/* Focus Effect */
+#productCategory:focus {
+    outline: none;
+    border-color: #f01818;
+    box-shadow: 0 0 0 2px rgba(240, 24, 24, 0.2);
 }
 /*------------------------------image preview close button-------------------*/
 .image-preview-wrapper {
@@ -771,6 +815,7 @@ body {
     }
 
 }
+
 
 
 
