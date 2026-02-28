@@ -41,6 +41,26 @@
     </div>
 
 </div>
+
+<!------------------------------------------------------------------------------------------------------>
+<!-- SEARCH BAR SECTION -->
+<div class="search-bar-container" id="searchBar">
+    
+    <input type="text" placeholder="Search products..." class="search-input">
+
+    <div class="menu-wrapper">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <div class="menu-dropdown" id="menuDropdown">
+            <a href="#">Electricals</a>
+            <a href="#">Plumbing</a>
+            <a href="#">Constructions</a>
+            <a href="#">Paints</a>
+            <a href="#">Others</a>
+        </div>
+    </div>
+
+</div>   
 <!--------------------------------------------------admin Panel----------------------------------------------------------------->
     <!-- ================= ADMIN PANEL ================= -->
 <div id="adminPanel" class="admin-panel" style="display:none;">
@@ -80,25 +100,6 @@
 </div>
     <!-- ================= PRODUCT LIST ================= -->
 <div id="productsContainer"></div>
-<!------------------------------------------------------------------------------------------------------>
-<!-- SEARCH BAR SECTION -->
-<div class="search-bar-container" id="searchBar">
-    
-    <input type="text" placeholder="Search products..." class="search-input">
-
-    <div class="menu-wrapper">
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-
-        <div class="menu-dropdown" id="menuDropdown">
-            <a href="#">Electricals</a>
-            <a href="#">Plumbing</a>
-            <a href="#">Constructions</a>
-            <a href="#">Paints</a>
-            <a href="#">Others</a>
-        </div>
-    </div>
-
-</div>        
 <!----------------------------------------------------------------------------------------------->
 <!-- Admin Modal -->
 <div class="admin-modal" id="adminModal">
@@ -109,9 +110,9 @@
 
         <h2>Admin Login</h2>
 
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
-        <button>Login</button>
+        <input type="email" id="adminEmail" placeholder="Admin Email">
+        <input type="password" id="adminPassword" placeholder="Password">
+        <button id="adminLoginBtn">Login</button>
 
     </div>
     
@@ -169,7 +170,7 @@
 
   </div>
 </div>
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 <!-- Bottom Navigation -->
 <div id="welcomeMessage" class="welcome-message">
     Welcome to Thomas Traders Online Shopping Portal.
@@ -188,6 +189,7 @@
 </div>
 </body>
 </html>
+
 
 
 
