@@ -100,7 +100,7 @@ if (addProductBtn) {
     addProductBtn.addEventListener("click", async function(){
 
         const category = document.getElementById("productCategory").value;
-        const image = document.getElementById("productImage").value;
+        const file = document.getElementById("productImage").files[0];
         const description = document.getElementById("productDescription").value;
         const price = document.getElementById("productPrice").value;
 
@@ -125,6 +125,18 @@ if (addProductBtn) {
         }
     });
 }
+/*----------------image upload preview----------------------------*/
+const imageInput = document.getElementById("productImage");
+const previewImage = document.getElementById("previewImage");
+
+imageInput.addEventListener("change", function() {
+    const file = this.files[0];
+
+    if (file) {
+        previewImage.src = URL.createObjectURL(file);
+        previewImage.style.display = "block";
+    }
+});
 /*-------------------------------------------------------------------------------------------------*/
 /* ================= CUSTOMER MODAL ================= */
 
@@ -394,6 +406,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
