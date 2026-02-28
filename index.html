@@ -75,17 +75,22 @@
     <!-- Add Product Section -->
     <div id="addProductSection" class="admin-section">
 
-        <!-- CATEGORY DROPDOWN -->
-        <div class="select-wrapper">
-        <select id="productCategory">
-            <option value="">Select Category</option>
-            <option value="Electrical">Electrical</option>
-            <option value="Plumbing">Plumbing</option>
-            <option value="Constructions">Constructions</option>
-            <option value="Paints">Paints</option>
-            <option value="Others">Others</option>
-        </select>
-        </div>
+<!-- CATEGORY CUSTOM DROPDOWN -->
+<div class="category-dropdown">
+
+    <div class="category-selected" id="selectedCategory">
+        Select Category
+    </div>
+
+    <div class="category-options" id="categoryOptions">
+        <div data-value="Electrical">Electrical</div>
+        <div data-value="Plumbing">Plumbing</div>
+        <div data-value="Constructions">Constructions</div>
+        <div data-value="Paints">Paints</div>
+        <div data-value="Others">Others</div>
+    </div>
+
+</div>
 
         <input type="file" id="productImage" accept="image/*">
         <div class="image-preview-wrapper">
@@ -196,6 +201,7 @@
 </div>
 </body>
 </html>
+
 
 
 
