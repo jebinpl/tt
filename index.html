@@ -41,6 +41,45 @@
     </div>
 
 </div>
+<!--------------------------------------------------admin Panel----------------------------------------------------------------->
+    <!-- ================= ADMIN PANEL ================= -->
+<div id="adminPanel" class="admin-panel" style="display:none;">
+
+    <h2 class="admin-welcome">Welcome Admin</h2>
+
+    <div class="admin-buttons">
+        <button id="addProductsBtn" class="admin-action-btn">Add Products</button>
+        <button id="customerOrdersBtn" class="admin-action-btn">Customers Order</button>
+    </div>
+
+    <!-- Add Product Section -->
+    <div id="addProductSection" class="admin-section">
+
+        <!-- CATEGORY DROPDOWN -->
+        <select id="productCategory">
+            <option value="">Select Category</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Constructions">Constructions</option>
+            <option value="Paints">Paints</option>
+            <option value="Others">Others</option>
+        </select>
+
+        <input type="text" id="productImage" placeholder="Add image URL">
+        <input type="text" id="productDescription" placeholder="Product Description">
+        <input type="number" id="productPrice" placeholder="Price">
+        <button id="addProductBtn" class="add-btn">Add</button>
+    </div>
+
+    <!-- Orders Section -->
+    <div id="ordersSection" class="admin-section" style="display:none;">
+        <h3>Customer Orders</h3>
+        <div id="ordersContainer"></div>
+    </div>
+
+</div>
+    <!-- ================= PRODUCT LIST ================= -->
+<div id="productsContainer"></div>
 <!------------------------------------------------------------------------------------------------------>
 <!-- SEARCH BAR SECTION -->
 <div class="search-bar-container" id="searchBar">
@@ -149,6 +188,7 @@
 </div>
 </body>
 </html>
+
 
 
 
