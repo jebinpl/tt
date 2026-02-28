@@ -366,6 +366,14 @@ onSnapshot(collection(db, "products"), (snapshot) => {
 async function deleteProduct(id){
     await deleteDoc(doc(db, "products", id));
 }
+// Make functions global for HTML onclick
+
+window.goHome = goHome;
+window.toggleMenu = toggleMenu;
+window.removeItem = removeItem;
+window.addToCart = addToCart;
+window.deleteProduct = deleteProduct;
+
 
 
 
