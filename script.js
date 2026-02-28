@@ -22,10 +22,6 @@ if (loginBtn) {
             dropdown.style.display === 'block' ? 'none' : 'block';
     });
 }
-    e.stopPropagation();
-    dropdown.style.display =
-        dropdown.style.display === 'block' ? 'none' : 'block';
-});
 
 window.addEventListener('click', function () {
     dropdown.style.display = 'none';
@@ -68,24 +64,24 @@ window.addEventListener("click", function(e) {
 
 const adminLoginBtn = document.getElementById("adminLoginBtn");
 
-adminLoginBtn.addEventListener("click", function(){
+if (adminLoginBtn) {
+    adminLoginBtn.addEventListener("click", function(){
 
-    const email = document.getElementById("adminEmail").value;
-    const password = document.getElementById("adminPassword").value;
+        const email = document.getElementById("adminEmail").value;
+        const password = document.getElementById("adminPassword").value;
 
-    if(email === "admin@gmail.com" && password === "Admin@123"){
+        if(email === "admin@gmail.com" && password === "Admin@123"){
 
-localStorage.setItem("isAdmin", "true");
+            localStorage.setItem("isAdmin", "true");
+            adminModal.style.display = "none";
+            location.reload();
 
-adminModal.style.display = "none";
+        } else {
+            alert("Invalid Email or Password");
+        }
 
-location.reload();
-
-    } else {
-        alert("Invalid Email or Password");
-    }
-
-});
+    });
+}
 
 // ================= ADD PRODUCT =================
 
@@ -94,32 +90,32 @@ const addProductBtn = document.getElementById("addProductBtn");
 if (addProductBtn) {
     addProductBtn.addEventListener("click", async function(){
 
-    const category = document.getElementById("productCategory").value;
-    const image = document.getElementById("productImage").value;
-    const description = document.getElementById("productDescription").value;
-    const price = document.getElementById("productPrice").value;
+        const category = document.getElementById("productCategory").value;
+        const image = document.getElementById("productImage").value;
+        const description = document.getElementById("productDescription").value;
+        const price = document.getElementById("productPrice").value;
 
-    if(!category || !image || !description || !price){
-        alert("Fill all fields");
-        return;
-    }
+        if(!category || !image || !description || !price){
+            alert("Fill all fields");
+            return;
+        }
 
-    try {
+        try {
 
-        await addDoc(collection(db, "products"), {
-            category: category,
-            image: image,
-            description: description,
-            price: parseFloat(price)
-        });
-    }
-        alert("Product Added Successfully");
+            await addDoc(collection(db, "products"), {
+                category: category,
+                image: image,
+                description: description,
+                price: parseFloat(price)
+            });
 
-    } catch (error) {
-        alert(error.message);
-    }
+            alert("Product Added Successfully");
 
-});
+        } catch (error) {
+            alert(error.message);
+        }
+    });
+}
 /*-------------------------------------------------------------------------------------------------*/
 /* ================= CUSTOMER MODAL ================= */
 
@@ -389,6 +385,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
