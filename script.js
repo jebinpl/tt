@@ -9,11 +9,19 @@ import {
     deleteDoc, 
     doc 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+let isAdmin = localStorage.getItem("isAdmin") === "true";
 /*------------------------------------------Login Button------------------------------------------------------*/
 const loginBtn = document.querySelector('.login-btn');
 const dropdown = document.querySelector('.dropdown');
 
-loginBtn.addEventListener('click', function (e) {
+if (loginBtn) {
+    loginBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        dropdown.style.display =
+            dropdown.style.display === 'block' ? 'none' : 'block';
+    });
+}
     e.stopPropagation();
     dropdown.style.display =
         dropdown.style.display === 'block' ? 'none' : 'block';
@@ -30,7 +38,8 @@ const closeAdmin = document.getElementById("closeAdmin");
 if (isAdmin) {
     adminLink.textContent = "Logout";
 }
-adminLink.addEventListener("click", function(e) {
+if (adminLink) {
+    adminLink.addEventListener("click", function(e) {
     e.preventDefault();
 
     if (isAdmin) {
@@ -42,7 +51,7 @@ adminLink.addEventListener("click", function(e) {
         adminModal.style.display = "block";
     }
 });
-
+}
 closeAdmin.addEventListener("click", function() {
     adminModal.style.display = "none";
 });
@@ -55,7 +64,7 @@ window.addEventListener("click", function(e) {
 
 // ================= LOCAL ADMIN LOGIN =================
 
-let isAdmin = localStorage.getItem("isAdmin") === "true";
+
 
 const adminLoginBtn = document.getElementById("adminLoginBtn");
 
@@ -82,7 +91,8 @@ location.reload();
 
 const addProductBtn = document.getElementById("addProductBtn");
 
-addProductBtn.addEventListener("click", async function(){
+if (addProductBtn) {
+    addProductBtn.addEventListener("click", async function(){
 
     const category = document.getElementById("productCategory").value;
     const image = document.getElementById("productImage").value;
@@ -102,7 +112,7 @@ addProductBtn.addEventListener("click", async function(){
             description: description,
             price: parseFloat(price)
         });
-
+    }
         alert("Product Added Successfully");
 
     } catch (error) {
@@ -208,10 +218,11 @@ const cartTotal = document.getElementById("cartTotal");
 let cart = [];
 
 /* Open Cart */
-cartLink.addEventListener("click", function(e){
+if (cartLink) {
+    cartLink.addEventListener("click", function(e){
     e.preventDefault();
     cartModal.style.display = "flex";
-});
+});}
 
 /* Close Cart */
 closeCart.addEventListener("click", function(){
@@ -378,6 +389,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
