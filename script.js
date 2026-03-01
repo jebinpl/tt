@@ -112,7 +112,7 @@ if (addProductBtn) {
         const description = document.getElementById("productDescription").value;
         const price = document.getElementById("productPrice").value;
 
-        if(!category || !file || !description || !price){
+        if(!file || !description || !price){
             alert("Fill all fields");
             return;
         }
@@ -398,9 +398,9 @@ function goHome() {
         window.speechSynthesis.speak(speech);
     }
 
-    // ✅ Always SHOW dropup (not toggle)
+    // ✅ Toggle dropup open/close
     const dropup = document.getElementById("homeDropup");
-    dropup.classList.add("show");
+    dropup.classList.toggle("show");
 }
 document.addEventListener("click", function (e) {
 
@@ -476,6 +476,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
