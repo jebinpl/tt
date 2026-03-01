@@ -492,10 +492,10 @@ if (myProfileLink) {
         const isAdmin = localStorage.getItem("isAdmin") === "true";
         const message = document.getElementById("welcomeMessage");
 
-        if (!isAdmin) {
-            message.textContent = "Please login";
+        if (isAdmin) {
+            message.textContent = "Hi Admin 👋";
         } else {
-            message.textContent = "Hi Admin";
+            message.textContent = "Please login";
         }
 
         message.classList.add("show");
@@ -506,26 +506,6 @@ if (myProfileLink) {
 
     });
 }
-let scrollTimeout;
-let lastScrollY = window.scrollY;
-
-window.addEventListener("scroll", function () {
-
-    const searchBar = document.getElementById("searchBar");
-
-    // Hide while scrolling down
-    if (window.scrollY > lastScrollY) {
-        searchBar.style.transform = "translateY(-100%)";
-    }
-
-    lastScrollY = window.scrollY;
-
-    // Show again when scrolling stops
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(function () {
-        searchBar.style.transform = "translateY(0)";
-    }, 200);
-});
 // ================= LOAD PRODUCTS =================
 
 const productsContainer = document.getElementById("productsContainer");
@@ -563,6 +543,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
