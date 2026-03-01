@@ -129,12 +129,11 @@ if (addProductBtn) {
             const imageURL = await getDownloadURL(imageRef);
 
             // 🔹 Save product to Firestore
-            await addDoc(collection(db, "products"), {
-                category: category,
-                image: imageURL,
-                description: description,
-                price: parseFloat(price)
-            });
+await addDoc(collection(db, "products"), {
+    image: imageURL,
+    description: description,
+    price: parseFloat(price)
+});
 
             alert("Product Added Successfully");
 
@@ -457,7 +456,6 @@ onSnapshot(collection(db, "products"), (snapshot) => {
             <img src="${p.image}" alt="Product Image">
             <h4>${p.description}</h4>
             <p>₹${p.price}</p>
-            <small>${p.category}</small>
             ${isAdmin ? `<button onclick="deleteProduct('${id}')">Delete</button>` : ""}
             <button onclick="addToCart('${p.description}', ${p.price})">Buy Now</button>
         `;
@@ -478,6 +476,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
