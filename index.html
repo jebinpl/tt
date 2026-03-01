@@ -51,46 +51,58 @@
     <div class="menu-wrapper">
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-        <div class="menu-dropdown" id="menuDropdown">
-            <a href="#">Electricals</a>
-            <a href="#">Plumbing</a>
-            <a href="#">Constructions</a>
-            <a href="#">Paints</a>
-            <a href="#">Others</a>
-        </div>
+<div class="menu-dropdown" id="menuDropdown">
+    <a href="#" onclick="selectCategory('Electricals')">Electricals</a>
+    <a href="#" onclick="selectCategory('Plumbing')">Plumbing</a>
+    <a href="#" onclick="selectCategory('Constructions')">Constructions</a>
+    <a href="#" onclick="selectCategory('Paints')">Paints</a>
+    <a href="#" onclick="selectCategory('Others')">Others</a>
+</div>
     </div>
 
 </div>   
 <!--------------------------------------------------admin Panel----------------------------------------------------------------->
     <!-- ================= ADMIN PANEL ================= -->
 <div id="adminPanel" class="admin-panel" style="display:none;">
-<div class="admin-buttons">
-    <button id="addProductsBtn" class="admin-action-btn">Add Products</button>
-</div>
+
+    <!-- Message -->
+    <p id="adminMessage">Please select the category from menu bar.</p>
+
+    <!-- Category Heading -->
+    <h2 id="categoryHeading" style="display:none;"></h2>
+
+    <!-- Add Products Button -->
+    <div class="admin-buttons" id="categoryControls" style="display:none;">
+        <button id="addProductsBtn" class="admin-action-btn">Add Products</button>
+    </div>
+
     <!-- Add Product Section -->
-    <div id="addProductSection" class="admin-section">
+    <div id="addProductSection" class="admin-section" style="display:none;">
 
-<div class="product-form-row">
+        <div class="product-form-row">
 
-    <!-- LEFT: IMAGE BOX -->
-    <div class="upload-box" id="uploadBox">
-        <img id="previewImage">
-        <input type="file" id="productImage" accept="image/*">
-        <span class="remove-image" id="removeImageBtn">×</span>
-        <span class="upload-placeholder">Choose Image</span>
+            <div class="upload-box" id="uploadBox">
+                <img id="previewImage">
+                <input type="file" id="productImage" accept="image/*">
+                <span class="remove-image" id="removeImageBtn">×</span>
+                <span class="upload-placeholder">Choose Image</span>
+            </div>
+
+            <div class="product-fields">
+                <input type="text" id="productDescription" placeholder="Product Description">
+                <input type="number" id="productPrice" placeholder="Enter Price (₹)">
+
+                <div class="form-buttons">
+                    <button id="addProductBtn" class="add-btn">Add</button>
+                    <button type="button" id="cancelProductBtn" class="add-btn cancel-btn">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
-    <!-- RIGHT: TEXT FIELDS -->
-    <div class="product-fields">
-        <input type="text" id="productDescription" placeholder="Product Description">
-        <input type="number" id="productPrice" placeholder="Enter Price (₹)">
-
-<div class="form-buttons">
-    <button id="addProductBtn" class="add-btn">Add</button>
-    <button type="button" id="cancelProductBtn" class="add-btn">Cancel</button>
 </div>
-    </div>
-      </div>
 
     <!-- Orders Section -->
     <div id="ordersSection" class="admin-section" style="display:none;">
@@ -190,6 +202,7 @@
 </div>
 </body>
 </html>
+
 
 
 
