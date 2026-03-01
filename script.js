@@ -154,6 +154,38 @@ window.addEventListener("click", function(e) {
         categoryOptions.style.display = "none";
     }
 });
+/*-------------------------------square box image------------------------*/
+const uploadBox = document.getElementById("uploadBox");
+const fileInput = document.getElementById("productImage");
+const previewImage = document.getElementById("previewImage");
+const uploadText = document.getElementById("uploadText");
+const removeBtn = document.getElementById("removeImageBtn");
+
+uploadBox.addEventListener("click", () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = "block";
+            uploadText.style.display = "none";
+            removeBtn.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+removeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    fileInput.value = "";
+    previewImage.style.display = "none";
+    uploadText.style.display = "block";
+    removeBtn.style.display = "none";
+});
 /*-------------------------------cancel button--------------------*/
 const cancelProductBtn = document.getElementById("cancelProductBtn");
 
@@ -476,6 +508,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
