@@ -599,7 +599,7 @@ body {
 
 .admin-panel {
     padding: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 .admin-buttons {
@@ -875,6 +875,7 @@ body {
         padding: 8px;
     }
 }
+
 
 
 
