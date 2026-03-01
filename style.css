@@ -212,6 +212,11 @@ body {
     font-size: 22px;
     cursor: pointer;
 }
+#categoryHeading {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
 /* ================= ADMIN PRODUCT FORM LAYOUT ================= */
 
 .product-form-row {
@@ -889,6 +894,7 @@ body {
         padding: 8px;
     }
 }
+
 
 
 
