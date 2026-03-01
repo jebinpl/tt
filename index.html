@@ -70,8 +70,9 @@
     <!-- Add Product Section -->
     <div id="addProductSection" class="admin-section">
 
-        <input type="file" id="productImage" accept="image/*">
-        <div class="image-preview-wrapper">
+<div class="upload-box" id="uploadBox">
+    <input type="file" id="productImage" accept="image/*" hidden>
+    <span id="uploadText">Choose Image</span>
     <img id="previewImage">
     <span class="remove-image" id="removeImageBtn">×</span>
 </div>
@@ -179,6 +180,7 @@
 </div>
 </body>
 </html>
+
 
 
 
