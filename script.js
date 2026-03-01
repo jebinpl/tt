@@ -136,7 +136,7 @@ function selectCategory(categoryName) {
 
 const addProductsBtn = document.getElementById("addProductsBtn");
 const addProductSection = document.getElementById("addProductSection");
-const cancelProductBtn = document.getElementById("cancelProductBtn");
+
 
 if (addProductsBtn) {
     addProductsBtn.addEventListener("click", function () {
@@ -149,7 +149,12 @@ if (cancelProductBtn) {
         addProductSection.style.display = "none";
     });
 }
-
+document.querySelectorAll(".category-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const category = this.dataset.category;
+        selectCategory(category);
+    });
+});
 // ================= ADD PRODUCT =================
 
 const addProductBtn = document.getElementById("addProductBtn");
@@ -238,7 +243,7 @@ if (uploadBox) {
     });
 }
 /*-------------------------------cancel button--------------------*/
-const cancelProductBtn = document.getElementById("cancelProductBtn");
+
 
 if (cancelProductBtn) {
     cancelProductBtn.addEventListener("click", function () {
@@ -255,10 +260,9 @@ if (cancelProductBtn) {
         previewImage.style.display = "none";
 
         // Close modal (if using modal)
-        const adminModal = document.getElementById("adminModal");
-        if (adminModal) {
-            adminModal.style.display = "none";
-        }
+if (addProductSection) {
+    addProductSection.style.display = "none";
+}
     });
 }
 
@@ -528,6 +532,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
