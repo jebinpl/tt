@@ -107,7 +107,7 @@ const addProductBtn = document.getElementById("addProductBtn");
 if (addProductBtn) {
     addProductBtn.addEventListener("click", async function(){
 
-        const category = categoryValue;
+        
         const file = document.getElementById("productImage").files[0];
         const description = document.getElementById("productDescription").value;
         const price = document.getElementById("productPrice").value;
@@ -139,7 +139,7 @@ if (addProductBtn) {
             alert("Product Added Successfully");
 
             // Optional: Clear form
-            document.getElementById("productCategory").value = "";
+            
             document.getElementById("productImage").value = "";
             document.getElementById("productDescription").value = "";
             document.getElementById("productPrice").value = "";
@@ -149,23 +149,6 @@ if (addProductBtn) {
         }
     });
 }
-let categoryValue = "";
-
-const selectedCategory = document.getElementById("selectedCategory");
-const categoryOptions = document.getElementById("categoryOptions");
-
-selectedCategory.addEventListener("click", function() {
-    categoryOptions.style.display =
-        categoryOptions.style.display === "block" ? "none" : "block";
-});
-
-categoryOptions.querySelectorAll("div").forEach(option => {
-    option.addEventListener("click", function() {
-        categoryValue = this.getAttribute("data-value");
-        selectedCategory.textContent = categoryValue;
-        categoryOptions.style.display = "none";
-    });
-});
 
 window.addEventListener("click", function(e) {
     if (!e.target.closest(".category-dropdown")) {
@@ -179,7 +162,7 @@ if (cancelProductBtn) {
     cancelProductBtn.addEventListener("click", function () {
 
         // Clear form fields
-        document.getElementById("productCategory").value = "";
+        
         document.getElementById("productImage").value = "";
         document.getElementById("productDescription").value = "";
         document.getElementById("productPrice").value = "";
@@ -495,6 +478,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
