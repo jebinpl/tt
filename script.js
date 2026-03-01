@@ -108,6 +108,48 @@ if (adminLoginBtn) {
     });
 }
 
+// CATEGORY SELECTION FUNCTION
+function selectCategory(categoryName) {
+
+    let isAdmin = localStorage.getItem("isAdmin") === "true";
+
+    if (!isAdmin) return; // Only admin can see this section
+
+    const message = document.getElementById("adminMessage");
+    const heading = document.getElementById("categoryHeading");
+    const controls = document.getElementById("categoryControls");
+    const formSection = document.getElementById("addProductSection");
+
+    // Hide message
+    message.style.display = "none";
+
+    // Show heading
+    heading.style.display = "block";
+    heading.textContent = categoryName;
+
+    // Show Add Products button
+    controls.style.display = "block";
+
+    // Hide form initially
+    formSection.style.display = "none";
+}
+
+const addProductsBtn = document.getElementById("addProductsBtn");
+const addProductSection = document.getElementById("addProductSection");
+const cancelProductBtn = document.getElementById("cancelProductBtn");
+
+if (addProductsBtn) {
+    addProductsBtn.addEventListener("click", function () {
+        addProductSection.style.display = "block";
+    });
+}
+
+if (cancelProductBtn) {
+    cancelProductBtn.addEventListener("click", function () {
+        addProductSection.style.display = "none";
+    });
+}
+
 // ================= ADD PRODUCT =================
 
 const addProductBtn = document.getElementById("addProductBtn");
@@ -486,6 +528,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
