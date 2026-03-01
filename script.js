@@ -154,6 +154,12 @@ document.querySelectorAll(".category-link").forEach(link => {
     link.addEventListener("click", function () {
         const category = this.dataset.category;
         selectCategory(category);
+
+        // ✅ Hide menu after selecting category
+        const menu = document.getElementById("menuDropdown");
+        if (menu) {
+            menu.style.display = "none";
+        }
     });
 });
 // ================= ADD PRODUCT =================
@@ -557,6 +563,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
