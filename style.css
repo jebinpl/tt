@@ -859,18 +859,25 @@ body {
         padding: 6px 14px;
         font-size: 14px;
     }
-        .product-form-row {
-        flex-direction: column;
-        align-items: center;
+    .product-form-row {
+        display: flex;
+        flex-direction: row;   /* Force side-by-side */
+        gap: 10px;
+        padding: 10px;
     }
 
     .upload-box {
-        width: 120px;
-        height: 120px;
+        width: 110px;
+        height: 110px;
+    }
+        .product-fields input {
+        font-size: 13px;
+        padding: 8px;
     }
 }
 
-}
+
+
 
 
 
