@@ -148,12 +148,6 @@ await addDoc(collection(db, "products"), {
         }
     });
 }
-
-window.addEventListener("click", function(e) {
-    if (!e.target.closest(".category-dropdown")) {
-        categoryOptions.style.display = "none";
-    }
-});
 /*-------------------------------square box image------------------------*/
 const uploadBox = document.getElementById("uploadBox");
 const fileInput = document.getElementById("productImage");
@@ -210,20 +204,6 @@ if (cancelProductBtn) {
         }
     });
 }
-/*----------------image upload preview----------------------------*/
-const imageInput = document.getElementById("productImage");
-const previewImage = document.getElementById("previewImage");
-
-if(imageInput){
-imageInput.addEventListener("change", function() {
-    const file = this.files[0];
-
-    if (file) {
-        previewImage.src = URL.createObjectURL(file);
-        previewImage.style.display = "block";
-        removeImageBtn.style.display = "block";
-    }
-});}
 /*--------------------------------------clear selected image-----------------------------------------------------------*/
 const removeImageBtn = document.getElementById("removeImageBtn");
 
@@ -505,6 +485,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
