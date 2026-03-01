@@ -178,6 +178,7 @@ if (uploadBox) {
                 previewImage.src = e.target.result;
                 previewImage.style.display = "block";
                 removeBtn.style.display = "flex"; // ✅ show close button
+                document.querySelector(".upload-placeholder").style.display = "none";
             };
 
             reader.readAsDataURL(file);
@@ -191,6 +192,7 @@ if (uploadBox) {
         previewImage.src = "";
         previewImage.style.display = "none";
         removeBtn.style.display = "none"; // ✅ hide close button
+        document.querySelector(".upload-placeholder").style.display = "block";
     });
 }
 /*-------------------------------cancel button--------------------*/
@@ -484,6 +486,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
