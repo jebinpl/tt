@@ -18,7 +18,13 @@ import {
 
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 const adminPanel = document.getElementById("adminPanel");
+const loginBtn = document.querySelector(".login-btn");
 
+if (isAdmin) {
+    if (loginBtn) loginBtn.textContent = "Admin";
+} else {
+    if (loginBtn) loginBtn.textContent = "Login";
+}
 if (adminPanel) {
     if (isAdmin) {
         adminPanel.style.display = "block";
@@ -476,6 +482,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
