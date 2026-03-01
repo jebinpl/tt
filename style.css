@@ -623,10 +623,11 @@ body {
     display: none;
 }
 /* ===== CLOSE BUTTON (TOP RIGHT EDGE OF BOX) ===== */
+/* ===== CLOSE BUTTON ===== */
 .remove-image {
     position: absolute;
-    top: -12px;          /* slightly outside box */
-    right: -12px;        /* slightly outside box */
+    top: 6px;        /* inside box */
+    right: 6px;      /* inside box */
     width: 32px;
     height: 32px;
     background: red;
@@ -634,11 +635,11 @@ body {
     font-size: 20px;
     font-weight: bold;
     border-radius: 50%;
-    display: none;       /* hidden until image selected */
+    display: none;   /* hidden until image selected */
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 5;
+    z-index: 10;
 }
 /* Choose button bottom */
 .choose-btn {
@@ -796,6 +797,7 @@ body {
     }
 
 }
+
 
 
 
