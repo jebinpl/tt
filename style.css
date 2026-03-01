@@ -859,8 +859,19 @@ body {
         padding: 6px 14px;
         font-size: 14px;
     }
+        .product-form-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .upload-box {
+        width: 120px;
+        height: 120px;
+    }
+}
 
 }
+
 
 
 
