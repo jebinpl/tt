@@ -603,10 +603,9 @@ body {
     height: 140px;
     border: 2px dashed #ccc;
     border-radius: 10px;
-    cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: 0.2s ease;
+    cursor: pointer;
 }
 
 .upload-box:hover {
@@ -623,7 +622,12 @@ body {
     overflow: hidden;
     transition: 0.2s ease;
 }
-
+#productImage {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 #previewImage {
     position: absolute;
     width: 100%;
@@ -639,7 +643,7 @@ body {
     font-size: 20px;
     color: red;
     cursor: pointer;
-    display: none;
+    z-index: 2;
 }
 
 .image-preview-wrapper {
@@ -805,6 +809,7 @@ body {
     }
 
 }
+
 
 
 
