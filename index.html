@@ -70,16 +70,23 @@
     <!-- Add Product Section -->
     <div id="addProductSection" class="admin-section">
 
-<div class="upload-box" id="uploadBox">
-    <img id="previewImage">
-    <button type="button" id="chooseImageBtn" class="choose-btn">
-        Choose Image
-    </button>
-    <input type="file" id="productImage" accept="image/*">
-    <span class="remove-image" id="removeImageBtn">×</span>
-</div>
+<div class="product-form-row">
+
+    <!-- LEFT: IMAGE BOX -->
+    <div class="upload-box" id="uploadBox">
+        <img id="previewImage">
+        <input type="file" id="productImage" accept="image/*">
+        <span class="remove-image" id="removeImageBtn">×</span>
+        <span class="upload-placeholder">Choose Image</span>
+    </div>
+
+    <!-- RIGHT: TEXT FIELDS -->
+    <div class="product-fields">
         <input type="text" id="productDescription" placeholder="Product Description">
-        <input type="number" id="productPrice" placeholder="Price">
+        <input type="number" id="productPrice" placeholder="Enter Price (₹)">
+    </div>
+
+</div>
         <button id="addProductBtn" class="add-btn">Add</button>
         <button type="button" id="cancelProductBtn" class="add-btn">Cancel</button>
     </div>
@@ -182,6 +189,7 @@
 </div>
 </body>
 </html>
+
 
 
 
