@@ -599,17 +599,13 @@ body {
 
 /*------------------------------image preview close button-------------------*/
 .upload-box {
-    width: 200px;
-    height: 200px;
+    width: 140px;
+    height: 140px;
     border: 2px dashed #ccc;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 10px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    margin-bottom: 15px;
     transition: 0.2s ease;
 }
 
@@ -617,8 +613,15 @@ body {
     border-color: #007bff;
 }
 
-#uploadText {
-    color: #777;
+.upload-box {
+    width: 140px;
+    height: 140px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.2s ease;
 }
 
 #previewImage {
@@ -802,6 +805,7 @@ body {
     }
 
 }
+
 
 
 
