@@ -441,6 +441,7 @@ window.goHome = function() {
 
     // Show welcome message
     const message = document.getElementById("welcomeMessage");
+    message.textContent = "Welcome to Thomas Traders Online Shopping Portal.";
     message.classList.add("show");
 
     setTimeout(function() {
@@ -543,6 +544,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
