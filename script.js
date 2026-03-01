@@ -397,7 +397,7 @@ function removeItem(index){
     updateCart();
 }
 /*----------------------------------------------------------------*/
-window.toggleMenu = function() {
+window.goHome = function() {
 
     // Scroll to top
     window.scrollTo({
@@ -502,12 +502,10 @@ async function deleteProduct(id){
     await deleteDoc(doc(db, "products", id));
 }
 // Make functions global for HTML onclick
-
-window.goHome = goHome;
-window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
