@@ -19,7 +19,7 @@ import {
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
-
+const dropdown = document.querySelector(".dropdown");
 if (isAdmin) {
     if (loginBtn) loginBtn.textContent = "Admin";
 } else {
@@ -33,19 +33,21 @@ if (adminPanel) {
     }
 }
 /*------------------------------------------Login Button------------------------------------------------------*/
-const loginBtn = document.querySelector('.login-btn');
-const dropdown = document.querySelector('.dropdown');
 
 if (loginBtn) {
-    loginBtn.addEventListener('click', function (e) {
+
+    // Change text depending on admin status
+    loginBtn.textContent = isAdmin ? "Admin" : "Login";
+
+    loginBtn.addEventListener("click", function (e) {
         e.stopPropagation();
         dropdown.style.display =
-            dropdown.style.display === 'block' ? 'none' : 'block';
+            dropdown.style.display === "block" ? "none" : "block";
     });
 }
 
-window.addEventListener('click', function () {
-    dropdown.style.display = 'none';
+window.addEventListener("click", function () {
+    if (dropdown) dropdown.style.display = "none";
 });
 /*-----------------------------------Admin ------------------------------------------*/
 const adminLink = document.getElementById("adminLink");
@@ -482,6 +484,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
