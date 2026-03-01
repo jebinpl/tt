@@ -135,6 +135,7 @@ function selectCategory(categoryName) {
 }
 
 const addProductsBtn = document.getElementById("addProductsBtn");
+const cancelProductBtn = document.getElementById("cancelProductBtn");
 const addProductSection = document.getElementById("addProductSection");
 
 
@@ -556,6 +557,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
