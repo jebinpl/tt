@@ -475,6 +475,29 @@ window.toggleMenu = function() {
     const menu = document.getElementById("menuDropdown");
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
+// ================= MY PROFILE LOGIC =================
+
+const myProfileLink = document.getElementById("myProfileLink");
+
+if (myProfileLink) {
+    myProfileLink.addEventListener("click", function () {
+
+        const isAdmin = localStorage.getItem("isAdmin") === "true";
+
+        if (!isAdmin) {
+            const message = document.getElementById("welcomeMessage");
+message.textContent = "Please login";
+message.classList.add("show");
+
+setTimeout(() => {
+    message.classList.remove("show");
+}, 2000);
+        } else {
+            message.textContent = "Hi Admin";
+        }
+
+    });
+}
 let scrollTimeout;
 let lastScrollY = window.scrollY;
 
@@ -532,6 +555,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
