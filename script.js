@@ -483,18 +483,19 @@ if (myProfileLink) {
     myProfileLink.addEventListener("click", function () {
 
         const isAdmin = localStorage.getItem("isAdmin") === "true";
+        const message = document.getElementById("welcomeMessage");
 
         if (!isAdmin) {
-            const message = document.getElementById("welcomeMessage");
-message.textContent = "Please login";
-message.classList.add("show");
-
-setTimeout(() => {
-    message.classList.remove("show");
-}, 2000);
+            message.textContent = "Please login";
         } else {
             message.textContent = "Hi Admin";
         }
+
+        message.classList.add("show");
+
+        setTimeout(() => {
+            message.classList.remove("show");
+        }, 2000);
 
     });
 }
@@ -555,6 +556,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
