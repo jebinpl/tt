@@ -397,7 +397,7 @@ function removeItem(index){
     updateCart();
 }
 /*----------------------------------------------------------------*/
-function goHome() {
+window.toggleMenu = function() {
 
     // Scroll to top
     window.scrollTo({
@@ -444,7 +444,7 @@ document.addEventListener("click", function (e) {
     }
 });
 /*----------------------------------------------------------------------------------------------------------------------------*/
-function toggleMenu() {
+window.toggleMenu = function() {
     const menu = document.getElementById("menuDropdown");
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
@@ -508,6 +508,7 @@ window.toggleMenu = toggleMenu;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
