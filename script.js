@@ -152,7 +152,6 @@ await addDoc(collection(db, "products"), {
 const uploadBox = document.getElementById("uploadBox");
 const fileInput = document.getElementById("productImage");
 const previewImage = document.getElementById("previewImage");
-const uploadText = document.getElementById("uploadText");
 const removeBtn = document.getElementById("removeImageBtn");
 
 if (uploadBox) {
@@ -163,25 +162,27 @@ if (uploadBox) {
 
     fileInput.addEventListener("change", () => {
         const file = fileInput.files[0];
+
         if (file) {
             const reader = new FileReader();
+
             reader.onload = function(e) {
                 previewImage.src = e.target.result;
                 previewImage.style.display = "block";
-                uploadText.style.display = "none";
-                removeBtn.style.display = "block";
+                removeBtn.style.display = "flex"; // ✅ show close button
             };
+
             reader.readAsDataURL(file);
         }
     });
 
     removeBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
+        e.stopPropagation(); // prevent reopening file dialog
+
         fileInput.value = "";
         previewImage.src = "";
         previewImage.style.display = "none";
-        uploadText.style.display = "block";
-        removeBtn.style.display = "none";
+        removeBtn.style.display = "none"; // ✅ hide close button
     });
 }
 /*-------------------------------cancel button--------------------*/
@@ -475,6 +476,7 @@ async function deleteProduct(id){
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
