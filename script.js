@@ -9,7 +9,11 @@ import {
     addDoc, 
     onSnapshot, 
     deleteDoc, 
-    doc 
+    doc,
+    updateDoc,
+    query,
+    orderBy,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 import { 
@@ -280,12 +284,16 @@ if (editingProductId) {
             // 🔹 Save product to Firestore
 const category = currentCategory;
 
-await addDoc(collection(db, "products"), {
+const productsRef = collection(db, "products");
+const snapshot = await getDocs(productsRef);
+
+await addDoc(productsRef, {
     image: imageURL,
     description: description,
     price: parseFloat(price),
     category: category,
-    createdAt: Date.now()
+    createdAt: Date.now(),
+    position: snapshot.size + 1
 });
 
             alert("Product Added Successfully");
@@ -581,8 +589,10 @@ function renderProductCard(id, product) {
 
     const card = document.createElement("div");
     card.className = "product-card";
-
-    if (isAdmin) {
+if (isAdmin) {
+    card.setAttribute("draggable", true);
+    card.dataset.id = id;
+}
 
         /* ===== ADMIN VIEW ===== */
         card.innerHTML = `
@@ -705,7 +715,8 @@ if (myProfileLink) {
 
 const productsContainer = document.getElementById("productsContainer");
 let allProducts = [];
-onSnapshot(collection(db, "products"), (snapshot) => {
+const q = query(collection(db, "products"), orderBy("position"));
+onSnapshot(q, (snapshot) => {
     allProducts = [];
     snapshot.forEach(docSnap => {
         allProducts.push({
@@ -745,12 +756,71 @@ window.addEventListener("click", function(e){
         imageModal.style.display = "none";
     }
 });
+/* ================= DRAG & DROP ADMIN SORT ================= */
 
+let draggedItem = null;
+
+document.addEventListener("dragstart", (e) => {
+    if (e.target.classList.contains("product-card") && isAdmin) {
+        draggedItem = e.target;
+        e.target.style.opacity = "0.5";
+    }
+});
+
+document.addEventListener("dragend", async (e) => {
+    if (draggedItem && isAdmin) {
+        draggedItem.style.opacity = "1";
+        await updatePositions();
+        draggedItem = null;
+    }
+});
+
+document.addEventListener("dragover", (e) => {
+    if (!isAdmin) return;
+
+    e.preventDefault();
+    const container = productsContainer;
+    const afterElement = getDragAfterElement(container, e.clientY);
+
+    if (afterElement == null) {
+        container.appendChild(draggedItem);
+    } else {
+        container.insertBefore(draggedItem, afterElement);
+    }
+});
+
+function getDragAfterElement(container, y) {
+    const elements = [...container.querySelectorAll(".product-card:not([style*='opacity'])")];
+
+    return elements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+async function updatePositions() {
+    const cards = document.querySelectorAll(".product-card");
+
+    for (let i = 0; i < cards.length; i++) {
+        const id = cards[i].dataset.id;
+
+        await updateDoc(doc(db, "products", id), {
+            position: i + 1
+        });
+    }
+}
 // Make functions global for HTML onclick
 window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
