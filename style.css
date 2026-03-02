@@ -819,6 +819,33 @@ body {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0,0,0,0.08);
 }
+/* ================= IMAGE POPUP ================= */
+
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.image-modal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+.close-image {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -898,6 +925,7 @@ body {
         padding: 8px;
     }
 }
+
 
 
 
