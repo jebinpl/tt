@@ -113,7 +113,7 @@ if (adminLoginBtn) {
 function selectCategory(categoryName) {
 
     currentCategory = categoryName;
-
+    renderProducts();
     let isAdmin = localStorage.getItem("isAdmin") === "true";
     if (!isAdmin) return;
 
@@ -465,7 +465,7 @@ function removeItem(index){
 /*----------------------------------------------------------------*/
 window.goHome = function() {
 currentCategory = "";
-productsContainer.innerHTML = "";
+renderProducts();
     // Scroll to top
     window.scrollTo({
         top: 0,
@@ -673,23 +673,32 @@ if (myProfileLink) {
 /* ================= LOAD PRODUCTS ================= */
 
 const productsContainer = document.getElementById("productsContainer");
+let allProducts = [];
 onSnapshot(collection(db, "products"), (snapshot) => {
-    productsContainer.innerHTML = "";
+    allProducts = [];
     snapshot.forEach(docSnap => {
-        const product = docSnap.data();
-        const id = docSnap.id;
-        // show only selected category
-        if (currentCategory && product.category !== currentCategory) return;
-        renderProductCard(id, product);
+        allProducts.push({
+            id: docSnap.id,
+            ...docSnap.data()
+        });
     });
-
+    renderProducts(); // 👈 redraw UI
 });
+function renderProducts() {
+    productsContainer.innerHTML = "";
+    allProducts.forEach(product => {
+        if (currentCategory &&
+            product.category !== currentCategory) return;
+        renderProductCard(product.id, product);
+    });
+}
 
 // Make functions global for HTML onclick
 window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
