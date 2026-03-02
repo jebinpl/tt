@@ -1,4 +1,5 @@
 console.log("Script Loaded Successfully");
+
 // ================= FIREBASE IMPORTS =================
 
 import { db, storage } from "./firebase.js";
@@ -18,7 +19,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 let isAdmin = localStorage.getItem("isAdmin") === "true";
-let currentCategory = "";
+let currentCategory = "Electricals";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
 const dropdown = document.querySelector(".dropdown");
@@ -112,9 +113,6 @@ if (adminLoginBtn) {
 function selectCategory(categoryName) {
 
     currentCategory = categoryName;
-
-    // reload products automatically
-    loadProductsByCategory();
 
     let isAdmin = localStorage.getItem("isAdmin") === "true";
     if (!isAdmin) return;
@@ -466,7 +464,8 @@ function removeItem(index){
 }
 /*----------------------------------------------------------------*/
 window.goHome = function() {
-
+currentCategory = "";
+productsContainer.innerHTML = "";
     // Scroll to top
     window.scrollTo({
         top: 0,
@@ -674,11 +673,6 @@ if (myProfileLink) {
 /* ================= LOAD PRODUCTS ================= */
 
 const productsContainer = document.getElementById("productsContainer");
-
-/* Listen realtime */
-function loadProductsByCategory(){
-    productsContainer.innerHTML = "";
-}
 onSnapshot(collection(db, "products"), (snapshot) => {
     productsContainer.innerHTML = "";
     snapshot.forEach(docSnap => {
@@ -696,6 +690,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
