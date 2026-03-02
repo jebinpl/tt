@@ -23,7 +23,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 let isAdmin = localStorage.getItem("isAdmin") === "true";
-let currentCategory = "Electricals";
+let currentCategory = "";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
 const dropdown = document.querySelector(".dropdown");
@@ -729,8 +729,10 @@ onSnapshot(q, (snapshot) => {
 function renderProducts() {
     productsContainer.innerHTML = "";
     allProducts.forEach(product => {
-        if (currentCategory &&
-            product.category !== currentCategory) return;
+        if (currentCategory !== "" &&
+            product.category !== currentCategory) {
+            return;
+        }
         renderProductCard(product.id, product);
     });
 }
@@ -820,6 +822,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
