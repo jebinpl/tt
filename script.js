@@ -1,3 +1,4 @@
+console.log("Script Loaded Successfully");
 // ================= FIREBASE IMPORTS =================
 
 import { db, storage } from "./firebase.js";
@@ -302,22 +303,22 @@ if (customerLink) {
 }
 
 /* Close Customer Modal */
-closeCustomer.addEventListener("click", function () {
-    customerModal.style.display = "none";
-
-    // Reset to phone section when closing
-    phoneSection.style.display = "block";
-    otpSection.style.display = "none";
-});
+if (closeCustomer) {
+    closeCustomer.addEventListener("click", function () {
+        customerModal.style.display = "none";
+        phoneSection.style.display = "block";
+        otpSection.style.display = "none";
+    });
+}
 
 /* Show OTP Section */
-getOtpBtn.addEventListener("click", function () {
-    phoneSection.style.display = "none";
-    otpSection.style.display = "block";
-
-    // Focus first OTP box automatically
-    document.querySelector(".otp-boxes input").focus();
-});
+if (getOtpBtn) {
+    getOtpBtn.addEventListener("click", function () {
+        phoneSection.style.display = "none";
+        otpSection.style.display = "block";
+        document.querySelector(".otp-boxes input").focus();
+    });
+}
 
 /* Close when clicking outside modal */
 window.addEventListener("click", function (e) {
@@ -390,9 +391,11 @@ if (cartLink) {
 });}
 
 /* Close Cart */
-closeCart.addEventListener("click", function(){
-    cartModal.style.display = "none";
-});
+if (closeCart) {
+    closeCart.addEventListener("click", function(){
+        cartModal.style.display = "none";
+    });
+}
 
 /* Add To Cart */
 function addToCart(name, price){
@@ -627,6 +630,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
