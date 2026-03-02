@@ -233,23 +233,39 @@ if (uploadBox) {
     uploadBox.addEventListener("click", () => {
         fileInput.click();
     });
+/*--------------------------------------------------------------------storage rules-------------------------------------*/
+fileInput.addEventListener("change", () => {
 
-    fileInput.addEventListener("change", () => {
-        const file = fileInput.files[0];
+    const file = fileInput.files[0];
+    if (!file) return;
 
-        if (file) {
-            const reader = new FileReader();
+    /* ✅ IMAGE SIZE LIMIT (300 KB) */
+    const maxSize = 300 * 1024; // 300KB
 
-            reader.onload = function(e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = "block";
-                removeBtn.style.display = "flex"; // ✅ show close button
-                document.querySelector(".upload-placeholder").style.display = "none";
-            };
+    if (file.size > maxSize) {
+        alert("Image must be less than 300KB");
 
-            reader.readAsDataURL(file);
-        }
-    });
+        fileInput.value = "";
+        previewImage.src = "";
+        previewImage.style.display = "none";
+        removeBtn.style.display = "none";
+        document.querySelector(".upload-placeholder").style.display = "block";
+
+        return;
+    }
+
+    /* ✅ PREVIEW IMAGE */
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        previewImage.style.display = "block";
+        removeBtn.style.display = "flex";
+        document.querySelector(".upload-placeholder").style.display = "none";
+    };
+
+    reader.readAsDataURL(file);
+});
 
     removeBtn.addEventListener("click", (e) => {
         e.stopPropagation(); // prevent reopening file dialog
@@ -630,6 +646,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
