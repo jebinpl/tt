@@ -179,7 +179,7 @@ if(!currentCategory){
     return;
 }
 
-if(!file || !description || !price){
+if(!description || !price){
     alert("Fill all product fields");
     return;
 }
@@ -703,6 +703,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
