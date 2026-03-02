@@ -560,8 +560,8 @@ function renderProductCard(id, product) {
 
         /* ===== ADMIN VIEW ===== */
         card.innerHTML = `
-            <img src="${product.image}">
-            
+            <img src="${product.image}" class="clickable-image"
+     onclick="openImageModal('${product.image}')">      
             <div class="product-info">
                 <strong>${product.description}</strong>
                 <p>₹${product.price}</p>
@@ -580,8 +580,8 @@ function renderProductCard(id, product) {
 
         /* ===== CUSTOMER VIEW ===== */
         card.innerHTML = `
-            <img src="${product.image}">
-            
+            <img src="${product.image}" class="clickable-image"
+     onclick="openImageModal('${product.image}')">    
             <div class="product-info">
                 <strong>${product.description}</strong>
                 <p>₹${product.price}</p>
@@ -697,12 +697,35 @@ function renderProducts() {
         renderProductCard(product.id, product);
     });
 }
+/* ================= IMAGE POPUP LOGIC ================= */
+
+const imageModal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+const closeImageBtn = document.querySelector(".close-image");
+
+window.openImageModal = function(imageSrc){
+    modalImage.src = imageSrc;
+    imageModal.style.display = "flex";
+};
+
+if(closeImageBtn){
+    closeImageBtn.addEventListener("click", function(){
+        imageModal.style.display = "none";
+    });
+}
+
+window.addEventListener("click", function(e){
+    if(e.target === imageModal){
+        imageModal.style.display = "none";
+    }
+});
 
 // Make functions global for HTML onclick
 window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
