@@ -171,10 +171,15 @@ if (addProductBtn) {
         const description = document.getElementById("productDescription").value;
         const price = document.getElementById("productPrice").value;
 
-        if(!file || !description || !price || !currentCategory){
-            alert("Fill all fields");
-            return;
-        }
+if(!currentCategory){
+    alert("Please select category first");
+    return;
+}
+
+if(!file || !description || !price){
+    alert("Fill all product fields");
+    return;
+}
 
         try {
 
@@ -622,6 +627,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
