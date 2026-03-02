@@ -111,11 +111,9 @@ if (adminLoginBtn) {
 
 // CATEGORY SELECTION FUNCTION
 function selectCategory(categoryName) {
-
+    currentCategory = categoryName;
     let isAdmin = localStorage.getItem("isAdmin") === "true";
-
     if (!isAdmin) return; // Only admin can see this section
-
     const message = document.getElementById("adminMessage");
     const heading = document.getElementById("categoryHeading");
     const controls = document.getElementById("categoryControls");
@@ -192,10 +190,15 @@ if (addProductBtn) {
             const imageURL = await getDownloadURL(imageRef);
 
             // 🔹 Save product to Firestore
+const category =
+    document.getElementById("categoryHeading").textContent;
+
 await addDoc(collection(db, "products"), {
     image: imageURL,
     description: description,
-    price: parseFloat(price)
+    price: parseFloat(price),
+    category: category,
+    createdAt: Date.now()
 });
 
             alert("Product Added Successfully");
@@ -479,7 +482,93 @@ document.addEventListener("click", function (e) {
         dropup.classList.remove("show");
     }
 });
-/*----------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------Product Card UI Generator---------------------------------------------------------------------*/
+function renderProductCard(id, product) {
+
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    if (isAdmin) {
+
+        /* ===== ADMIN VIEW ===== */
+        card.innerHTML = `
+            <img src="${product.image}">
+            
+            <div class="product-info">
+                <strong>${product.description}</strong>
+                <p>₹${product.price}</p>
+            </div>
+
+            <div class="product-actions">
+                <button class="edit-btn"
+                    onclick="editProduct('${id}')">Edit</button>
+
+                <button class="delete-btn"
+                    onclick="deleteProduct('${id}')">Delete</button>
+            </div>
+        `;
+
+    } else {
+
+        /* ===== CUSTOMER VIEW ===== */
+        card.innerHTML = `
+            <img src="${product.image}">
+            
+            <div class="product-info">
+                <strong>${product.description}</strong>
+                <p>₹${product.price}</p>
+            </div>
+
+            <div class="product-actions">
+                <button onclick="decreaseQty(this)">-</button>
+                <span class="qty">1</span>
+                <button onclick="increaseQty(this)">+</button>
+
+                <button class="buy-btn"
+                    onclick="addToCart('${product.description}', ${product.price})">
+                    Buy Now
+                </button>
+            </div>
+        `;
+    }
+
+    productsContainer.appendChild(card);
+}
+/*--------------------------------Delete Product(Admin)--------------------*/
+window.deleteProduct = async function(id){
+
+    if(!confirm("Delete this product?")) return;
+
+    await deleteDoc(doc(db, "products", id));
+}
+/*--------------------------------------Edit Product---------------------*/
+window.editProduct = function(id){
+
+    const newPrice = prompt("Enter new price");
+
+    if(!newPrice) return;
+
+    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js")
+    .then(({ updateDoc }) => {
+
+        updateDoc(doc(db,"products",id),{
+            price: parseFloat(newPrice)
+        });
+
+    });
+}
+/*--------------------------Quantity Buttons--------------------------*/
+window.increaseQty = function(btn){
+    const qty = btn.parentElement.querySelector(".qty");
+    qty.textContent = Number(qty.textContent) + 1;
+}
+
+window.decreaseQty = function(btn){
+    const qty = btn.parentElement.querySelector(".qty");
+    let value = Number(qty.textContent);
+    if(value > 1) qty.textContent = value - 1;
+}
+/*---------------------------------Toggle---------------------------*/
 window.toggleMenu = function() {
     const menu = document.getElementById("menuDropdown");
     menu.style.display = menu.style.display === "block" ? "none" : "block";
@@ -541,11 +630,32 @@ onSnapshot(collection(db, "products"), (snapshot) => {
 async function deleteProduct(id){
     await deleteDoc(doc(db, "products", id));
 }
+
+/* ================= LOAD PRODUCTS ================= */
+
+const productsContainer = document.getElementById("productsContainer");
+
+let currentCategory = "";
+
+/* Listen realtime */
+onSnapshot(collection(db, "products"), (snapshot) => {
+    productsContainer.innerHTML = "";
+    snapshot.forEach(docSnap => {
+        const product = docSnap.data();
+        const id = docSnap.id;
+        // show only selected category
+        if (currentCategory && product.category !== currentCategory) return;
+        renderProductCard(id, product);
+    });
+
+});
+
 // Make functions global for HTML onclick
 window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
