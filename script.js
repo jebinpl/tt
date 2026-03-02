@@ -64,7 +64,8 @@ if (adminLink) {
     if (isAdmin) {
         // Logout
         localStorage.removeItem("isAdmin");
-        location.reload();
+        adminPanel.style.display = "block";
+loginBtn.textContent = "Admin";
     } else {
         // Open login modal
         adminModal.style.display = "block";
@@ -541,9 +542,11 @@ async function deleteProduct(id){
     await deleteDoc(doc(db, "products", id));
 }
 // Make functions global for HTML onclick
+window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
