@@ -715,16 +715,25 @@ if (myProfileLink) {
 
 const productsContainer = document.getElementById("productsContainer");
 let allProducts = [];
-const q = query(collection(db, "products"), orderBy("position"));
-onSnapshot(q, (snapshot) => {
+
+onSnapshot(collection(db, "products"), (snapshot) => {
+
     allProducts = [];
+
     snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+
         allProducts.push({
             id: docSnap.id,
-            ...docSnap.data()
+            position: data.position || 0, // fallback if missing
+            ...data
         });
     });
-    renderProducts(); // 👈 redraw UI
+
+    // sort manually instead of Firestore
+    allProducts.sort((a, b) => a.position - b.position);
+
+    renderProducts();
 });
 function renderProducts() {
     productsContainer.innerHTML = "";
@@ -822,6 +831,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
