@@ -610,7 +610,6 @@ window.deleteProduct = async function(id){
     await deleteDoc(doc(db, "products", id));
 }
 /*--------------------------------------Edit Product---------------------*/
-window.editProduct = async function(id){
 /*--------------------------------------Edit Product (Use Add UI)---------------------*/
 window.editProduct = function(id){
 
@@ -635,62 +634,6 @@ window.editProduct = function(id){
     // Change button text
     addProductBtn.textContent = "Update Product";
 };
-    // select new image
-    const imageInput = document.createElement("input");
-    imageInput.type = "file";
-    imageInput.accept = "image/*";
-
-    imageInput.click();
-
-    imageInput.onchange = async function(){
-
-        const file = imageInput.files[0];
-
-        const newDescription = prompt("Enter new description");
-        if(newDescription === null) return;
-
-        const newPrice = prompt("Enter new price");
-        if(newPrice === null) return;
-
-        try {
-
-            let imageURL = null;
-
-            // ✅ If new image selected → upload
-            if(file){
-
-                const imageRef = ref(
-                    storage,
-                    "products/" + Date.now() + "_" + file.name
-                );
-
-                await uploadBytes(imageRef, file);
-                imageURL = await getDownloadURL(imageRef);
-            }
-
-            const { updateDoc } = await import(
-                "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"
-            );
-
-            // ✅ Update Firestore
-            const updateData = {
-                description: newDescription,
-                price: parseFloat(newPrice)
-            };
-
-            if(imageURL){
-                updateData.image = imageURL;
-            }
-
-            await updateDoc(doc(db,"products",id), updateData);
-
-            alert("Product Updated ✅");
-
-        } catch(error){
-            alert(error.message);
-        }
-    };
-}
 /*--------------------------Quantity Buttons--------------------------*/
 window.increaseQty = function(btn){
     const qty = btn.parentElement.querySelector(".qty");
@@ -760,6 +703,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
