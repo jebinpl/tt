@@ -27,12 +27,7 @@ if (isAdmin) {
     if (loginBtn) loginBtn.textContent = "Login";
 }
 if (adminPanel) {
-    if (isAdmin) {
-        adminPanel.style.display = "none";
-        location.reload();
-    } else {
-        adminPanel.style.display = "none";
-    }
+    adminPanel.style.display = isAdmin ? "block" : "none";
 }
 /*------------------------------------------Login Button------------------------------------------------------*/
 
@@ -627,6 +622,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
