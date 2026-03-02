@@ -589,15 +589,15 @@ function renderProductCard(id, product) {
 
     const card = document.createElement("div");
     card.className = "product-card";
-if (isAdmin) {
-    card.setAttribute("draggable", true);
-    card.dataset.id = id;
-}
+
+    if (isAdmin) {
+        card.setAttribute("draggable", true);
+        card.dataset.id = id;
 
         /* ===== ADMIN VIEW ===== */
         card.innerHTML = `
             <img src="${product.image}" class="clickable-image"
-     onclick="openImageModal('${product.image}')">      
+                onclick="openImageModal('${product.image}')">      
             <div class="product-info">
                 <strong>${product.description}</strong>
                 <p>₹${product.price}</p>
@@ -617,7 +617,7 @@ if (isAdmin) {
         /* ===== CUSTOMER VIEW ===== */
         card.innerHTML = `
             <img src="${product.image}" class="clickable-image"
-     onclick="openImageModal('${product.image}')">    
+                onclick="openImageModal('${product.image}')">    
             <div class="product-info">
                 <strong>${product.description}</strong>
                 <p>₹${product.price}</p>
@@ -820,6 +820,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
