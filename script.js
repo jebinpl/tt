@@ -202,12 +202,17 @@ await addDoc(collection(db, "products"), {
 });
 
             alert("Product Added Successfully");
+            addProductSection.style.display = "none";
 
             // Optional: Clear form
             
             document.getElementById("productImage").value = "";
             document.getElementById("productDescription").value = "";
             document.getElementById("productPrice").value = "";
+            previewImage.src = "";
+            previewImage.style.display = "none";
+            removeBtn.style.display = "none";
+            document.querySelector(".upload-placeholder").style.display = "block";
 
         } catch (error) {
             alert(error.message);
@@ -622,6 +627,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
