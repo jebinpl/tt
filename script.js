@@ -169,6 +169,10 @@ if (addProductBtn) {
 
         
         const file = document.getElementById("productImage").files[0];
+        if (file.size > 300 * 1024) {
+    alert("Image must be under 300KB");
+    return;
+}
         const description = document.getElementById("productDescription").value;
         const price = document.getElementById("productPrice").value;
 
@@ -646,6 +650,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
