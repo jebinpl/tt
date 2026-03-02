@@ -110,25 +110,25 @@ if (adminLoginBtn) {
 
 // CATEGORY SELECTION FUNCTION
 function selectCategory(categoryName) {
+
     currentCategory = categoryName;
+
+    // reload products automatically
+    loadProductsByCategory();
+
     let isAdmin = localStorage.getItem("isAdmin") === "true";
-    if (!isAdmin) return; // Only admin can see this section
+    if (!isAdmin) return;
+
+    // ADMIN UI ONLY BELOW
     const message = document.getElementById("adminMessage");
     const heading = document.getElementById("categoryHeading");
     const controls = document.getElementById("categoryControls");
     const formSection = document.getElementById("addProductSection");
 
-    // Hide message
     message.style.display = "none";
-
-    // Show heading
     heading.style.display = "block";
     heading.textContent = categoryName;
-
-    // Show Add Products button
     controls.style.display = "block";
-
-    // Hide form initially
     formSection.style.display = "none";
 }
 
@@ -676,6 +676,9 @@ if (myProfileLink) {
 const productsContainer = document.getElementById("productsContainer");
 
 /* Listen realtime */
+function loadProductsByCategory(){
+    productsContainer.innerHTML = "";
+}
 onSnapshot(collection(db, "products"), (snapshot) => {
     productsContainer.innerHTML = "";
     snapshot.forEach(docSnap => {
@@ -693,6 +696,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
