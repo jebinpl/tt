@@ -322,23 +322,6 @@ fileInput.addEventListener("change", () => {
 
     const file = fileInput.files[0];
     if (!file) return;
-
-    /* ✅ IMAGE SIZE LIMIT (300 KB) */
-    const maxSize = 300 * 1024; // 300KB
-
-    if (file.size > maxSize) {
-        alert("Image must be less than 300KB");
-
-        fileInput.value = "";
-        previewImage.src = "";
-        previewImage.style.display = "none";
-        removeBtn.style.display = "none";
-        document.querySelector(".upload-placeholder").style.display = "block";
-
-        return;
-    }
-
-    /* ✅ PREVIEW IMAGE */
     const reader = new FileReader();
 
     reader.onload = function(e) {
@@ -768,6 +751,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
