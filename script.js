@@ -597,39 +597,6 @@ if (myProfileLink) {
 
     });
 }
-// ================= LOAD PRODUCTS =================
-
-const productsContainer = document.getElementById("productsContainer");
-
-onSnapshot(collection(db, "products"), (snapshot) => {
-
-    productsContainer.innerHTML = "";
-
-    snapshot.forEach((docSnap) => {
-
-        const p = docSnap.data();
-        const id = docSnap.id;
-
-        const div = document.createElement("div");
-        div.classList.add("product-card");
-
-        div.innerHTML = `
-            <img src="${p.image}" alt="Product Image">
-            <h4>${p.description}</h4>
-            <p>₹${p.price}</p>
-            ${isAdmin ? `<button onclick="deleteProduct('${id}')">Delete</button>` : ""}
-            <button onclick="addToCart('${p.description}', ${p.price})">Buy Now</button>
-        `;
-
-        productsContainer.appendChild(div);
-    });
-
-});
-// ================= DELETE PRODUCT =================
-
-async function deleteProduct(id){
-    await deleteDoc(doc(db, "products", id));
-}
 
 /* ================= LOAD PRODUCTS ================= */
 
@@ -655,6 +622,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
