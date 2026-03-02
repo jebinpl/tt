@@ -750,6 +750,10 @@ body {
 #productsContainer {
     padding: 10px;
 }
+.products-area{
+    max-width: 800px;
+    margin: 0 auto;
+}
 
 .product-card {
     background: #f2e7e7;
@@ -894,6 +898,7 @@ body {
         padding: 8px;
     }
 }
+
 
 
 
