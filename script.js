@@ -28,7 +28,8 @@ if (isAdmin) {
 }
 if (adminPanel) {
     if (isAdmin) {
-        adminPanel.style.display = "block";
+        adminPanel.style.display = "none";
+        location.reload();
     } else {
         adminPanel.style.display = "none";
     }
@@ -607,8 +608,6 @@ if (myProfileLink) {
 
 const productsContainer = document.getElementById("productsContainer");
 
-let currentCategory = "";
-
 /* Listen realtime */
 onSnapshot(collection(db, "products"), (snapshot) => {
     productsContainer.innerHTML = "";
@@ -627,6 +626,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
