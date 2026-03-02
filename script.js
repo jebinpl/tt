@@ -48,10 +48,6 @@ if (loginBtn) {
             dropdown.style.display === "block" ? "none" : "block";
     });
 }
-
-window.addEventListener("click", function () {
-    if (dropdown) dropdown.style.display = "none";
-});
 /*-----------------------------------Admin ------------------------------------------*/
 const adminLink = document.getElementById("adminLink");
 const adminModal = document.getElementById("adminModal");
@@ -682,9 +678,12 @@ window.decreaseQty = function(btn){
     if(value > 1) qty.textContent = value - 1;
 }
 /*---------------------------------Toggle---------------------------*/
-window.toggleMenu = function() {
+window.toggleMenu = function(e) {
+    if (e) e.stopPropagation();
     const menu = document.getElementById("menuDropdown");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
+    if (!menu) return;
+    menu.style.display =
+        menu.style.display === "block" ? "none" : "block";
 }
 // ================= MY PROFILE LOGIC =================
 
@@ -826,11 +825,23 @@ async function updatePositions() {
         });
     }
 }
+document.addEventListener("click", function (e) {
+
+    const menu = document.getElementById("menuDropdown");
+    const menuBtn = document.querySelector(".menu-btn");
+
+    if (!menu || !menuBtn) return;
+
+    if (!menu.contains(e.target) && !menuBtn.contains(e.target)) {
+        menu.style.display = "none";
+    }
+});
 // Make functions global for HTML onclick
 window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
