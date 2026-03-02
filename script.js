@@ -61,18 +61,19 @@ if (adminLink && isAdmin) {
 }
 if (adminLink) {
     adminLink.addEventListener("click", function(e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    if (isAdmin) {
-        // Logout
-        localStorage.removeItem("isAdmin");
-        adminPanel.style.display = "block";
-loginBtn.textContent = "Admin";
-    } else {
-        // Open login modal
-        adminModal.style.display = "block";
-    }
-});
+        const isAdminNow = localStorage.getItem("isAdmin") === "true";
+
+        if (isAdminNow) {
+            // ✅ Logout
+            localStorage.removeItem("isAdmin");
+            location.reload();
+        } else {
+            // ✅ Open login modal
+            adminModal.style.display = "block";
+        }
+    });
 }
 if (closeAdmin) {
     closeAdmin.addEventListener("click", function() {
@@ -626,6 +627,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
