@@ -1,5 +1,5 @@
 console.log("Script Loaded Successfully");
-
+let editingProductId = null;
 // ================= FIREBASE IMPORTS =================
 
 import { db, storage } from "./firebase.js";
@@ -167,7 +167,7 @@ if (addProductBtn) {
 
         
         const file = document.getElementById("productImage").files[0];
-        if (file.size > 300 * 1024) {
+if (file && file.size > 300 * 1024) {
     alert("Image must be under 300KB");
     return;
 }
@@ -183,7 +183,46 @@ if(!file || !description || !price){
     alert("Fill all product fields");
     return;
 }
+// ================= UPDATE MODE =================
+if (editingProductId) {
 
+    const { updateDoc } = await import(
+        "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"
+    );
+
+    const updateData = {
+        description: description,
+        price: parseFloat(price),
+        category: currentCategory
+    };
+
+    // If new image selected
+    if (file) {
+        const imageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
+        await uploadBytes(imageRef, file);
+        const imageURL = await getDownloadURL(imageRef);
+        updateData.image = imageURL;
+    }
+
+    await updateDoc(doc(db, "products", editingProductId), updateData);
+
+    alert("Product Updated Successfully ✅");
+
+    editingProductId = null;
+    addProductBtn.textContent = "Add Product";
+
+    // Reset UI
+    addProductSection.style.display = "none";
+    document.getElementById("productImage").value = "";
+    document.getElementById("productDescription").value = "";
+    document.getElementById("productPrice").value = "";
+    previewImage.src = "";
+    previewImage.style.display = "none";
+    removeBtn.style.display = "none";
+    document.querySelector(".upload-placeholder").style.display = "block";
+
+    return; // 🔥 STOP here (don’t continue to addDoc)
+}
         try {
 
             // 🔹 Create image reference
@@ -572,7 +611,30 @@ window.deleteProduct = async function(id){
 }
 /*--------------------------------------Edit Product---------------------*/
 window.editProduct = async function(id){
+/*--------------------------------------Edit Product (Use Add UI)---------------------*/
+window.editProduct = function(id){
 
+    const product = allProducts.find(p => p.id === id);
+    if (!product) return;
+
+    editingProductId = id;
+
+    // Show Add Product UI
+    addProductSection.style.display = "block";
+
+    // Fill existing data
+    document.getElementById("productDescription").value = product.description;
+    document.getElementById("productPrice").value = product.price;
+
+    // Show existing image preview
+    previewImage.src = product.image;
+    previewImage.style.display = "block";
+    removeBtn.style.display = "flex";
+    document.querySelector(".upload-placeholder").style.display = "none";
+
+    // Change button text
+    addProductBtn.textContent = "Update Product";
+};
     // select new image
     const imageInput = document.createElement("input");
     imageInput.type = "file";
@@ -698,6 +760,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
