@@ -158,6 +158,50 @@ document.querySelectorAll(".category-link").forEach(link => {
         }
     });
 });
+/* ================= IMAGE AUTO COMPRESS ================= */
+
+async function compressImage(file, maxSizeKB = 300) {
+    return new Promise((resolve) => {
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(file);
+
+        reader.onload = function (event) {
+
+            const img = new Image();
+            img.src = event.target.result;
+
+            img.onload = function () {
+
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx.drawImage(img, 0, 0);
+
+                let quality = 0.9;
+
+                function reduceQuality() {
+                    canvas.toBlob((blob) => {
+
+                        if (blob.size / 1024 > maxSizeKB && quality > 0.1) {
+                            quality -= 0.05;
+                            reduceQuality();
+                        } else {
+                            resolve(blob);
+                        }
+
+                    }, "image/jpeg", quality);
+                }
+
+                reduceQuality();
+            };
+        };
+    });
+}
 // ================= ADD PRODUCT =================
 
 const addProductBtn = document.getElementById("addProductBtn");
@@ -167,10 +211,7 @@ if (addProductBtn) {
 
         
         const file = document.getElementById("productImage").files[0];
-if (file && file.size > 300 * 1024) {
-    alert("Image must be under 300KB");
-    return;
-}
+
         const description = document.getElementById("productDescription").value;
         const price = document.getElementById("productPrice").value;
 
@@ -199,7 +240,8 @@ if (editingProductId) {
     // If new image selected
     if (file) {
         const imageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
-        await uploadBytes(imageRef, file);
+        const compressedImage = await compressImage(file, 300);
+        await uploadBytes(imageRef, compressedImage);
         const imageURL = await getDownloadURL(imageRef);
         updateData.image = imageURL;
     }
@@ -229,7 +271,8 @@ if (editingProductId) {
             const imageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
 
             // 🔹 Upload image to Firebase Storage
-            await uploadBytes(imageRef, file);
+            const compressedImage = await compressImage(file, 300);
+            await uploadBytes(imageRef, compressedImage);
 
             // 🔹 Get image URL
             const imageURL = await getDownloadURL(imageRef);
@@ -725,6 +768,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
