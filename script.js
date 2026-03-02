@@ -17,6 +17,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 let isAdmin = localStorage.getItem("isAdmin") === "true";
+let currentCategory = "";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
 const dropdown = document.querySelector(".dropdown");
@@ -173,7 +174,7 @@ if (addProductBtn) {
         const description = document.getElementById("productDescription").value;
         const price = document.getElementById("productPrice").value;
 
-        if(!file || !description || !price){
+        if(!file || !description || !price || !currentCategory){
             alert("Fill all fields");
             return;
         }
@@ -190,8 +191,7 @@ if (addProductBtn) {
             const imageURL = await getDownloadURL(imageRef);
 
             // 🔹 Save product to Firestore
-const category =
-    document.getElementById("categoryHeading").textContent;
+const category = currentCategory;
 
 await addDoc(collection(db, "products"), {
     image: imageURL,
@@ -627,6 +627,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
