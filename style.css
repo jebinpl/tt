@@ -387,6 +387,52 @@ body {
 .admin-btn:hover {
     background-color: #c0392b;
 }
+.logout-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.logout-box {
+    background: white;
+    padding: 25px;
+    width: 300px;
+    border-radius: 10px;
+    text-align: center;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.logout-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cancel-btn {
+    padding: 8px 15px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.confirm-btn {
+    padding: 8px 15px;
+    border: none;
+    background: #e74c3c;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+@keyframes fadeIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 /* ================================================= */
 /* ================= CART MODAL ==================== */
 /* ================================================= */
@@ -926,6 +972,7 @@ body {
         padding: 8px;
     }
 }
+
 
 
 
