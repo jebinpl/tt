@@ -58,9 +58,13 @@ if (adminPanel) {
 /*------------------------------------------Login Button------------------------------------------------------*/
 
 if (loginBtn) {
-
-    // Change text depending on admin status
-    loginBtn.textContent = isAdmin ? "Admin" : "Login";
+    if (isAdmin) {
+        loginBtn.textContent = "Admin";
+    } else if (customerPhone) {
+        loginBtn.textContent = "Logout";
+    } else {
+        loginBtn.textContent = "Login";
+    }
 
 loginBtn.addEventListener("click", function (e) {
 
@@ -457,6 +461,7 @@ getOtpBtn.addEventListener("click", async function () {
 });
 
 const verifyBtn = otpSection.querySelector("button");
+
 verifyBtn.addEventListener("click", async function () {
 
     const otpInputs = document.querySelectorAll(".otp-boxes input");
@@ -503,68 +508,9 @@ verifyBtn.addEventListener("click", async function () {
         alert("Invalid OTP ❌");
     }
 
-});verifyBtn.addEventListener("click", async function () {
-
-    const otpInputs = document.querySelectorAll(".otp-boxes input");
-    let otp = "";
-
-    otpInputs.forEach(input => {
-        otp += input.value;
-    });
-
-    try {
-
-        const result = await window.confirmationResult.confirm(otp);
-        const user = result.user;
-        const phoneNumber = user.phoneNumber;
-
-        localStorage.setItem("customerPhone", phoneNumber);
-        customerModal.style.display = "none";
-
-        const userRef = doc(db, "customers", phoneNumber);
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists()) {
-
-            const data = userSnap.data();
-            document.getElementById("welcomeMessage").textContent =
-                `Hi ${data.name} 👋`;
-
-        } else {
-
-            const name = prompt("Enter your name:");
-            const address = prompt("Enter your delivery address:");
-
-            await setDoc(userRef, {
-                name: name,
-                address: address,
-                phone: phoneNumber
-            });
-
-            document.getElementById("welcomeMessage").textContent =
-                `Hi ${name} 👋`;
-        }
-
-    } catch (error) {
-        alert("Invalid OTP ❌");
-    }
-
 });
-} else {
-
-    // ❗ New customer → ask details
-    const name = prompt("Enter your name:");
-    const address = prompt("Enter your delivery address:");
-
-    await setDoc(userRef, {
-        name: name,
-        address: address,
-        phone: phoneNumber
-    });
-
-    document.getElementById("welcomeMessage").textContent =
-        `Hi ${name} 👋`;
-}
+    
+    
 /* Close when clicking outside modal */
 window.addEventListener("click", function (e) {
     if (e.target === customerModal) {
@@ -1017,10 +963,12 @@ window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
 window.customerLogout = function () {
     localStorage.removeItem("customerPhone");
-    auth.signOut();
+    import { signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+signOut(auth);
     alert("Logged out successfully");
     location.reload();
 };
+
 
 
 
