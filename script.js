@@ -27,7 +27,7 @@ import {
 import { 
     getAuth, 
     RecaptchaVerifier, 
-    signInWithPhoneNumber 
+    signInWithPhoneNumber, 
     signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 const auth = getAuth();
@@ -970,6 +970,7 @@ window.customerLogout = function () {
     alert("Logged out successfully");
     location.reload();
 };
+
 
 
 
