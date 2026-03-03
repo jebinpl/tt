@@ -964,25 +964,42 @@ window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
 
 // ✅ Customer Logout
+const logoutModal = document.getElementById("logoutModal");
+const confirmLogoutBtn = document.getElementById("confirmLogout");
+const cancelLogoutBtn = document.getElementById("cancelLogout");
+
+// Open modal instead of direct logout
 window.customerLogout = function () {
-
-    const confirmLogout = confirm("Are you sure you want to log out?");
-
-    if (!confirmLogout) {
-        return; // ❌ If user clicks "No", stop here
-    }
-
-    localStorage.removeItem("customerPhone");
-
-    signOut(auth)
-        .then(() => {
-            alert("Logged out successfully");
-            location.reload();
-        })
-        .catch((error) => {
-            console.error("Logout error:", error);
-        });
+    logoutModal.style.display = "flex";
 };
+
+// Cancel button
+if (cancelLogoutBtn) {
+    cancelLogoutBtn.addEventListener("click", function () {
+        logoutModal.style.display = "none";
+    });
+}
+
+// Confirm logout
+if (confirmLogoutBtn) {
+    confirmLogoutBtn.addEventListener("click", function () {
+
+        localStorage.removeItem("customerPhone");
+
+        signOut(auth).then(() => {
+            logoutModal.style.display = "none";
+            location.reload();
+        });
+
+    });
+}
+
+// Close when clicking outside box
+window.addEventListener("click", function(e){
+    if (e.target === logoutModal) {
+        logoutModal.style.display = "none";
+    }
+});
 
 
 
