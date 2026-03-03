@@ -1,5 +1,7 @@
 
 let editingProductId = null;
+import { getDoc, setDoc } from 
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 // ================= FIREBASE IMPORTS =================
 console.log("Script Loaded Successfully");
 import { db, storage } from "./firebase.js";
@@ -438,14 +440,43 @@ verifyBtn.addEventListener("click", async function () {
     });
     try {
         const result = await window.confirmationResult.confirm(otp);
-        const user = result.user;
-        alert("Login Successful ✅");
-        customerModal.style.display = "none";
-    } catch (error) {
-        alert("Invalid OTP ❌");
-    }
-});
+const user = result.user;
+const phoneNumber = user.phoneNumber;
 
+localStorage.setItem("customerPhone", phoneNumber);
+
+customerModal.style.display = "none";
+
+// 🔥 Check Firestore for existing customer
+import { getDoc, setDoc } from 
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const userRef = doc(db, "customers", phoneNumber);
+const userSnap = await getDoc(userRef);
+
+if (userSnap.exists()) {
+
+    // ✅ Existing customer
+    const data = userSnap.data();
+
+    document.getElementById("welcomeMessage").textContent =
+        `Hi ${data.name} 👋`;
+
+} else {
+
+    // ❗ New customer → ask details
+    const name = prompt("Enter your name:");
+    const address = prompt("Enter your delivery address:");
+
+    await setDoc(userRef, {
+        name: name,
+        address: address,
+        phone: phoneNumber
+    });
+
+    document.getElementById("welcomeMessage").textContent =
+        `Hi ${name} 👋`;
+}
 /* Close when clicking outside modal */
 window.addEventListener("click", function (e) {
     if (e.target === customerModal) {
@@ -734,11 +765,27 @@ if (myProfileLink) {
         const isAdmin = localStorage.getItem("isAdmin") === "true";
         const message = document.getElementById("welcomeMessage");
 
-        if (isAdmin) {
-            message.textContent = "Hi Admin 👋";
-        } else {
-            message.textContent = "Please login";
+const phone = localStorage.getItem("customerPhone");
+
+if (isAdmin) {
+    message.textContent = "Hi Admin 👋";
+}
+else if (phone) {
+
+    const userRef = doc(db, "customers", phone);
+    getDoc(userRef).then((docSnap) => {
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            message.textContent =
+                `Hi ${data.name} - ${data.address}`;
         }
+    });
+
+}
+else {
+    message.textContent = "Please login";
+}
 
         message.classList.add("show");
 
@@ -880,6 +927,13 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+window.customerLogout = function () {
+    localStorage.removeItem("customerPhone");
+    auth.signOut();
+    alert("Logged out successfully");
+    location.reload();
+};
+
 
 
 
