@@ -965,11 +965,25 @@ window.deleteProduct = deleteProduct;
 
 // ✅ Customer Logout
 window.customerLogout = function () {
+
+    const confirmLogout = confirm("Are you sure you want to log out?");
+
+    if (!confirmLogout) {
+        return; // ❌ If user clicks "No", stop here
+    }
+
     localStorage.removeItem("customerPhone");
-    signOut(auth);
-    alert("Logged out successfully");
-    location.reload();
+
+    signOut(auth)
+        .then(() => {
+            alert("Logged out successfully");
+            location.reload();
+        })
+        .catch((error) => {
+            console.error("Logout error:", error);
+        });
 };
+
 
 
 
