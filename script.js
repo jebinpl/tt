@@ -91,7 +91,7 @@ loginBtn.addEventListener("click", function (e) {
     dropdown.style.display =
         dropdown.style.display === "block" ? "none" : "block";
 });
-}
+
 /*-----------------------------------Admin ------------------------------------------*/
 const adminLink = document.getElementById("adminLink");
 const adminModal = document.getElementById("adminModal");
@@ -970,6 +970,7 @@ window.customerLogout = function () {
     alert("Logged out successfully");
     location.reload();
 };
+
 
 
 
