@@ -480,7 +480,7 @@ verifyBtn.addEventListener("click", async function () {
 
         localStorage.setItem("customerPhone", phoneNumber);
         customerModal.style.display = "none";
-
+        location.reload();
         const userRef = doc(db, "customers", phoneNumber);
         const userSnap = await getDoc(userRef);
 
@@ -970,6 +970,7 @@ window.customerLogout = function () {
     alert("Logged out successfully");
     location.reload();
 };
+
 
 
 
