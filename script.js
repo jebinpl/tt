@@ -72,9 +72,7 @@ if (loginBtn) {
         loginBtn.textContent = "Login";
     }
 }
-loginBtn.addEventListener("click", function (e) {
-
-    e.stopPropagation();
+loginBtn.addEventListener("click", function () {
 
     let customerPhone = localStorage.getItem("customerPhone");
     let isAdminNow = localStorage.getItem("isAdmin") === "true";
@@ -437,6 +435,17 @@ if (customerLink) {
         closeDropdown();
         customerModal.style.display = "flex";
     });
+    document.addEventListener("click", function (e) {
+
+    if (
+        dropdown &&
+        !dropdown.contains(e.target) &&
+        !loginBtn.contains(e.target)
+    ) {
+        dropdown.style.display = "none";
+    }
+
+});
 }
 
 /* Close Customer Modal */
@@ -1006,6 +1015,7 @@ window.addEventListener("click", function(e){
         logoutModal.style.display = "none";
     }
 });
+
 
 
 
