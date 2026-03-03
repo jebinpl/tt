@@ -1,7 +1,7 @@
-console.log("Script Loaded Successfully");
+
 let editingProductId = null;
 // ================= FIREBASE IMPORTS =================
-
+console.log("Script Loaded Successfully");
 import { db, storage } from "./firebase.js";
 
 import { 
@@ -21,7 +21,19 @@ import {
     uploadBytes, 
     getDownloadURL 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-
+//============== otp ==============
+import { 
+    getAuth, 
+    RecaptchaVerifier, 
+    signInWithPhoneNumber 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+const auth = getAuth();
+window.recaptchaVerifier = new RecaptchaVerifier(auth, 'getOtpBtn', {
+    'size': 'invisible',
+    'callback': (response) => {
+        console.log("reCAPTCHA solved");
+    }
+});
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 let currentCategory = "";
 const adminPanel = document.getElementById("adminPanel");
@@ -399,13 +411,40 @@ if (closeCustomer) {
 }
 
 /* Show OTP Section */
-if (getOtpBtn) {
-    getOtpBtn.addEventListener("click", function () {
+getOtpBtn.addEventListener("click", async function () {
+    const phoneNumber = "+91" + document.getElementById("phoneNumber").value;
+    const appVerifier = window.recaptchaVerifier;
+    try {
+        const confirmationResult = await signInWithPhoneNumber(
+            auth,
+            phoneNumber,
+            appVerifier
+        );
+        window.confirmationResult = confirmationResult;
         phoneSection.style.display = "none";
         otpSection.style.display = "block";
-        document.querySelector(".otp-boxes input").focus();
+        alert("OTP Sent Successfully");
+    } catch (error) {
+        alert(error.message);
+    }
+});
+
+const verifyBtn = otpSection.querySelector("button");
+verifyBtn.addEventListener("click", async function () {
+    const otpInputs = document.querySelectorAll(".otp-boxes input");
+    let otp = "";
+    otpInputs.forEach(input => {
+        otp += input.value;
     });
-}
+    try {
+        const result = await window.confirmationResult.confirm(otp);
+        const user = result.user;
+        alert("Login Successful ✅");
+        customerModal.style.display = "none";
+    } catch (error) {
+        alert("Invalid OTP ❌");
+    }
+});
 
 /* Close when clicking outside modal */
 window.addEventListener("click", function (e) {
@@ -841,6 +880,7 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
 
 
 
