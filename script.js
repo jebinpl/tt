@@ -28,6 +28,7 @@ import {
     getAuth, 
     RecaptchaVerifier, 
     signInWithPhoneNumber 
+    signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 const auth = getAuth();
 window.recaptchaVerifier = new RecaptchaVerifier(auth, 'getOtpBtn', {
@@ -65,7 +66,7 @@ if (loginBtn) {
     } else {
         loginBtn.textContent = "Login";
     }
-
+}
 loginBtn.addEventListener("click", function (e) {
 
     e.stopPropagation();
@@ -961,10 +962,11 @@ window.selectCategory = selectCategory;
 window.removeItem = removeItem;
 window.addToCart = addToCart;
 window.deleteProduct = deleteProduct;
+
+// ✅ Customer Logout
 window.customerLogout = function () {
     localStorage.removeItem("customerPhone");
-    import { signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-signOut(auth);
+    signOut(auth);
     alert("Logged out successfully");
     location.reload();
 };
