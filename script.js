@@ -458,35 +458,98 @@ getOtpBtn.addEventListener("click", async function () {
 
 const verifyBtn = otpSection.querySelector("button");
 verifyBtn.addEventListener("click", async function () {
+
     const otpInputs = document.querySelectorAll(".otp-boxes input");
     let otp = "";
+
     otpInputs.forEach(input => {
         otp += input.value;
     });
+
     try {
+
         const result = await window.confirmationResult.confirm(otp);
-const user = result.user;
-const phoneNumber = user.phoneNumber;
+        const user = result.user;
+        const phoneNumber = user.phoneNumber;
 
-localStorage.setItem("customerPhone", phoneNumber);
+        localStorage.setItem("customerPhone", phoneNumber);
+        customerModal.style.display = "none";
 
-customerModal.style.display = "none";
+        const userRef = doc(db, "customers", phoneNumber);
+        const userSnap = await getDoc(userRef);
 
-// 🔥 Check Firestore for existing customer
-import { getDoc, setDoc } from 
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        if (userSnap.exists()) {
 
-const userRef = doc(db, "customers", phoneNumber);
-const userSnap = await getDoc(userRef);
+            const data = userSnap.data();
+            document.getElementById("welcomeMessage").textContent =
+                `Hi ${data.name} 👋`;
 
-if (userSnap.exists()) {
+        } else {
 
-    // ✅ Existing customer
-    const data = userSnap.data();
+            const name = prompt("Enter your name:");
+            const address = prompt("Enter your delivery address:");
 
-    document.getElementById("welcomeMessage").textContent =
-        `Hi ${data.name} 👋`;
+            await setDoc(userRef, {
+                name: name,
+                address: address,
+                phone: phoneNumber
+            });
 
+            document.getElementById("welcomeMessage").textContent =
+                `Hi ${name} 👋`;
+        }
+
+    } catch (error) {
+        alert("Invalid OTP ❌");
+    }
+
+});verifyBtn.addEventListener("click", async function () {
+
+    const otpInputs = document.querySelectorAll(".otp-boxes input");
+    let otp = "";
+
+    otpInputs.forEach(input => {
+        otp += input.value;
+    });
+
+    try {
+
+        const result = await window.confirmationResult.confirm(otp);
+        const user = result.user;
+        const phoneNumber = user.phoneNumber;
+
+        localStorage.setItem("customerPhone", phoneNumber);
+        customerModal.style.display = "none";
+
+        const userRef = doc(db, "customers", phoneNumber);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+
+            const data = userSnap.data();
+            document.getElementById("welcomeMessage").textContent =
+                `Hi ${data.name} 👋`;
+
+        } else {
+
+            const name = prompt("Enter your name:");
+            const address = prompt("Enter your delivery address:");
+
+            await setDoc(userRef, {
+                name: name,
+                address: address,
+                phone: phoneNumber
+            });
+
+            document.getElementById("welcomeMessage").textContent =
+                `Hi ${name} 👋`;
+        }
+
+    } catch (error) {
+        alert("Invalid OTP ❌");
+    }
+
+});
 } else {
 
     // ❗ New customer → ask details
@@ -958,6 +1021,7 @@ window.customerLogout = function () {
     alert("Logged out successfully");
     location.reload();
 };
+
 
 
 
