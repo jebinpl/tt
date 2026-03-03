@@ -42,6 +42,11 @@ let currentCategory = "";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
 const dropdown = document.querySelector(".dropdown");
+function closeDropdown() {
+    if (dropdown) {
+        dropdown.style.display = "none";
+    }
+}
 let customerPhone = localStorage.getItem("customerPhone");
 
 if (isAdmin) {
@@ -103,7 +108,7 @@ if (adminLink && isAdmin) {
 if (adminLink) {
     adminLink.addEventListener("click", function(e) {
         e.preventDefault();
-
+        closeDropdown();
         const isAdminNow = localStorage.getItem("isAdmin") === "true";
 
         if (isAdminNow) {
@@ -429,6 +434,7 @@ const otpSection = document.getElementById("otpSection");
 if (customerLink) {
     customerLink.addEventListener("click", function (e) {
         e.preventDefault();
+        closeDropdown();
         customerModal.style.display = "flex";
     });
 }
@@ -1000,6 +1006,7 @@ window.addEventListener("click", function(e){
         logoutModal.style.display = "none";
     }
 });
+
 
 
 
