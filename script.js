@@ -41,10 +41,16 @@ let currentCategory = "";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
 const dropdown = document.querySelector(".dropdown");
+let customerPhone = localStorage.getItem("customerPhone");
+
 if (isAdmin) {
-    if (loginBtn) loginBtn.textContent = "Admin";
-} else {
-    if (loginBtn) loginBtn.textContent = "Login";
+    loginBtn.textContent = "Admin";
+}
+else if (customerPhone) {
+    loginBtn.textContent = "Logout";
+}
+else {
+    loginBtn.textContent = "Login";
 }
 if (adminPanel) {
     adminPanel.style.display = isAdmin ? "block" : "none";
@@ -56,11 +62,30 @@ if (loginBtn) {
     // Change text depending on admin status
     loginBtn.textContent = isAdmin ? "Admin" : "Login";
 
-    loginBtn.addEventListener("click", function (e) {
-        e.stopPropagation();
+loginBtn.addEventListener("click", function (e) {
+
+    e.stopPropagation();
+
+    let customerPhone = localStorage.getItem("customerPhone");
+    let isAdminNow = localStorage.getItem("isAdmin") === "true";
+
+    // 🔐 Admin stays same
+    if (isAdminNow) {
         dropdown.style.display =
             dropdown.style.display === "block" ? "none" : "block";
-    });
+        return;
+    }
+
+    // 👤 Customer logged in → Logout
+    if (customerPhone) {
+        customerLogout();
+        return;
+    }
+
+    // ❌ Not logged in → Show dropdown
+    dropdown.style.display =
+        dropdown.style.display === "block" ? "none" : "block";
+});
 }
 /*-----------------------------------Admin ------------------------------------------*/
 const adminLink = document.getElementById("adminLink");
@@ -933,6 +958,7 @@ window.customerLogout = function () {
     alert("Logged out successfully");
     location.reload();
 };
+
 
 
 
