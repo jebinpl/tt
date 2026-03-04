@@ -976,9 +976,9 @@ window.addEventListener("click", function(e){
         logoutModal.style.display = "none";
     }
 });
-/* ================= PROFILE EDIT SYSTEM ================= */
-
 /* ================= PROFILE SYSTEM ================= */
+
+const myProfileLink = document.getElementById("myProfileLink");
 
 const profileModal = document.getElementById("profileModal");
 const profileView = document.getElementById("profileView");
@@ -992,103 +992,100 @@ const saveProfileBtn = document.getElementById("saveProfileBtn");
 const cancelProfileBtn = document.getElementById("cancelProfileBtn");
 const closeProfile = document.getElementById("closeProfile");
 
+/* OPEN PROFILE */
 if (myProfileLink) {
     myProfileLink.addEventListener("click", async function () {
 
         const phone = localStorage.getItem("customerPhone");
+
         if (!phone) {
             alert("Please login first");
             return;
         }
 
-        const userRef = doc(db, "customers", phone);
-        const userSnap = await getDoc(userRef);
+        try {
+            const userRef = doc(db, "customers", phone);
+            const userSnap = await getDoc(userRef);
 
-        if (userSnap.exists()) {
+            if (userSnap.exists()) {
 
-            const data = userSnap.data();
+                const data = userSnap.data();
 
-            profileGreeting.textContent = `Hi ${data.name} 👋`;
-            profileAddress.textContent = `Delivery Address: ${data.address}`;
+                profileGreeting.textContent = `Hi ${data.name} 👋`;
+                profileAddress.textContent = `Delivery Address: ${data.address}`;
 
-            // View mode first
-            profileView.style.display = "block";
-            profileEdit.style.display = "none";
+                profileView.style.display = "block";
+                profileEdit.style.display = "none";
 
-            profileModal.style.display = "flex";
+                profileModal.style.display = "flex";
+            }
+        } catch (error) {
+            alert("Network error. Please check internet.");
         }
     });
 }
 
-/* Switch to Edit Mode */
+/* SWITCH TO EDIT MODE */
 if (editProfileBtn) {
     editProfileBtn.addEventListener("click", function () {
 
         profileView.style.display = "none";
         profileEdit.style.display = "block";
 
-        // Fill input fields
-        const nameText = profileGreeting.textContent.replace("Hi ", "").replace(" 👋", "");
-        const addressText = profileAddress.textContent.replace("Delivery Address: ", "");
+        document.getElementById("editName").value =
+            profileGreeting.textContent.replace("Hi ", "").replace(" 👋", "");
 
-        document.getElementById("editName").value = nameText;
-        document.getElementById("editAddress").value = addressText;
+        document.getElementById("editAddress").value =
+            profileAddress.textContent.replace("Delivery Address: ", "");
     });
 }
 
-/* Save Profile */
+/* SAVE PROFILE */
 if (saveProfileBtn) {
-    saveProfileBtn.addEventListener("click", async function(){
+    saveProfileBtn.addEventListener("click", async function () {
 
         const phone = localStorage.getItem("customerPhone");
-        if (!phone) return;
+        const name = document.getElementById("editName").value.trim();
+        const address = document.getElementById("editAddress").value.trim();
 
-        const newName = document.getElementById("editName").value.trim();
-        const newAddress = document.getElementById("editAddress").value.trim();
-
-        if (!newName || !newAddress) {
+        if (!name || !address) {
             alert("Please fill all fields");
             return;
         }
 
-        const userRef = doc(db, "customers", phone);
+        try {
+            await setDoc(doc(db, "customers", phone), {
+                name: name,
+                address: address
+            });
 
-        await updateDoc(userRef, {
-            name: newName,
-            address: newAddress
-        });
+            profileModal.style.display = "none";
 
-        // Update UI instantly
-        profileGreeting.textContent = `Hi ${newName} 👋`;
-        profileAddress.textContent = `Delivery Address: ${newAddress}`;
+            document.getElementById("welcomeMessage").textContent =
+                `Hi ${name} 👋`;
 
-        profileEdit.style.display = "none";
-        profileView.style.display = "block";
-
-        alert("Profile Updated Successfully ✅");
+        } catch (error) {
+            alert("Failed to save profile.");
+        }
     });
 }
 
-/* Cancel Edit */
+/* CANCEL EDIT */
 if (cancelProfileBtn) {
-    cancelProfileBtn.addEventListener("click", function(){
+    cancelProfileBtn.addEventListener("click", function () {
+
         profileEdit.style.display = "none";
         profileView.style.display = "block";
     });
 }
 
-/* Close Modal */
+/* CLOSE MODAL */
 if (closeProfile) {
-    closeProfile.addEventListener("click", function(){
+    closeProfile.addEventListener("click", function () {
         profileModal.style.display = "none";
     });
 }
 
-window.addEventListener("click", function(e){
-    if (e.target === profileModal) {
-        profileModal.style.display = "none";
-    }
-});
 
 
 
