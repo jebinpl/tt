@@ -972,6 +972,23 @@ body {
     font-size: 22px;
     cursor: pointer;
 }
+/* PROFILE VIEW ALIGNMENT */
+#profileView {
+    text-align: center;
+}
+
+.address-label {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+#profileGreeting {
+    margin-bottom: 12px;
+}
+
+#profileAddress {
+    margin-bottom: 18px;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1051,6 +1068,7 @@ body {
         padding: 8px;
     }
 }
+
 
 
 
