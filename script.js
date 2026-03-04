@@ -1012,7 +1012,7 @@ if (myProfileLink) {
                 const data = userSnap.data();
 
                 profileGreeting.textContent = `Hi ${data.name} 👋`;
-                profileAddress.textContent = `Delivery Address: ${data.address}`;
+                profileAddress.textContent = data.address;
 
                 profileView.style.display = "block";
                 profileEdit.style.display = "none";
@@ -1036,7 +1036,7 @@ if (editProfileBtn) {
             profileGreeting.textContent.replace("Hi ", "").replace(" 👋", "");
 
         document.getElementById("editAddress").value =
-            profileAddress.textContent.replace("Delivery Address: ", "");
+            profileAddress.textContent;
     });
 }
 
@@ -1085,6 +1085,7 @@ if (closeProfile) {
         profileModal.style.display = "none";
     });
 }
+
 
 
 
