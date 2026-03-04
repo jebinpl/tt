@@ -978,23 +978,24 @@ window.addEventListener("click", function(e){
 });
 /* ================= PROFILE EDIT SYSTEM ================= */
 
+/* ================= PROFILE SYSTEM ================= */
+
 const profileModal = document.getElementById("profileModal");
-const closeProfile = document.getElementById("closeProfile");
+const profileView = document.getElementById("profileView");
+const profileEdit = document.getElementById("profileEdit");
+
+const profileGreeting = document.getElementById("profileGreeting");
+const profileAddress = document.getElementById("profileAddress");
+
+const editProfileBtn = document.getElementById("editProfileBtn");
 const saveProfileBtn = document.getElementById("saveProfileBtn");
 const cancelProfileBtn = document.getElementById("cancelProfileBtn");
+const closeProfile = document.getElementById("closeProfile");
 
 if (myProfileLink) {
-
     myProfileLink.addEventListener("click", async function () {
 
         const phone = localStorage.getItem("customerPhone");
-        const isAdmin = localStorage.getItem("isAdmin") === "true";
-
-        if (isAdmin) {
-            alert("Admin profile cannot be edited");
-            return;
-        }
-
         if (!phone) {
             alert("Please login first");
             return;
@@ -1004,30 +1005,38 @@ if (myProfileLink) {
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
+
             const data = userSnap.data();
 
-            document.getElementById("editName").value = data.name || "";
-            document.getElementById("editAddress").value = data.address || "";
+            profileGreeting.textContent = `Hi ${data.name} 👋`;
+            profileAddress.textContent = `Delivery Address: ${data.address}`;
+
+            // View mode first
+            profileView.style.display = "block";
+            profileEdit.style.display = "none";
 
             profileModal.style.display = "flex";
         }
     });
 }
 
-/* Close modal */
-if (closeProfile) {
-    closeProfile.addEventListener("click", function(){
-        profileModal.style.display = "none";
+/* Switch to Edit Mode */
+if (editProfileBtn) {
+    editProfileBtn.addEventListener("click", function () {
+
+        profileView.style.display = "none";
+        profileEdit.style.display = "block";
+
+        // Fill input fields
+        const nameText = profileGreeting.textContent.replace("Hi ", "").replace(" 👋", "");
+        const addressText = profileAddress.textContent.replace("Delivery Address: ", "");
+
+        document.getElementById("editName").value = nameText;
+        document.getElementById("editAddress").value = addressText;
     });
 }
 
-if (cancelProfileBtn) {
-    cancelProfileBtn.addEventListener("click", function(){
-        profileModal.style.display = "none";
-    });
-}
-
-/* Save updated profile */
+/* Save Profile */
 if (saveProfileBtn) {
     saveProfileBtn.addEventListener("click", async function(){
 
@@ -1044,31 +1053,43 @@ if (saveProfileBtn) {
 
         const userRef = doc(db, "customers", phone);
 
-        const firstTime = localStorage.getItem("firstTimeUser") === "true";
+        await updateDoc(userRef, {
+            name: newName,
+            address: newAddress
+        });
 
-        if (firstTime) {
-            // 🔥 First time → create document
-            await setDoc(userRef, {
-                name: newName,
-                address: newAddress,
-                phone: phone
-            });
+        // Update UI instantly
+        profileGreeting.textContent = `Hi ${newName} 👋`;
+        profileAddress.textContent = `Delivery Address: ${newAddress}`;
 
-            localStorage.removeItem("firstTimeUser");
+        profileEdit.style.display = "none";
+        profileView.style.display = "block";
 
-        } else {
-            // 🔄 Existing user → update document
-            await updateDoc(userRef, {
-                name: newName,
-                address: newAddress
-            });
-        }
+        alert("Profile Updated Successfully ✅");
+    });
+}
 
-        alert("Profile Saved Successfully ✅");
+/* Cancel Edit */
+if (cancelProfileBtn) {
+    cancelProfileBtn.addEventListener("click", function(){
+        profileEdit.style.display = "none";
+        profileView.style.display = "block";
+    });
+}
 
+/* Close Modal */
+if (closeProfile) {
+    closeProfile.addEventListener("click", function(){
         profileModal.style.display = "none";
     });
 }
+
+window.addEventListener("click", function(e){
+    if (e.target === profileModal) {
+        profileModal.style.display = "none";
+    }
+});
+
 
 
 
