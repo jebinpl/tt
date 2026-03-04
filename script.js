@@ -494,30 +494,33 @@ verifyBtn.addEventListener("click", async function () {
         const phoneNumber = user.phoneNumber;
 
         localStorage.setItem("customerPhone", phoneNumber);
-        customerModal.style.display = "none";
-        location.reload();
+
         const userRef = doc(db, "customers", phoneNumber);
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
 
+            // ✅ Existing User
             const data = userSnap.data();
+
             document.getElementById("welcomeMessage").textContent =
                 `Hi ${data.name} 👋`;
 
+            customerModal.style.display = "none";
+
         } else {
 
-            const name = prompt("Enter your name:");
-            const address = prompt("Enter your delivery address:");
+            // 🆕 First time user → open profile modal
+            profileModal.style.display = "flex";
 
-            await setDoc(userRef, {
-                name: name,
-                address: address,
-                phone: phoneNumber
-            });
+            // Clear fields
+            document.getElementById("editName").value = "";
+            document.getElementById("editAddress").value = "";
 
-            document.getElementById("welcomeMessage").textContent =
-                `Hi ${name} 👋`;
+            // Mark as first time user
+            localStorage.setItem("firstTimeUser", "true");
+
+            customerModal.style.display = "none";
         }
 
     } catch (error) {
@@ -761,7 +764,6 @@ window.deleteProduct = async function(id){
 
     await deleteDoc(doc(db, "products", id));
 }
-/*--------------------------------------Edit Product---------------------*/
 /*--------------------------------------Edit Product (Use Add UI)---------------------*/
 window.editProduct = function(id){
 
@@ -805,47 +807,6 @@ window.toggleMenu = function(e) {
     menu.style.display =
         menu.style.display === "block" ? "none" : "block";
 }
-// ================= MY PROFILE LOGIC =================
-
-const myProfileLink = document.getElementById("myProfileLink");
-
-if (myProfileLink) {
-    myProfileLink.addEventListener("click", function () {
-
-        const isAdmin = localStorage.getItem("isAdmin") === "true";
-        const message = document.getElementById("welcomeMessage");
-
-const phone = localStorage.getItem("customerPhone");
-
-if (isAdmin) {
-    message.textContent = "Hi Admin 👋";
-}
-else if (phone) {
-
-    const userRef = doc(db, "customers", phone);
-    getDoc(userRef).then((docSnap) => {
-
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            message.textContent =
-                `Hi ${data.name} - ${data.address}`;
-        }
-    });
-
-}
-else {
-    message.textContent = "Please login";
-}
-
-        message.classList.add("show");
-
-        setTimeout(() => {
-            message.classList.remove("show");
-        }, 2000);
-
-    });
-}
-
 /* ================= LOAD PRODUCTS ================= */
 
 const productsContainer = document.getElementById("productsContainer");
@@ -1015,6 +976,99 @@ window.addEventListener("click", function(e){
         logoutModal.style.display = "none";
     }
 });
+/* ================= PROFILE EDIT SYSTEM ================= */
+
+const profileModal = document.getElementById("profileModal");
+const closeProfile = document.getElementById("closeProfile");
+const saveProfileBtn = document.getElementById("saveProfileBtn");
+const cancelProfileBtn = document.getElementById("cancelProfileBtn");
+
+if (myProfileLink) {
+
+    myProfileLink.addEventListener("click", async function () {
+
+        const phone = localStorage.getItem("customerPhone");
+        const isAdmin = localStorage.getItem("isAdmin") === "true";
+
+        if (isAdmin) {
+            alert("Admin profile cannot be edited");
+            return;
+        }
+
+        if (!phone) {
+            alert("Please login first");
+            return;
+        }
+
+        const userRef = doc(db, "customers", phone);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+            const data = userSnap.data();
+
+            document.getElementById("editName").value = data.name || "";
+            document.getElementById("editAddress").value = data.address || "";
+
+            profileModal.style.display = "flex";
+        }
+    });
+}
+
+/* Close modal */
+if (closeProfile) {
+    closeProfile.addEventListener("click", function(){
+        profileModal.style.display = "none";
+    });
+}
+
+if (cancelProfileBtn) {
+    cancelProfileBtn.addEventListener("click", function(){
+        profileModal.style.display = "none";
+    });
+}
+
+/* Save updated profile */
+if (saveProfileBtn) {
+    saveProfileBtn.addEventListener("click", async function(){
+
+        const phone = localStorage.getItem("customerPhone");
+        if (!phone) return;
+
+        const newName = document.getElementById("editName").value.trim();
+        const newAddress = document.getElementById("editAddress").value.trim();
+
+        if (!newName || !newAddress) {
+            alert("Please fill all fields");
+            return;
+        }
+
+        const userRef = doc(db, "customers", phone);
+
+        const firstTime = localStorage.getItem("firstTimeUser") === "true";
+
+        if (firstTime) {
+            // 🔥 First time → create document
+            await setDoc(userRef, {
+                name: newName,
+                address: newAddress,
+                phone: phone
+            });
+
+            localStorage.removeItem("firstTimeUser");
+
+        } else {
+            // 🔄 Existing user → update document
+            await updateDoc(userRef, {
+                name: newName,
+                address: newAddress
+            });
+        }
+
+        alert("Profile Saved Successfully ✅");
+
+        profileModal.style.display = "none";
+    });
+}
 
 
 
