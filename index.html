@@ -219,24 +219,32 @@
 </div>
 <!-- ================= PROFILE EDIT MODAL ================= -->
 <div id="profileModal" class="modal">
-  <div class="modal-content">
+  <div class="profile-box">
 
-    <span id="closeProfile" class="close">&times;</span>
+    <span id="closeProfile" class="close-btn">×</span>
 
-    <h2>Edit Profile</h2>
+    <!-- VIEW MODE -->
+    <div id="profileView">
+        <h2 id="profileGreeting"></h2>
+        <p id="profileAddress"></p>
 
-    <input type="text" id="editName" placeholder="Enter your name">
-    <input type="text" id="editAddress" placeholder="Enter delivery address">
+        <button id="editProfileBtn">Edit Profile</button>
+    </div>
 
-    <div style="margin-top:15px;">
-        <button id="saveProfileBtn" class="admin-btn">Submit</button>
-        <button id="cancelProfileBtn" class="cancel-btn">Cancel</button>
+    <!-- EDIT MODE -->
+    <div id="profileEdit" style="display:none;">
+        <input type="text" id="editName" placeholder="Enter Name">
+        <textarea id="editAddress" placeholder="Enter Address"></textarea>
+
+        <button id="saveProfileBtn">Submit</button>
+        <button id="cancelProfileBtn">Cancel</button>
     </div>
 
   </div>
 </div>
 </body>
 </html>
+
 
 
 
