@@ -663,10 +663,6 @@ if(phone){
         items: cart
     });
 }
-// Load cart when page opens
-document.addEventListener("DOMContentLoaded", function(){
-    updateCart();
-});
 /* Remove Item */
 function removeItem(index){
     cart.splice(index,1);
@@ -987,10 +983,14 @@ if (cancelLogoutBtn) {
 
 // Confirm logout
 if (confirmLogoutBtn) {
-    confirmLogoutBtn.addEventListener("click", function () {
+    confirmLogoutBtn.addEventListener("click", async function () {
 
         localStorage.removeItem("customerPhone");
-        await deleteDoc(doc(db,"carts",customerPhone));
+        const phone = localStorage.getItem("customerPhone");
+
+        if(phone){
+        await deleteDoc(doc(db,"carts",phone));
+        }
         cart = [];
         updateCart();
         signOut(auth).then(() => {
@@ -1117,6 +1117,21 @@ if (closeProfile) {
     });
 }
 
+document.addEventListener("DOMContentLoaded", async function(){
+
+    const phone = localStorage.getItem("customerPhone");
+
+    if(phone){
+        const cartRef = doc(db,"carts",phone);
+        const cartSnap = await getDoc(cartRef);
+
+        if(cartSnap.exists()){
+            cart = cartSnap.data().items || [];
+        }
+    }
+
+    updateCart();
+});
 
 
 
