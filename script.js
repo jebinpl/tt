@@ -493,14 +493,15 @@ verifyBtn.addEventListener("click", async function () {
         const user = result.user;
         const phoneNumber = user.phoneNumber;
 
-        localStorage.setItem("customerPhone", phoneNumber);
-        const cartRef = doc(db,"carts",phoneNumber);
-        const cartSnap = await getDoc(cartRef);
+localStorage.setItem("customerPhone", phoneNumber);
 
-        if(cartSnap.exists()){
-        cart = cartSnap.data().items || [];
+// 🔥 REALTIME CART SYNC
+onSnapshot(doc(db,"carts",phoneNumber),(snap)=>{
+    if(snap.exists()){
+        cart = snap.data().items || [];
         updateCart();
-        }
+    }
+});
         const userRef = doc(db, "customers", phoneNumber);
         const userSnap = await getDoc(userRef);
 
@@ -990,14 +991,16 @@ if (cancelLogoutBtn) {
 if (confirmLogoutBtn) {
     confirmLogoutBtn.addEventListener("click", async function () {
 
-       
         const phone = localStorage.getItem("customerPhone");
+
         localStorage.removeItem("customerPhone");
-        if(phone){
-        await deleteDoc(doc(db,"carts",phone));
-        }
+
+        // ❌ Do NOT delete Firebase cart
+        // await deleteDoc(doc(db,"carts",phone));
+
         cart = [];
         updateCart();
+
         signOut(auth).then(() => {
             logoutModal.style.display = "none";
             location.reload();
@@ -1122,21 +1125,25 @@ if (closeProfile) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", async function(){
+document.addEventListener("DOMContentLoaded", function(){
 
     const phone = localStorage.getItem("customerPhone");
 
     if(phone){
-        const cartRef = doc(db,"carts",phone);
-        const cartSnap = await getDoc(cartRef);
 
-        if(cartSnap.exists()){
-            cart = cartSnap.data().items || [];
-        }
+        onSnapshot(doc(db,"carts",phone),(snap)=>{
+            if(snap.exists()){
+                cart = snap.data().items || [];
+                updateCart();
+            }
+        });
+
+    }else{
+        updateCart();
     }
 
-    updateCart();
 });
+
 
 
 
