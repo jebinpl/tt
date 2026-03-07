@@ -494,7 +494,13 @@ verifyBtn.addEventListener("click", async function () {
         const phoneNumber = user.phoneNumber;
 
         localStorage.setItem("customerPhone", phoneNumber);
+        const cartRef = doc(db,"carts",phoneNumber);
+        const cartSnap = await getDoc(cartRef);
 
+        if(cartSnap.exists()){
+        cart = cartSnap.data().items || [];
+        updateCart();
+        }
         const userRef = doc(db, "customers", phoneNumber);
         const userSnap = await getDoc(userRef);
 
@@ -591,7 +597,7 @@ const cartCount = document.getElementById("cartCount");
 const cartItemsContainer = document.getElementById("cartItems");
 const cartTotal = document.getElementById("cartTotal");
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart = [];
 
 /* Open Cart */
 if (cartLink) {
@@ -620,7 +626,7 @@ function addToCart(name, price){
 }
 
 /* Update Cart UI */
-function updateCart(){
+async function updateCart(){
     cartItemsContainer.innerHTML = "";
     if(cart.length === 0){
         cartItemsContainer.innerHTML = "<p class='empty-cart'>Your cart is empty</p>";
@@ -650,7 +656,12 @@ function updateCart(){
     cartCount.textContent = cart.length;
     cartTotal.textContent = total;
     // SAVE CART
-    localStorage.setItem("cart", JSON.stringify(cart));
+const phone = localStorage.getItem("customerPhone");
+
+if(phone){
+    await setDoc(doc(db,"carts",phone),{
+        items: cart
+    });
 }
 // Load cart when page opens
 document.addEventListener("DOMContentLoaded", function(){
@@ -979,7 +990,9 @@ if (confirmLogoutBtn) {
     confirmLogoutBtn.addEventListener("click", function () {
 
         localStorage.removeItem("customerPhone");
-
+        await deleteDoc(doc(db,"carts",customerPhone));
+        cart = [];
+        updateCart();
         signOut(auth).then(() => {
             logoutModal.style.display = "none";
             location.reload();
@@ -1103,6 +1116,7 @@ if (closeProfile) {
         profileModal.style.display = "none";
     });
 }
+
 
 
 
