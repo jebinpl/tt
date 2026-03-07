@@ -609,42 +609,44 @@ if (closeCart) {
 
 /* Add To Cart */
 function addToCart(name, price){
-    cart.push({ name, price });
+    const existingItem = cart.find(item => item.name === name);
+    if(existingItem){
+        existingItem.qty += 1;
+    }else{
+        cart.push({ name, price, qty: 1 });
+    }
+
     updateCart();
 }
 
 /* Update Cart UI */
 function updateCart(){
-
     cartItemsContainer.innerHTML = "";
-
     if(cart.length === 0){
         cartItemsContainer.innerHTML = "<p class='empty-cart'>Your cart is empty</p>";
         cartCount.textContent = 0;
         cartTotal.textContent = 0;
         return;
     }
-
     let total = 0;
-
     cart.forEach((item, index) => {
-
-        total += item.price;
-
+        total += item.price * item.qty;
         const itemDiv = document.createElement("div");
         itemDiv.classList.add("cart-item");
-
         itemDiv.innerHTML = `
-            <div>
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">₹${item.price}</div>
-            </div>
+        <div class="cart-left">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">₹${item.price}</div>
+        </div>
+        <div class="cart-right">
+            <button class="qty-btn" onclick="decreaseCartQty(${index})">-</button>
+            <span class="cart-qty">${item.qty}</span>
+            <button class="qty-btn" onclick="increaseCartQty(${index})">+</button>
             <button class="remove-btn" onclick="removeItem(${index})">X</button>
+        </div>
         `;
-
         cartItemsContainer.appendChild(itemDiv);
     });
-
     cartCount.textContent = cart.length;
     cartTotal.textContent = total;
 }
@@ -652,6 +654,17 @@ function updateCart(){
 /* Remove Item */
 function removeItem(index){
     cart.splice(index,1);
+    updateCart();
+}
+window.increaseCartQty = function(index){
+    cart[index].qty++;
+    updateCart();
+}
+
+window.decreaseCartQty = function(index){
+    if(cart[index].qty > 1){
+        cart[index].qty--;
+    }
     updateCart();
 }
 /*----------------------------------------------------------------*/
@@ -1085,6 +1098,7 @@ if (closeProfile) {
         profileModal.style.display = "none";
     });
 }
+
 
 
 
