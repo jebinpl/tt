@@ -667,7 +667,7 @@ if(phone){
 await setDoc(doc(db,"carts",phone),{
     items: cart
 },{merge:true});
-}
+}}
 /* Remove Item */
 function removeItem(index){
     cart.splice(index,1);
@@ -778,7 +778,7 @@ function renderProductCard(id, product) {
                 <button onclick="increaseQty(this)">+</button>
 
                 <button class="buy-btn"
-                    onclick="addToCart(this, '${product.description}', ${product.price})"
+                    onclick="addToCart(this, '${product.description}', ${product.price})">
                     Buy Now
                 </button>
             </div>
@@ -1137,6 +1137,7 @@ document.addEventListener("DOMContentLoaded", async function(){
 
     updateCart();
 });
+
 
 
 
