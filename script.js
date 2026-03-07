@@ -591,7 +591,7 @@ const cartCount = document.getElementById("cartCount");
 const cartItemsContainer = document.getElementById("cartItems");
 const cartTotal = document.getElementById("cartTotal");
 
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 /* Open Cart */
 if (cartLink) {
@@ -649,8 +649,13 @@ function updateCart(){
     });
     cartCount.textContent = cart.length;
     cartTotal.textContent = total;
+    // SAVE CART
+    localStorage.setItem("cart", JSON.stringify(cart));
 }
-
+// Load cart when page opens
+document.addEventListener("DOMContentLoaded", function(){
+    updateCart();
+});
 /* Remove Item */
 function removeItem(index){
     cart.splice(index,1);
@@ -1098,6 +1103,7 @@ if (closeProfile) {
         profileModal.style.display = "none";
     });
 }
+
 
 
 
