@@ -614,12 +614,17 @@ if (closeCart) {
 }
 
 /* Add To Cart */
-function addToCart(name, price){
+function addToCart(btn, name, price){
+
+    const qtyElement = btn.parentElement.querySelector(".qty");
+    const quantity = parseInt(qtyElement.textContent);
+
     const existingItem = cart.find(item => item.name === name);
+
     if(existingItem){
-        existingItem.qty += 1;
+        existingItem.qty += quantity;
     }else{
-        cart.push({ name, price, qty: 1 });
+        cart.push({ name, price, qty: quantity });
     }
 
     updateCart();
@@ -653,15 +658,15 @@ async function updateCart(){
         `;
         cartItemsContainer.appendChild(itemDiv);
     });
-    cartCount.textContent = cart.length;
+    cartCount.textContent = cart.reduce((sum,item)=>sum+item.qty,0);
     cartTotal.textContent = total;
     // SAVE CART
 const phone = localStorage.getItem("customerPhone");
 
 if(phone){
-    await setDoc(doc(db,"carts",phone),{
-        items: cart
-    });
+await setDoc(doc(db,"carts",phone),{
+    items: cart
+},{merge:true});
 }
 /* Remove Item */
 function removeItem(index){
@@ -773,7 +778,7 @@ function renderProductCard(id, product) {
                 <button onclick="increaseQty(this)">+</button>
 
                 <button class="buy-btn"
-                    onclick="addToCart('${product.description}', ${product.price})">
+                    onclick="addToCart(this, '${product.description}', ${product.price})"
                     Buy Now
                 </button>
             </div>
@@ -985,9 +990,9 @@ if (cancelLogoutBtn) {
 if (confirmLogoutBtn) {
     confirmLogoutBtn.addEventListener("click", async function () {
 
-        localStorage.removeItem("customerPhone");
+       
         const phone = localStorage.getItem("customerPhone");
-
+        localStorage.removeItem("customerPhone");
         if(phone){
         await deleteDoc(doc(db,"carts",phone));
         }
@@ -1132,6 +1137,7 @@ document.addEventListener("DOMContentLoaded", async function(){
 
     updateCart();
 });
+
 
 
 
