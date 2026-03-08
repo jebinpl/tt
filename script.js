@@ -770,10 +770,13 @@ createdAt: Date.now()
 });
 
 alert("Order placed successfully");
-
 cart = [];
+localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
-
+const stickyBar = document.getElementById("stickyCartBar");
+if (stickyBar) {
+    stickyBar.style.display = "none";
+}
 checkoutModal.style.display="none";
 
 });
@@ -1340,6 +1343,7 @@ stickyCheckoutBtn.addEventListener("click",function(){
     cartModal.style.display="flex";
 });
 }
+
 
 
 
