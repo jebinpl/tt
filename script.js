@@ -661,6 +661,21 @@ async function updateCart(){
     });
     cartCount.textContent = cart.reduce((sum,item)=>sum+item.qty,0);
     cartTotal.textContent = total;
+    /* ================= STICKY CART ================= */
+
+const stickyBar = document.getElementById("stickyCartBar");
+const stickyItems = document.getElementById("stickyCartItems");
+const stickyTotal = document.getElementById("stickyCartTotal");
+
+const totalItems = cart.reduce((sum,item)=>sum+item.qty,0);
+
+if(totalItems > 0){
+    stickyBar.style.display = "flex";
+    stickyItems.textContent = totalItems + " Items";
+    stickyTotal.textContent = total;
+}else{
+    stickyBar.style.display = "none";
+}
     // SAVE CART
 const phone = localStorage.getItem("customerPhone");
 
@@ -1318,6 +1333,13 @@ status:"Cancelled"
 alert("Order cancelled");
 
 };
+const stickyCheckoutBtn = document.getElementById("stickyCheckoutBtn");
+
+if(stickyCheckoutBtn){
+stickyCheckoutBtn.addEventListener("click",function(){
+    cartModal.style.display="flex";
+});
+}
 
 
 
