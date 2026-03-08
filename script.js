@@ -681,9 +681,9 @@ if(totalItems > 0){
     // SAVE CART
 const phone = localStorage.getItem("customerPhone");
 const isAdmin = localStorage.getItem("isAdmin") === "true";
-if(phone){
+if(phone && !isAdmin){
 await setDoc(doc(db,"carts",phone),{
-    items: cart
+items: cart
 },{merge:true});
 }}
 /* Remove Item */
@@ -822,6 +822,7 @@ const ordersList = document.getElementById("ordersList");
 const closeOrders = document.getElementById("closeOrders");
 
 if(myOrdersLink){
+
 myOrdersLink.addEventListener("click", async function(){
 
 const phone = localStorage.getItem("customerPhone");
@@ -840,8 +841,7 @@ orderBy("createdAt","desc")
 );
 
 const snapshot = await getDocs(q);
-ordersList.innerHTML = "";
-}
+
 ordersList.innerHTML="";
 
 snapshot.forEach(docSnap=>{
@@ -924,9 +924,11 @@ Cancel Order
 }
 
 });
+
 ordersModal.style.display="flex";
 
 });
+
 }
 
 if(closeOrders){
@@ -1449,6 +1451,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
