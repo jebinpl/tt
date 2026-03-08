@@ -825,8 +825,9 @@ if(myOrdersLink){
 myOrdersLink.addEventListener("click", async function(){
 
 const phone = localStorage.getItem("customerPhone");
+const isAdmin = localStorage.getItem("isAdmin") === "true";
 
-if(!phone){
+if(!phone && !isAdmin){
 alert("Please login");
 return;
 }
@@ -839,7 +840,11 @@ orderBy("createdAt","desc")
 );
 
 const snapshot = await getDocs(q);
-
+if(isAdmin){
+ordersList.innerHTML = "<h3>All Customer Orders</h3>";
+}else{
+ordersList.innerHTML = "";
+}
 ordersList.innerHTML="";
 
 snapshot.forEach(docSnap=>{
@@ -1384,6 +1389,7 @@ stickyCheckoutBtn.addEventListener("click",function(){
     cartModal.style.display="flex";
 });
 }
+
 
 
 
