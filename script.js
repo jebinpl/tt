@@ -850,52 +850,78 @@ ordersList.innerHTML="";
 snapshot.forEach(docSnap=>{
 
 const order = docSnap.data();
+const id = docSnap.id;
 
 if(!isAdmin && order.phone!==phone) return;
 
-const div = document.createElement("div");
-
-let itemsHTML="";
+let items="";
+let prices="";
+let qty="";
 
 order.items.forEach(i=>{
-itemsHTML += `
-${i.name} | ₹${i.price} × ${i.qty} = ₹${i.price * i.qty}<br>
-`;
+items += i.name + "<br>";
+prices += "₹"+i.price+"<br>";
+qty += i.qty+"<br>";
 });
 
 const date = new Date(order.createdAt).toLocaleString();
 
-div.innerHTML = `
+if(isAdmin){
 
+ordersList.innerHTML += `
+<tr>
+
+<td>${order.orderId}</td>
+<td>${order.phone}</td>
+<td>${items}</td>
+<td>${prices}</td>
+<td>${qty}</td>
+<td>₹${order.total}</td>
+<td>${order.address}</td>
+<td>${date}</td>
+
+<td>
+<select onchange="updateOrderStatus('${id}',this.value)">
+<option ${order.status==="Order Placed"?"selected":""}>Order Placed</option>
+<option ${order.status==="Items Bagged"?"selected":""}>Items Bagged</option>
+<option ${order.status==="Shipped"?"selected":""}>Shipped</option>
+<option ${order.status==="Delivered"?"selected":""}>Delivered</option>
+<option ${order.status==="Closed"?"selected":""}>Closed</option>
+</select>
+</td>
+
+<td>
+<button onclick="deleteOrder('${id}','${order.status}')">Delete</button>
+</td>
+
+</tr>
+`;
+
+}else{
+
+ordersList.innerHTML += `
 <hr>
 
 <b>Order ID:</b> ${order.orderId}<br>
 
-<b>Customer Phone:</b> ${order.phone}<br>
-
 <b>Items:</b><br>
-${itemsHTML}
+${items}
 
-<b>Total Price:</b> ₹${order.total}<br>
-
-<b>Delivery Address:</b> ${order.address}<br>
-
-<b>Date & Time:</b> ${date}<br>
+<b>Total:</b> ₹${order.total}<br>
 
 <b>Status:</b> ${order.status}<br>
 
 <button 
-onclick="cancelOrder('${docSnap.id}','${order.status}')"
+onclick="cancelOrder('${id}','${order.status}')"
 ${order.status!=="Order Placed" ? "disabled":""}>
 Cancel Order
 </button>
 
 `;
 
-ordersList.appendChild(div);
+}
 
 });
-
 ordersModal.style.display="flex";
 
 });
@@ -1389,6 +1415,37 @@ stickyCheckoutBtn.addEventListener("click",function(){
     cartModal.style.display="flex";
 });
 }
+/* ================= UPDATE ORDER STATUS ================= */
+
+window.updateOrderStatus = async function(id,status){
+
+await updateDoc(doc(db,"orders",id),{
+status:status
+});
+
+alert("Order status updated");
+
+};
+
+
+/* ================= DELETE ORDER ================= */
+
+window.deleteOrder = async function(id,status){
+
+if(status!=="Closed"){
+alert("Order must be CLOSED before deleting");
+return;
+}
+
+if(!confirm("Delete this order?")) return;
+
+await deleteDoc(doc(db,"orders",id));
+
+alert("Order deleted");
+
+location.reload();
+
+};
 
 
 
