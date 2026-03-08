@@ -1408,6 +1408,7 @@ status:"Cancelled"
 });
 
 alert("Order cancelled");
+document.getElementById("myOrdersLink").click();
 
 };
 const stickyCheckoutBtn = document.getElementById("stickyCheckoutBtn");
@@ -1448,6 +1449,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
