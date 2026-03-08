@@ -1033,6 +1033,55 @@ body {
 #profileAddress {
     margin-bottom: 18px;
 }
+/* ================= CHECKOUT MODAL ================= */
+
+.checkout-section {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.checkout-section h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+#checkoutAddress {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+/* ================= ORDERS MODAL ================= */
+
+#ordersList {
+    text-align: left;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.order-card {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.order-card b {
+    font-size: 14px;
+}
+
+.order-card button {
+    margin-top: 8px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    background: #e74c3c;
+    color: white;
+    cursor: pointer;
+}
+
+.order-card button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1112,6 +1161,7 @@ body {
         padding: 8px;
     }
 }
+
 
 
 
