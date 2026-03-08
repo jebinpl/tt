@@ -840,9 +840,6 @@ orderBy("createdAt","desc")
 );
 
 const snapshot = await getDocs(q);
-if(isAdmin){
-ordersList.innerHTML = "<h3>All Customer Orders</h3>";
-}else{
 ordersList.innerHTML = "";
 }
 ordersList.innerHTML="";
@@ -900,16 +897,20 @@ ordersList.innerHTML += `
 }else{
 
 ordersList.innerHTML += `
-<hr>
 
-<b>Order ID:</b> ${order.orderId}<br>
+<div class="order-card">
 
-<b>Items:</b><br>
-${items}
+<h4>Order ID: ${order.orderId}</h4>
 
-<b>Total:</b> ₹${order.total}<br>
+<p><b>Items:</b><br>${items}</p>
 
-<b>Status:</b> ${order.status}<br>
+<p><b>Total:</b> ₹${order.total}</p>
+
+<p><b>Address:</b> ${order.address}</p>
+
+<p><b>Date:</b> ${date}</p>
+
+<p><b>Status:</b> ${order.status}</p>
 
 <button 
 onclick="cancelOrder('${id}','${order.status}')"
@@ -917,8 +918,9 @@ ${order.status!=="Order Placed" ? "disabled":""}>
 Cancel Order
 </button>
 
-`;
+</div>
 
+`;
 }
 
 });
@@ -1446,6 +1448,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
