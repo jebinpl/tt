@@ -687,19 +687,50 @@ await setDoc(doc(db,"carts",phone),{
 },{merge:true});
 }}
 /* Remove Item */
-function removeItem(index){
+async function removeItem(index){
+
     cart.splice(index,1);
+
+    const phone = localStorage.getItem("customerPhone");
+
+    if(phone){
+        await setDoc(doc(db,"carts",phone),{
+            items: cart
+        },{merge:true});
+    }
+
     updateCart();
 }
-window.increaseCartQty = function(index){
+window.increaseCartQty = async function(index){
     cart[index].qty++;
+
+    const phone = localStorage.getItem("customerPhone");
+
+    if(phone){
+        await setDoc(doc(db,"carts",phone),{
+            items: cart
+        },{merge:true});
+    }
+
     updateCart();
 }
 
-window.decreaseCartQty = function(index){
+window.decreaseCartQty = async function(index){
+
     if(cart[index].qty > 1){
         cart[index].qty--;
+    }else{
+        cart.splice(index,1);
     }
+
+    const phone = localStorage.getItem("customerPhone");
+
+    if(phone){
+        await setDoc(doc(db,"carts",phone),{
+            items: cart
+        },{merge:true});
+    }
+
     updateCart();
 }
 /* ================= CHECKOUT SYSTEM ================= */
@@ -1345,6 +1376,7 @@ stickyCheckoutBtn.addEventListener("click",function(){
     cartModal.style.display="flex";
 });
 }
+
 
 
 
