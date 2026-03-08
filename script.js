@@ -685,6 +685,163 @@ window.decreaseCartQty = function(index){
     }
     updateCart();
 }
+/* ================= CHECKOUT SYSTEM ================= */
+
+const checkoutBtn = document.getElementById("checkoutBtn");
+const checkoutModal = document.getElementById("checkoutModal");
+const closeCheckout = document.getElementById("closeCheckout");
+
+if(checkoutBtn){
+checkoutBtn.addEventListener("click", async function(){
+
+const phone = localStorage.getItem("customerPhone");
+
+if(!phone){
+alert("Please login first");
+return;
+}
+
+if(cart.length===0){
+alert("Cart is empty");
+return;
+}
+
+const userSnap = await getDoc(doc(db,"customers",phone));
+
+if(!userSnap.exists()){
+alert("Please update profile first");
+return;
+}
+
+const data = userSnap.data();
+
+document.getElementById("checkoutAddress").textContent = data.address;
+document.getElementById("checkoutTotal").textContent = cartTotal.textContent;
+
+cartModal.style.display="none";
+checkoutModal.style.display="flex";
+
+});
+}
+
+if(closeCheckout){
+closeCheckout.onclick=function(){
+checkoutModal.style.display="none";
+};
+}
+/* ================= PLACE ORDER ================= */
+
+const submitOrderBtn = document.getElementById("submitOrderBtn");
+
+if(submitOrderBtn){
+submitOrderBtn.addEventListener("click", async function(){
+
+const phone = localStorage.getItem("customerPhone");
+
+const orderId = "ORD"+Date.now();
+
+const address = document.getElementById("checkoutAddress").textContent;
+
+await addDoc(collection(db,"orders"),{
+
+orderId: orderId,
+phone: phone,
+items: cart,
+total: parseFloat(cartTotal.textContent),
+address: address,
+status: "Order Placed",
+createdAt: Date.now()
+
+});
+
+alert("Order placed successfully");
+
+cart = [];
+updateCart();
+
+checkoutModal.style.display="none";
+
+});
+}
+/* ================= MY ORDERS ================= */
+
+const myOrdersLink = document.getElementById("myOrdersLink");
+const ordersModal = document.getElementById("ordersModal");
+const ordersList = document.getElementById("ordersList");
+const closeOrders = document.getElementById("closeOrders");
+
+if(myOrdersLink){
+myOrdersLink.addEventListener("click", async function(){
+
+const phone = localStorage.getItem("customerPhone");
+
+if(!phone){
+alert("Please login");
+return;
+}
+
+ordersList.innerHTML="Loading...";
+
+const q = query(
+collection(db,"orders"),
+orderBy("createdAt","desc")
+);
+
+const snapshot = await getDocs(q);
+
+ordersList.innerHTML="";
+
+snapshot.forEach(docSnap=>{
+
+const order = docSnap.data();
+
+if(order.phone!==phone) return;
+
+const div = document.createElement("div");
+
+let itemsHTML="";
+
+order.items.forEach(i=>{
+itemsHTML += `${i.name} x${i.qty}<br>`;
+});
+
+div.innerHTML=`
+
+<hr>
+
+<b>Order ID:</b> ${order.orderId}<br>
+
+<b>Items:</b><br>
+${itemsHTML}
+
+<b>Total:</b> ₹${order.total}<br>
+
+<b>Address:</b> ${order.address}<br>
+
+<b>Status:</b> ${order.status}<br>
+
+<button 
+onclick="cancelOrder('${docSnap.id}','${order.status}')"
+${order.status!=="Order Placed" ? "disabled":""}>
+Cancel Order
+</button>
+
+`;
+
+ordersList.appendChild(div);
+
+});
+
+ordersModal.style.display="flex";
+
+});
+}
+
+if(closeOrders){
+closeOrders.onclick=function(){
+ordersModal.style.display="none";
+};
+}
 /*----------------------------------------------------------------*/
 window.goHome = function() {
 currentCategory = "";
@@ -1143,6 +1300,24 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 });
+/* ================= CANCEL ORDER ================= */
+
+window.cancelOrder = async function(id,status){
+
+if(status!=="Order Placed"){
+alert("Order cannot be cancelled");
+return;
+}
+
+if(!confirm("Cancel this order?")) return;
+
+await updateDoc(doc(db,"orders",id),{
+status:"Cancelled"
+});
+
+alert("Order cancelled");
+
+};
 
 
 
