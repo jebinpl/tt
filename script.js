@@ -829,7 +829,16 @@ myOrdersLink.addEventListener("click", async function(){
 
 const phone = localStorage.getItem("customerPhone");
 const isAdmin = localStorage.getItem("isAdmin") === "true";
+const adminSection = document.getElementById("adminOrdersSection");
+const customerSection = document.getElementById("customerOrdersSection");
 
+if(isAdmin){
+adminSection.style.display="block";
+customerSection.style.display="none";
+}else{
+adminSection.style.display="none";
+customerSection.style.display="block";
+}
 if(!phone && !isAdmin){
 alert("Please login");
 return;
@@ -1462,6 +1471,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
