@@ -1,4 +1,4 @@
-
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let editingProductId = null;
 import { getDoc, setDoc } from 
 "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -598,8 +598,6 @@ const cartCount = document.getElementById("cartCount");
 const cartItemsContainer = document.getElementById("cartItems");
 const cartTotal = document.getElementById("cartTotal");
 
-let cart = [];
-
 /* Open Cart */
 if (cartLink) {
     cartLink.addEventListener("click", function(e){
@@ -634,12 +632,16 @@ function addToCart(btn, name, price){
 /* Update Cart UI */
 async function updateCart(){
     cartItemsContainer.innerHTML = "";
-    if(cart.length === 0){
-        cartItemsContainer.innerHTML = "<p class='empty-cart'>Your cart is empty</p>";
-        cartCount.textContent = 0;
-        cartTotal.textContent = 0;
-        return;
-    }
+if(cart.length === 0){
+    cartItemsContainer.innerHTML = "<p class='empty-cart'>Your cart is empty</p>";
+    cartCount.textContent = 0;
+    cartTotal.textContent = 0;
+
+    const stickyBar = document.getElementById("stickyCartBar");
+    if(stickyBar) stickyBar.style.display = "none";
+
+    return;
+}
     let total = 0;
     cart.forEach((item, index) => {
         total += item.price * item.qty;
@@ -1343,6 +1345,7 @@ stickyCheckoutBtn.addEventListener("click",function(){
     cartModal.style.display="flex";
 });
 }
+
 
 
 
