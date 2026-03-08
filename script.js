@@ -72,6 +72,7 @@ if (loginBtn) {
         loginBtn.textContent = "Login";
     }
 }
+if (loginBtn) {
 loginBtn.addEventListener("click", function () {
 
     let customerPhone = localStorage.getItem("customerPhone");
@@ -94,7 +95,7 @@ loginBtn.addEventListener("click", function () {
     dropdown.style.display =
         dropdown.style.display === "block" ? "none" : "block";
 });
-
+}
 /*-----------------------------------Admin ------------------------------------------*/
 const adminLink = document.getElementById("adminLink");
 const adminModal = document.getElementById("adminModal");
@@ -336,7 +337,7 @@ await addDoc(productsRef, {
     price: parseFloat(price),
     category: category,
     createdAt: Date.now(),
-    position: snapshot.size + 1
+    position: Date.now()
 });
 
             alert("Product Added Successfully");
@@ -458,6 +459,7 @@ if (closeCustomer) {
 }
 
 /* Show OTP Section */
+if(getOtpBtn){
 getOtpBtn.addEventListener("click", async function () {
     const phoneNumber = "+91" + document.getElementById("phoneNumber").value;
     const appVerifier = window.recaptchaVerifier;
@@ -475,7 +477,7 @@ getOtpBtn.addEventListener("click", async function () {
         alert(error.message);
     }
 });
-
+}
 const verifyBtn = otpSection.querySelector("button");
 
 verifyBtn.addEventListener("click", async function () {
@@ -843,7 +845,17 @@ orderBy("createdAt","desc")
 const snapshot = await getDocs(q);
 
 ordersList.innerHTML="";
+document.getElementById("customerOrders").innerHTML="";
+const table = document.getElementById("adminOrdersTable");
+const cardContainer = document.getElementById("customerOrders");
 
+if(isAdmin){
+table.style.display="table";
+cardContainer.style.display="none";
+}else{
+table.style.display="none";
+cardContainer.style.display="block";
+}
 snapshot.forEach(docSnap=>{
 
 const order = docSnap.data();
@@ -896,7 +908,7 @@ ordersList.innerHTML += `
 
 }else{
 
-ordersList.innerHTML += `
+document.getElementById("customerOrders").innerHTML += `
 
 <div class="order-card">
 
@@ -922,7 +934,6 @@ Cancel Order
 
 `;
 }
-
 });
 
 ordersModal.style.display="flex";
@@ -1451,6 +1462,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
