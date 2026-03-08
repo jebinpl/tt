@@ -680,7 +680,7 @@ if(totalItems > 0){
 }
     // SAVE CART
 const phone = localStorage.getItem("customerPhone");
-
+const isAdmin = localStorage.getItem("isAdmin") === "true";
 if(phone){
 await setDoc(doc(db,"carts",phone),{
     items: cart
@@ -846,28 +846,36 @@ snapshot.forEach(docSnap=>{
 
 const order = docSnap.data();
 
-if(order.phone!==phone) return;
+if(!isAdmin && order.phone!==phone) return;
 
 const div = document.createElement("div");
 
 let itemsHTML="";
 
 order.items.forEach(i=>{
-itemsHTML += `${i.name} x${i.qty}<br>`;
+itemsHTML += `
+${i.name} | ₹${i.price} × ${i.qty} = ₹${i.price * i.qty}<br>
+`;
 });
 
-div.innerHTML=`
+const date = new Date(order.createdAt).toLocaleString();
+
+div.innerHTML = `
 
 <hr>
 
 <b>Order ID:</b> ${order.orderId}<br>
 
+<b>Customer Phone:</b> ${order.phone}<br>
+
 <b>Items:</b><br>
 ${itemsHTML}
 
-<b>Total:</b> ₹${order.total}<br>
+<b>Total Price:</b> ₹${order.total}<br>
 
-<b>Address:</b> ${order.address}<br>
+<b>Delivery Address:</b> ${order.address}<br>
+
+<b>Date & Time:</b> ${date}<br>
 
 <b>Status:</b> ${order.status}<br>
 
@@ -1376,6 +1384,7 @@ stickyCheckoutBtn.addEventListener("click",function(){
     cartModal.style.display="flex";
 });
 }
+
 
 
 
