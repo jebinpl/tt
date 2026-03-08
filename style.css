@@ -1124,6 +1124,34 @@ body {
 #stickyCheckoutBtn:hover {
     opacity: 0.9;
 }
+.orders-table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+font-size:14px;
+}
+
+.orders-table th{
+background:#333;
+color:white;
+padding:8px;
+border:1px solid #ddd;
+}
+
+.orders-table td{
+padding:8px;
+border:1px solid #ddd;
+vertical-align:top;
+}
+
+.orders-table select{
+padding:4px;
+}
+
+.orders-table button{
+padding:5px 8px;
+cursor:pointer;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1203,6 +1231,7 @@ body {
         padding: 8px;
     }
 }
+
 
 
 
