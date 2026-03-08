@@ -310,20 +310,48 @@
 </div>
 <!-- ================= MY ORDERS MODAL ================= -->
 <div id="ordersModal" class="modal">
-  <div class="modal-content">
 
-    <span id="closeOrders" class="close">&times;</span>
+<div class="modal-content">
 
-    <h2>My Orders</h2>
+<span id="closeOrders">&times;</span>
 
-    <!-- Customer Orders Container -->
-    <div id="ordersList"></div>
+<h2>My Orders</h2>
 
-  </div>
+<!-- ADMIN TABLE -->
+<div id="adminOrdersSection" style="display:none; overflow-x:auto;">
+<table id="adminOrdersTable">
+
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Phone</th>
+<th>Items</th>
+<th>Price</th>
+<th>Qty</th>
+<th>Total</th>
+<th>Address</th>
+<th>Date</th>
+<th>Status</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody id="ordersList"></tbody>
+
+</table>
+</div>
+
+<!-- CUSTOMER CARD VIEW -->
+<div id="customerOrdersSection" style="display:none;">
+<div id="customerOrders"></div>
+</div>
+
+</div>
 </div>
     
 </body>
 </html>
+
 
 
 
