@@ -846,10 +846,19 @@ return;
 
 ordersList.innerHTML="Loading...";
 
-const q = query(
-collection(db,"orders"),
-orderBy("createdAt","desc")
-);
+let q;
+if(isAdmin){
+  q = query(
+    collection(db,"orders"),
+    orderBy("createdAt","desc")
+  );
+} else {
+  q = query(
+    collection(db,"orders"),
+    where("phone","==",phone),
+    orderBy("createdAt","desc")
+  );
+}
 
 const snapshot = await getDocs(q);
 
@@ -1494,6 +1503,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
