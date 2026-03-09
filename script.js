@@ -781,20 +781,26 @@ checkoutModal.style.display="none";
 };
 }
 /* ================= PLACE ORDER ================= */
-
+let isPlacingOrder = false;
 const submitOrderBtn = document.getElementById("submitOrderBtn");
 
 if(submitOrderBtn){
+
 submitOrderBtn.addEventListener("click", async function(){
+
+if(isPlacingOrder) return;
+isPlacingOrder = true;
+
+submitOrderBtn.disabled = true;
+submitOrderBtn.textContent = "Processing...";
 
 const phone = localStorage.getItem("customerPhone");
 
-const orderId = "ORD"+Date.now();
+const orderId = "ORD" + Date.now();
 
 const address = document.getElementById("checkoutAddress").textContent;
 
 await addDoc(collection(db,"orders"),{
-
 orderId: orderId,
 phone: phone,
 items: cart,
@@ -802,19 +808,27 @@ total: parseFloat(cartTotal.textContent),
 address: address,
 status: "Order Placed",
 createdAt: Date.now()
-
 });
 
 alert("Order placed successfully");
+
+/* 🔹 CLEAR FIREBASE CART */
+await setDoc(doc(db,"carts",phone),{
+items:[]
+},{merge:true});
+
+/* 🔹 CLEAR LOCAL CART */
 cart = [];
 localStorage.setItem("cart", JSON.stringify(cart));
+
 updateCart();
+
 const stickyBar = document.getElementById("stickyCartBar");
 if (stickyBar) {
     stickyBar.style.display = "none";
 }
-checkoutModal.style.display="none";
 
+checkoutModal.style.display="none";
 });
 }
 /* ================= MY ORDERS ================= */
@@ -1459,6 +1473,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
