@@ -888,7 +888,6 @@ if(isAdmin){
 
 ordersList.innerHTML += `
 <tr>
-
 <td>${order.orderId}</td>
 <td>${order.phone}</td>
 <td>${items}</td>
@@ -941,32 +940,6 @@ document.getElementById("customerOrders").innerHTML += `
 <b>Address:</b> ${order.address}
 </div>
 
-<!-- ORDER TRACKER -->
-
-<div class="order-tracker">
-
-<div class="tracker-step ${step>=1?"active":""}">
-<div class="tracker-dot"></div>
-<span>Placed</span>
-</div>
-
-<div class="tracker-step ${step>=2?"active":""}">
-<div class="tracker-dot"></div>
-<span>Packed</span>
-</div>
-
-<div class="tracker-step ${step>=3?"active":""}">
-<div class="tracker-dot"></div>
-<span>Shipped</span>
-</div>
-
-<div class="tracker-step ${step>=4?"active":""}">
-<div class="tracker-dot"></div>
-<span>Delivered</span>
-</div>
-
-</div>
-
 <div class="order-footer">
 
 <div class="order-total">
@@ -991,17 +964,7 @@ Cancel Order
 </div>
 
 `;
-}}else{
-
-let step = 1;
-
-if(order.status === "Items Bagged") step = 2;
-if(order.status === "Shipped") step = 3;
-if(order.status === "Delivered") step = 4;
-if(order.status === "Closed") step = 4;
-
-document.getElementById("customerOrders").innerHTML += `
-
+}
 <div class="order-card">
 
 <div class="order-header">
@@ -1595,6 +1558,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
