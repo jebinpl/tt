@@ -854,16 +854,22 @@ orderBy("createdAt","desc")
 const snapshot = await getDocs(q);
 
 ordersList.innerHTML="";
-document.getElementById("customerOrders").innerHTML="";
+
 const table = document.getElementById("adminOrdersTable");
 const cardContainer = document.getElementById("customerOrders");
-
+cardContainer.innerHTML="";
 if(isAdmin){
+
 table.style.display="table";
 cardContainer.style.display="none";
+cardContainer.innerHTML="";
+
 }else{
+
 table.style.display="none";
 cardContainer.style.display="block";
+ordersList.innerHTML="";
+
 }
 snapshot.forEach(docSnap=>{
 
@@ -1488,6 +1494,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
