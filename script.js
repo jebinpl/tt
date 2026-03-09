@@ -820,7 +820,7 @@ checkoutModal.style.display="none";
 
 const myOrdersLink = document.getElementById("myOrdersLink");
 const ordersModal = document.getElementById("ordersModal");
-const ordersList = document.getElementById("ordersList");
+const ordersList = document.getElementById("adminOrdersList");
 const closeOrders = document.getElementById("closeOrders");
 
 if(myOrdersLink){
@@ -847,7 +847,7 @@ myOrdersLink.addEventListener("click", async function() {
     }
 
     ordersList.innerHTML="Loading...";
-
+    document.getElementById("customerOrders").innerHTML = "";
     let q;
     if(isAdmin){
         q = query(collection(db,"orders"), orderBy("createdAt","desc"));
@@ -1458,6 +1458,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
