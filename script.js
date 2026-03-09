@@ -966,7 +966,7 @@ Cancel Order
 }
 });
 ordersModal.style.display="flex";
-}
+});}
 
 if(closeOrders){
 closeOrders.onclick=function(){
@@ -1488,6 +1488,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
