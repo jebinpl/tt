@@ -825,162 +825,117 @@ const closeOrders = document.getElementById("closeOrders");
 
 if(myOrdersLink){
 
-myOrdersLink.addEventListener("click", async function(){
+myOrdersLink.addEventListener("click", async function() {
 
-const phone = localStorage.getItem("customerPhone");
-const isAdmin = localStorage.getItem("isAdmin") === "true";
-const adminSection = document.getElementById("adminOrdersSection");
-const customerSection = document.getElementById("customerOrdersSection");
+    const phone = localStorage.getItem("customerPhone");
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
 
-if(isAdmin){
-adminSection.style.display="block";
-customerSection.style.display="none";
-}else{
-adminSection.style.display="none";
-customerSection.style.display="block";
-}
-if(!phone && !isAdmin){
-alert("Please login");
-return;
-}
+    const adminSection = document.getElementById("adminOrdersSection");
+    const customerSection = document.getElementById("customerOrdersSection");
 
-ordersList.innerHTML="Loading...";
+    if(isAdmin){
+        adminSection.style.display="block";
+        customerSection.style.display="none";
+    } else {
+        adminSection.style.display="none";
+        customerSection.style.display="block";
+    }
 
-let q;
-if(isAdmin){
-  q = query(
-    collection(db,"orders"),
-    orderBy("createdAt","desc")
-  );
-} else {
-  q = query(
-    collection(db,"orders"),
-    where("phone","==",phone),
-    orderBy("createdAt","desc")
-  );
-}
+    if(!phone && !isAdmin){
+        alert("Please login");
+        return;
+    }
 
-const snapshot = await getDocs(q);
+    ordersList.innerHTML="Loading...";
 
-ordersList.innerHTML="";
+    let q;
+    if(isAdmin){
+        q = query(collection(db,"orders"), orderBy("createdAt","desc"));
+    } else {
+        q = query(
+            collection(db,"orders"),
+            where("phone","==",phone),
+            orderBy("createdAt","desc")
+        );
+    }
 
-const table = document.getElementById("adminOrdersTable");
-const cardContainer = document.getElementById("customerOrders");
-cardContainer.innerHTML="";
-if(isAdmin){
+    const snapshot = await getDocs(q);
 
-table.style.display="table";
-cardContainer.style.display="none";
-cardContainer.innerHTML="";
+    ordersList.innerHTML="";
 
-}else{
+    snapshot.forEach(docSnap => {
+        const order = docSnap.data();
+        const id = docSnap.id;
 
-table.style.display="none";
-cardContainer.style.display="block";
-ordersList.innerHTML="";
+        if(!isAdmin && order.phone!==phone) return;
 
-}
-snapshot.forEach(docSnap=>{
+        let items="", prices="", qty="";
+        order.items.forEach(i=>{
+            items += i.name + "<br>";
+            prices += "₹"+i.price+"<br>";
+            qty += i.qty+"<br>";
+        });
 
-const order = docSnap.data();
-const id = docSnap.id;
+        const date = new Date(order.createdAt).toLocaleString();
 
-if(!isAdmin && order.phone!==phone) return;
+        if(isAdmin){
+            // Excel style table row
+            ordersList.innerHTML += `
+                <tr>
+                    <td>${order.orderId}</td>
+                    <td>${order.phone}</td>
+                    <td>${items}</td>
+                    <td>${prices}</td>
+                    <td>${qty}</td>
+                    <td>₹${order.total}</td>
+                    <td>${order.address}</td>
+                    <td>${date}</td>
+                    <td>
+                        <select onchange="updateOrderStatus('${id}', this.value)">
+                            <option ${order.status==="Order Placed"?"selected":""}>Order Placed</option>
+                            <option ${order.status==="Items Bagged"?"selected":""}>Items Bagged</option>
+                            <option ${order.status==="Shipped"?"selected":""}>Shipped</option>
+                            <option ${order.status==="Delivered"?"selected":""}>Delivered</option>
+                            <option ${order.status==="Closed"?"selected":""}>Closed</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button onclick="deleteOrder('${id}', '${order.status}')">Delete</button>
+                    </td>
+                </tr>
+            `;
+        } else {
+            // Customer card (no change)
+            const cardContainer = document.getElementById("customerOrders");
+            let step = 1;
+            if(order.status === "Items Bagged") step = 2;
+            if(order.status === "Shipped") step = 3;
+            if(order.status === "Delivered") step = 4;
+            if(order.status === "Closed") step = 4;
 
-let items="";
-let prices="";
-let qty="";
+            cardContainer.innerHTML += `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Order #${order.orderId}</span>
+                        <span>${date}</span>
+                    </div>
+                    <div class="order-items"><b>Items:</b><br>${items}</div>
+                    <div class="order-items"><b>Address:</b> ${order.address}</div>
+                    <div class="order-footer">
+                        <div class="order-total">₹${order.total}</div>
+                        <div class="order-status status-${order.status.toLowerCase()}">${order.status}</div>
+                    </div>
+                    <button class="cancel-btn"
+                        onclick="cancelOrder('${id}','${order.status}')"
+                        ${order.status !== "Order Placed" ? "disabled" : ""}>
+                        Cancel Order
+                    </button>
+                </div>
+            `;
+        }
+    });
 
-order.items.forEach(i=>{
-items += i.name + "<br>";
-prices += "₹"+i.price+"<br>";
-qty += i.qty+"<br>";
-});
-
-const date = new Date(order.createdAt).toLocaleString();
-
-if(isAdmin){
-
-ordersList.innerHTML += `
-<tr>
-<td>${order.orderId}</td>
-<td>${order.phone}</td>
-<td>${items}</td>
-<td>${prices}</td>
-<td>${qty}</td>
-<td>₹${order.total}</td>
-<td>${order.address}</td>
-<td>${date}</td>
-
-<td>
-<select onchange="updateOrderStatus('${id}',this.value)">
-<option ${order.status==="Order Placed"?"selected":""}>Order Placed</option>
-<option ${order.status==="Items Bagged"?"selected":""}>Items Bagged</option>
-<option ${order.status==="Shipped"?"selected":""}>Shipped</option>
-<option ${order.status==="Delivered"?"selected":""}>Delivered</option>
-<option ${order.status==="Closed"?"selected":""}>Closed</option>
-</select>
-</td>
-
-<td>
-<button onclick="deleteOrder('${id}','${order.status}')">Delete</button>
-</td>
-
-</tr>
-`;
-
-}else{
-
-let step = 1;
-
-if(order.status === "Items Bagged") step = 2;
-if(order.status === "Shipped") step = 3;
-if(order.status === "Delivered") step = 4;
-if(order.status === "Closed") step = 4;
-
-cardContainer.innerHTML += `
-
-<div class="order-card">
-
-<div class="order-header">
-<span class="order-id">Order #${order.orderId}</span>
-<span>${date}</span>
-</div>
-
-<div class="order-items">
-<b>Items:</b><br>${items}
-</div>
-
-<div class="order-items">
-<b>Address:</b> ${order.address}
-</div>
-
-<div class="order-footer">
-
-<div class="order-total">
-₹${order.total}
-</div>
-
-<div class="order-status status-${order.status.toLowerCase()}">
-${order.status}
-</div>
-
-</div>
-
-<button class="cancel-btn"
-onclick="cancelOrder('${id}','${order.status}')"
-${order.status !== "Order Placed" ? "disabled" : ""}>
-
-Cancel Order
-
-</button>
-
-</div>
-
-`;
-}
-});
-ordersModal.style.display="flex";
+    ordersModal.style.display="flex";
 });}
 
 if(closeOrders){
@@ -1503,6 +1458,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
