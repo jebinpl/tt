@@ -657,7 +657,69 @@ body {
 .welcome-message.show {
     opacity: 1;
 }
+/* ================= ORDER TRACKER ================= */
 
+.order-tracker{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin:15px 0;
+position:relative;
+
+}
+
+.order-tracker::before{
+
+content:"";
+position:absolute;
+
+top:12px;
+left:0;
+right:0;
+
+height:3px;
+background:#ddd;
+
+z-index:0;
+
+}
+
+.tracker-step{
+
+text-align:center;
+flex:1;
+position:relative;
+z-index:1;
+
+}
+
+.tracker-dot{
+
+width:18px;
+height:18px;
+
+border-radius:50%;
+background:#ccc;
+
+margin:auto;
+
+}
+
+.tracker-step.active .tracker-dot{
+
+background:#2ecc71;
+
+}
+
+.tracker-step span{
+
+display:block;
+font-size:11px;
+margin-top:5px;
+
+}
 /* HOVER EFFECT */
 @media (hover: hover) {
     .home-btn:hover {
@@ -1373,6 +1435,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
