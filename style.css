@@ -1169,6 +1169,131 @@ margin-top:10px;
 padding:6px 12px;
 cursor:pointer;
 }
+/* ================================================= */
+/* ================= PREMIUM ORDERS ================= */
+/* ================================================= */
+
+#ordersList{
+display:flex;
+flex-direction:column;
+gap:15px;
+margin-top:10px;
+}
+
+/* ORDER CARD */
+
+.order-card{
+
+background:#ffffff;
+border-radius:14px;
+padding:16px;
+
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+border:1px solid #eee;
+
+transition:0.25s;
+}
+
+.order-card:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 22px rgba(0,0,0,0.12);
+}
+
+/* HEADER */
+
+.order-header{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+color:#777;
+margin-bottom:8px;
+}
+
+.order-id{
+font-weight:600;
+color:#333;
+}
+
+/* ITEMS */
+
+.order-items{
+margin:10px 0;
+line-height:1.6;
+font-size:14px;
+}
+
+/* FOOTER */
+
+.order-footer{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:10px;
+}
+
+/* TOTAL */
+
+.order-total{
+font-weight:bold;
+font-size:16px;
+}
+
+/* STATUS BADGES */
+
+.order-status{
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+
+/* STATUS COLORS */
+
+.status-placed{
+background:#fff3cd;
+color:#b78103;
+}
+
+.status-bagged{
+background:#e3f2fd;
+color:#1565c0;
+}
+
+.status-shipped{
+background:#ede7f6;
+color:#5e35b1;
+}
+
+.status-delivered{
+background:#e8f5e9;
+color:#2e7d32;
+}
+
+.status-cancelled{
+background:#ffebee;
+color:#c62828;
+}
+
+/* CANCEL BUTTON */
+
+.cancel-btn{
+
+background:#e74c3c;
+color:white;
+
+border:none;
+padding:6px 12px;
+
+border-radius:6px;
+cursor:pointer;
+
+font-size:13px;
+}
+
+.cancel-btn:disabled{
+background:#aaa;
+cursor:not-allowed;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1248,6 +1373,7 @@ cursor:pointer;
         padding: 8px;
     }
 }
+
 
 
 
