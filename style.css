@@ -315,6 +315,17 @@ body {
     margin: auto;              /* helps with keyboard */
     max-height: 90vh;     /* prevents keyboard cut */
     overflow-y: auto;     /* enables scrolling */
+    animation: modalPop 0.25s ease;
+}
+@keyframes modalPop {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* Close Button */
@@ -1382,6 +1393,7 @@ cursor:not-allowed;
 #adminOrdersList {
   display: table-row-group;
 }
+
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1389,6 +1401,7 @@ cursor:not-allowed;
     .modal {
         align-items: flex-start;
         padding-top: 80px;
+        backdrop-filter: blur(4px);
     }
 
     .top-container {
@@ -1461,6 +1474,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
