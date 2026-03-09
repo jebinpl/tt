@@ -923,10 +923,47 @@ if(order.status === "Shipped") step = 3;
 if(order.status === "Delivered") step = 4;
 if(order.status === "Closed") step = 4;
 
-document.getElementById("customerOrders").innerHTML += `
+cardContainer.innerHTML += `
 
-}});
+<div class="order-card">
 
+<div class="order-header">
+<span class="order-id">Order #${order.orderId}</span>
+<span>${date}</span>
+</div>
+
+<div class="order-items">
+<b>Items:</b><br>${items}
+</div>
+
+<div class="order-items">
+<b>Address:</b> ${order.address}
+</div>
+
+<div class="order-footer">
+
+<div class="order-total">
+₹${order.total}
+</div>
+
+<div class="order-status status-${order.status.toLowerCase()}">
+${order.status}
+</div>
+
+</div>
+
+<button class="cancel-btn"
+onclick="cancelOrder('${id}','${order.status}')"
+${order.status !== "Order Placed" ? "disabled" : ""}>
+
+Cancel Order
+
+</button>
+
+</div>
+
+`;
+}
 ordersModal.style.display="flex";
 
 });
@@ -1453,6 +1490,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
