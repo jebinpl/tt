@@ -925,111 +925,6 @@ if(order.status === "Closed") step = 4;
 
 document.getElementById("customerOrders").innerHTML += `
 
-<div class="order-card">
-
-<div class="order-header">
-<span class="order-id">Order #${order.orderId}</span>
-<span>${date}</span>
-</div>
-
-<div class="order-items">
-<b>Items:</b><br>${items}
-</div>
-
-<div class="order-items">
-<b>Address:</b> ${order.address}
-</div>
-
-<div class="order-footer">
-
-<div class="order-total">
-₹${order.total}
-</div>
-
-<div class="order-status">
-${order.status}
-</div>
-
-</div>
-
-<button 
-class="cancel-btn"
-onclick="cancelOrder('${id}','${order.status}')"
-${order.status!=="Order Placed" ? "disabled":""}>
-
-Cancel Order
-
-</button>
-
-</div>
-
-`;
-}
-<div class="order-card">
-
-<div class="order-header">
-<span class="order-id">Order #${order.orderId}</span>
-<span>${date}</span>
-</div>
-
-<div class="order-items">
-<b>Items:</b><br>${items}
-</div>
-
-<div class="order-items">
-<b>Address:</b> ${order.address}
-</div>
-
-<!-- ORDER TRACKER -->
-
-<div class="order-tracker">
-
-<div class="tracker-step ${step>=1?"active":""}">
-<div class="tracker-dot"></div>
-<span>Placed</span>
-</div>
-
-<div class="tracker-step ${step>=2?"active":""}">
-<div class="tracker-dot"></div>
-<span>Packed</span>
-</div>
-
-<div class="tracker-step ${step>=3?"active":""}">
-<div class="tracker-dot"></div>
-<span>Shipped</span>
-</div>
-
-<div class="tracker-step ${step>=4?"active":""}">
-<div class="tracker-dot"></div>
-<span>Delivered</span>
-</div>
-
-</div>
-
-<div class="order-footer">
-
-<div class="order-total">
-₹${order.total}
-</div>
-
-<div class="order-status">
-${order.status}
-</div>
-
-</div>
-
-<button 
-class="cancel-btn"
-onclick="cancelOrder('${id}','${order.status}')"
-${order.status!=="Order Placed" ? "disabled":""}>
-
-Cancel Order
-
-</button>
-
-</div>
-
-`;
 }});
 
 ordersModal.style.display="flex";
@@ -1558,6 +1453,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
