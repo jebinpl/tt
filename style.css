@@ -1186,24 +1186,7 @@ margin-top:5px;
 #stickyCheckoutBtn:hover {
     opacity: 0.9;
 }
-.orders-table{
-width:100%;
-border-collapse:collapse;
-font-size:14px;
-background:#fff;
-}
-.orders-table th,
-.orders-table td{
-border:1px solid #ddd;
-padding:8px;
-text-align:left;
-}
-.orders-table th{
-background:#2c3e50;
-color:white;
-position:sticky;
-top:0;
-}
+
 .orders-table tr:nth-child(even){
 background:#f5f5f5;
 }
@@ -1393,22 +1376,6 @@ cursor:not-allowed;
   z-index: 2;
 }
 
-.orders-table tr:nth-child(even) {
-  background: #f5f5f5;
-}
-
-.orders-table tr:hover {
-  background: #e8f4ff;
-}
-
-.orders-table button {
-  padding: 4px 8px;
-  background: red;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
 /* Override flex display from #ordersList (customer cards) */
 #adminOrdersList {
   display: table-row-group;
@@ -1492,6 +1459,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
