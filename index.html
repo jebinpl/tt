@@ -319,31 +319,30 @@
 
 <!-- ADMIN TABLE -->
 <div id="adminOrdersSection" style="display:none; overflow-x:auto;">
-<table id="adminOrdersTable">
-
-<thead>
-<tr>
-<th>Order ID</th>
-<th>Phone</th>
-<th>Items</th>
-<th>Price</th>
-<th>Qty</th>
-<th>Total</th>
-<th>Address</th>
-<th>Date</th>
-<th>Status</th>
-<th>Delete</th>
-</tr>
-</thead>
-
-<tbody id="ordersList"></tbody>
-
-</table>
+  <div class="table-wrapper">
+    <table id="adminOrdersTable" class="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Phone</th>
+          <th>Items</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Total</th>
+          <th>Address</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="adminOrdersList"></tbody>
+    </table>
+  </div>
 </div>
 
 <!-- CUSTOMER CARD VIEW -->
 <div id="customerOrdersSection" style="display:none;">
-<div id="customerOrders"></div>
+  <div id="customerOrders"></div>
 </div>
 
 </div>
@@ -351,6 +350,7 @@
     
 </body>
 </html>
+
 
 
 
