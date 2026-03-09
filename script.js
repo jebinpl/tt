@@ -14,6 +14,7 @@ import {
     doc,
     updateDoc,
     query,
+    where,
     orderBy,
     getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -1458,6 +1459,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
