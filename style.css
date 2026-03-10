@@ -1493,6 +1493,19 @@ cursor:not-allowed;
 .admin-mode #maximizeOrders{
     display:inline-block;
 }
+.delete-order-btn{
+    background:#e53935;
+    color:#fff;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.delete-order-btn:hover{
+    background:#c62828;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1573,6 +1586,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
