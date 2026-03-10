@@ -1468,7 +1468,7 @@ box-shadow:0 2px 6px rgba(0,0,0,0.15);
     top:0;
 
     background:white;
-    z-index:2000; /* increase */
+    z-index:9999;   /* very high */
 
     padding:12px;
     border-bottom:1px solid #ddd;
@@ -1516,7 +1516,9 @@ padding:5px 8px;
     max-width:none;
     max-height:none;
     border-radius:0;
-    overflow:hidden;
+
+    overflow:hidden;   /* important */
+
     display:flex;
     flex-direction:column;
 }
@@ -1735,6 +1737,7 @@ font-weight:bold;
     border-radius: 16px;
 }
 }
+
 
 
 
