@@ -1615,7 +1615,54 @@ cursor:not-allowed;
     transform: scale(1);
     opacity: 1;
 }
-/*--------------------------------------------------------------------------------------------------------*/
+/* ================= ORDER TRACKER ANIMATION ================= */
+.order-tracker{
+display:flex;
+justify-content:space-between;
+margin:15px 0;
+position:relative;
+}
+
+.order-tracker::before{
+content:"";
+position:absolute;
+top:10px;
+left:0;
+right:0;
+height:4px;
+background:#ddd;
+z-index:1;
+}
+
+.tracker-step{
+text-align:center;
+position:relative;
+z-index:2;
+flex:1;
+}
+
+.circle{
+width:20px;
+height:20px;
+background:#ddd;
+border-radius:50%;
+margin:auto;
+}
+
+.tracker-step.active .circle{
+background:#28a745;
+}
+
+.tracker-step p{
+font-size:12px;
+margin-top:5px;
+}
+
+.tracker-step.active p{
+color:#28a745;
+font-weight:bold;
+}
+/* ================= ORDER TRACKER ANIMATION END ================= */
 /* Mobile adjustment */
 @media (max-width: 600px) {
 
@@ -1699,6 +1746,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
