@@ -952,7 +952,7 @@ myOrdersLink.addEventListener("click", async function() {
                     <td>${date}</td>
                     <td>
                         <select 
-                        ${order.status==="Cancelled"?"disabled":""}
+                        ${order.cancelledBy==="Customer" ? "disabled" : ""}
                         onchange="updateOrderStatus('${id}', this.value)">
                             <option ${order.status==="Order Placed"?"selected":""}>Order Placed</option>
                             <option ${order.status==="Items Bagged"?"selected":""}>Items Bagged</option>
@@ -1504,7 +1504,8 @@ return;
 if(!confirm("Cancel this order?")) return;
 
 await updateDoc(doc(db,"orders",id),{
-status:"Cancelled"
+    status:"Cancelled",
+    cancelledBy:"Customer"
 });
 
 alert("Order cancelled");
@@ -1523,10 +1524,13 @@ stickyCheckoutBtn.addEventListener("click",function(){
 window.updateOrderStatus = async function(id,status){
 
 await updateDoc(doc(db,"orders",id),{
-status:status
+    status: status,
+    cancelledBy: status === "Cancelled" ? "Admin" : null
 });
+
 alert("Order status updated");
 document.getElementById("myOrdersLink").click();
+
 };
 
 
@@ -1561,6 +1565,7 @@ alert("Order deleted successfully");
 // refresh orders
 document.getElementById("myOrdersLink").click();
 };
+
 
 
 
