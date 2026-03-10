@@ -1438,6 +1438,37 @@ cursor:not-allowed;
 .modal.fullscreen .table-wrapper{
     height:100%;
 }
+/* ================= ADMIN ORDER BADGE ================= */
+
+.home-btn-wrapper{
+    position:relative;
+}
+
+/* red notification badge */
+.order-badge{
+    position:absolute;
+    top:-6px;
+    right:-6px;
+
+    background:#ff3b30;
+    color:white;
+
+    font-size:11px;
+    font-weight:bold;
+
+    min-width:20px;
+    height:20px;
+    padding:0 5px;
+
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:0 3px 8px rgba(0,0,0,0.3);
+
+    display:none; /* hidden initially */
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1518,6 +1549,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
