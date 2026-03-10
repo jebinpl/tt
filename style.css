@@ -1509,7 +1509,32 @@ cursor:not-allowed;
 .delete-order-btn:hover{
     background:#c62828;
 }
+/* ================= MODAL ANIMATIONS ================= */
 
+.modal {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content,
+.profile-box {
+    transform: scale(0.92);
+    opacity: 0;
+    transition: all 0.25s ease;
+}
+
+/* when modal active */
+.modal.show .modal-content,
+.modal.show .profile-box {
+    transform: scale(1);
+    opacity: 1;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1590,6 +1615,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
