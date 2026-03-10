@@ -1484,6 +1484,15 @@ cursor:not-allowed;
 
     display:none; /* hidden initially */
 }
+/* hidden by default */
+#maximizeOrders{
+    display:none;
+}
+
+/* visible only for admin */
+.admin-mode #maximizeOrders{
+    display:inline-block;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1564,6 +1573,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
