@@ -1379,6 +1379,7 @@ cursor:not-allowed;
   padding: 8px;
   text-align: left;
   white-space: nowrap; /* prevents wrapping like cards */
+  box-shadow:0 2px 5px rgba(0,0,0,0.15);
 }
 
 .orders-table th {
@@ -1517,6 +1518,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
