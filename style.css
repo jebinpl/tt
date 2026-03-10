@@ -1409,9 +1409,12 @@ cursor:not-allowed;
 }
 
 /* ADMIN ORDERS TABLE */
+/* ADMIN ORDERS TABLE */
 .table-wrapper {
   width: 100%;
-  overflow-x: auto; /* scroll on mobile */
+  overflow-x: auto; /* mobile horizontal scroll */
+  overflow-y: auto; /* vertical scroll */
+  max-height: 70vh; /* keeps header visible */
   margin-top: 10px;
 }
 
@@ -1436,9 +1439,11 @@ cursor:not-allowed;
   color: white;
   position: sticky;
   top: 0; /* sticky header */
-  z-index: 2;
+  z-index: 5;
 }
-
+.orders-table thead th{
+box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
 /* Override flex display from #ordersList (customer cards) */
 #adminOrdersList {
   display: table-row-group;
@@ -1718,6 +1723,7 @@ font-weight:bold;
     border-radius: 16px;
 }
 }
+
 
 
 
