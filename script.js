@@ -802,7 +802,7 @@ if (changeAddressBtn) {
         localStorage.setItem("returnToCheckout", "true");
 
         // 🔹 Close checkout modal
-        checkoutModal.style.display = "none";
+        closeModal(checkoutModal);
 
         try {
             const userRef = doc(db, "customers", phone);
@@ -824,7 +824,7 @@ if (changeAddressBtn) {
                 // Open EDIT mode directly
                 profileView.style.display = "none";
                 profileEdit.style.display = "block";
-                profileModal.style.display = "flex";
+                openModal(profileModal);
             }
 
         } catch (error) {
@@ -1485,7 +1485,7 @@ if (saveProfileBtn) {
 
             // ✅ Close profile modal
             const profileModal = document.getElementById("profileModal");
-            profileModal.style.display = "none";
+            closeModal(profileModal);
 
             // ✅ Update welcome message
             document.getElementById("welcomeMessage").textContent =
@@ -1509,7 +1509,7 @@ if (saveProfileBtn) {
                     address;
 
                 // reopen checkout
-                checkoutModal.style.display = "flex";
+                openModal(checkoutModal);
             }
 
         } catch (error) {
@@ -1530,7 +1530,7 @@ if (cancelProfileBtn) {
 /* CLOSE MODAL */
 if (closeProfile) {
     closeProfile.addEventListener("click", function () {
-        profileModal.style.display = "none";
+        closeModal(profileModal);
     });
 }
 
@@ -1652,6 +1652,24 @@ alert("Order deleted successfully");
 document.getElementById("myOrdersLink").click();
 };
 
+// ================= MODAL ANIMATION HELPERS =================
+
+function openModal(modal) {
+    modal.style.display = "flex";
+
+    // allow display render first
+    setTimeout(() => {
+        modal.classList.add("show");
+    }, 10);
+}
+
+function closeModal(modal) {
+    modal.classList.remove("show");
+
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 250);
+}
 
 
 
