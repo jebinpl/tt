@@ -925,7 +925,7 @@ total: parseFloat(cartTotal.textContent),
 address: address,
 status: "Order Placed",
 createdAt: Date.now()
-});}
+});
 
 alert("Order placed successfully");
 
@@ -1763,6 +1763,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
