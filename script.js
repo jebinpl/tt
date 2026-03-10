@@ -1671,16 +1671,24 @@ function closeModal(modal) {
     }, 250);
 }
 
-// ================= SPLASH SCREEN =================
+// ================= PREMIUM SPLASH CONTROL =================
 
 window.addEventListener("load", () => {
 
     const splash = document.getElementById("splashScreen");
 
+    // show only once per browser session
+    if (sessionStorage.getItem("splashShown")) {
+        splash.style.display = "none";
+        return;
+    }
+
+    sessionStorage.setItem("splashShown", "true");
+
     setTimeout(() => {
+
         splash.classList.add("hide");
 
-        // remove from DOM after fade
         setTimeout(()=>{
             splash.style.display = "none";
         },800);
