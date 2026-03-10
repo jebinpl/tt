@@ -962,10 +962,16 @@ myOrdersLink.addEventListener("click", async function() {
                             <option ${order.status==="Cancelled"?"selected":""}>Cancelled</option>
                         </select>
                     </td>
-                    <td>
-                        <button ${(order.status==="Closed" || order.status==="Cancelled") ? "" : "disabled"}
-                        onclick="deleteOrder('${id}', '${order.status}')"> Delete </button>
-                    </td>
+                            <td>
+                                    ${
+                                        (order.status === "Closed" || order.status === "Cancelled")
+                                         ? `<button class="delete-order-btn"
+                                         onclick="deleteOrder('${id}')">
+                                         Delete
+                                         </button>`
+                                            : ""
+                                     }
+                            </td>
                 </tr>
             `;
         } else {
@@ -1527,9 +1533,21 @@ alert("Order status updated");
 
 /* ================= DELETE ORDER ================= */
 
-window.deleteOrder = async function(id,status){
+window.deleteOrder = async function(id){
 
-// ✅ allow Closed OR Cancelled
+// 🔥 get latest order from Firestore
+const orderRef = doc(db,"orders",id);
+const snap = await getDoc(orderRef);
+
+if(!snap.exists()){
+    alert("Order not found");
+    return;
+}
+
+const order = snap.data();
+const status = order.status;
+
+// ✅ allow only Closed or Cancelled
 if(status !== "Closed" && status !== "Cancelled"){
     alert("Only Closed or Cancelled orders can be deleted");
     return;
@@ -1537,13 +1555,14 @@ if(status !== "Closed" && status !== "Cancelled"){
 
 if(!confirm("Delete this order?")) return;
 
-await deleteDoc(doc(db,"orders",id));
+await deleteDoc(orderRef);
 
 alert("Order deleted successfully");
 
-// refresh orders list without reload
+// refresh orders
 document.getElementById("myOrdersLink").click();
 };
+
 
 
 
