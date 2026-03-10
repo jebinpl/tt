@@ -1082,10 +1082,11 @@ closeOrders.onclick=function(){
 closeModal(ordersModal);
 };
 }
-/*----------------------------------------------------------------*/
+/* ================= HOME BUTTON WELCOME VOICE ================= */
 window.goHome = function() {
-currentCategory = "";
-renderProducts();
+    currentCategory = "";
+    renderProducts();
+
     // Scroll to top
     window.scrollTo({
         top: 0,
@@ -1097,31 +1098,40 @@ renderProducts();
     message.textContent = "Welcome to Thomas Traders Online Shopping Portal.";
     message.classList.add("show");
 
-    setTimeout(function() {
-        message.classList.remove("show");
-    }, 2000);
+    setTimeout(() => message.classList.remove("show"), 2000);
 
-    // 🎙 Voice Welcome
+    // 🎙 Voice Welcome with 5-minute cooldown
     if ('speechSynthesis' in window) {
-        const speech = new SpeechSynthesisUtterance(
-            "Welcome to Thomas Traders Online Shopping Portal."
-        );
+        const lastPlayed = localStorage.getItem("homeVoiceLastPlayed");
+        const now = Date.now();
 
-        speech.lang = "en-IN";
-        speech.rate = 1;
-        speech.pitch = 1;
+        // 5 minutes = 5 * 60 * 1000 ms
+        if (!lastPlayed || now - lastPlayed > 5 * 60 * 1000) {
+            const speech = new SpeechSynthesisUtterance(
+                "Welcome to Thomas Traders Online Shopping Portal."
+            );
 
-        const voices = window.speechSynthesis.getVoices();
-        speech.voice = voices.find(v => v.lang === "en-IN") || voices[0];
+            speech.lang = "en-IN";
+            speech.rate = 1;
+            speech.pitch = 1;
 
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(speech);
+            const voices = window.speechSynthesis.getVoices();
+            speech.voice = voices.find(v => v.lang === "en-IN") || voices[0];
+
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(speech);
+
+            // ✅ update timestamp
+            localStorage.setItem("homeVoiceLastPlayed", now);
+        }
     }
 
-    // ✅ Toggle dropup open/close
+    // Toggle dropup open/close
     const dropup = document.getElementById("homeDropup");
     dropup.classList.toggle("show");
-}
+};
+/* ================= HOME BUTTON WELCOME VOICE END ================= */
+
 document.addEventListener("click", function (e) {
 
     const dropup = document.getElementById("homeDropup");
@@ -1710,6 +1720,7 @@ window.addEventListener("load", () => {
 
     }, 2000); // 2 seconds
 });
+
 
 
 
