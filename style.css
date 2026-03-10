@@ -383,10 +383,12 @@ transition:opacity 0.25s ease, visibility 0.25s ease;
     text-align: center;
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    margin: auto;
+    max-height: 90vh;
+    overflow: hidden;        /* change this */
 
-    margin: auto;              /* helps with keyboard */
-    max-height: 90vh;     /* prevents keyboard cut */
-    overflow-y: auto;     /* enables scrolling */
+    display: flex;           /* add */
+    flex-direction: column;  /* add */
     animation: modalPop 0.25s ease;
 }
 @keyframes modalPop {
@@ -1450,8 +1452,9 @@ align-items:center;
 position:sticky;
 top:0;
 background:white;
-z-index:10;
+z-index:50;
 padding:10px;
+border-bottom:1px solid #ddd;
 }
 /* Right-side buttons */
 .modal-controls{
@@ -1484,11 +1487,7 @@ padding:5px 8px;
     background:#f2f2f2;
     border-radius:5px;
 }
-.modal-controls span{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+
 /* FULLSCREEN MODE */
 .modal.fullscreen{
     padding:0;
@@ -1719,6 +1718,7 @@ font-weight:bold;
     border-radius: 16px;
 }
 }
+
 
 
 
