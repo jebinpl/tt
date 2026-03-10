@@ -39,6 +39,9 @@ window.recaptchaVerifier = new RecaptchaVerifier(auth, 'getOtpBtn', {
     }
 });
 let isAdmin = localStorage.getItem("isAdmin") === "true";
+if (isAdmin) {
+    document.body.classList.add("admin-mode");
+}
 let currentCategory = "";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
@@ -1510,6 +1513,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
