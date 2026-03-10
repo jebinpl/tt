@@ -1671,6 +1671,22 @@ function closeModal(modal) {
     }, 250);
 }
 
+// ================= SPLASH SCREEN =================
+
+window.addEventListener("load", () => {
+
+    const splash = document.getElementById("splashScreen");
+
+    setTimeout(() => {
+        splash.classList.add("hide");
+
+        // remove from DOM after fade
+        setTimeout(()=>{
+            splash.style.display = "none";
+        },800);
+
+    }, 2000); // 2 seconds
+});
 
 
 
