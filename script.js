@@ -1269,16 +1269,16 @@ onSnapshot(collection(db, "products"), (snapshot) => {
 
     renderProducts();
 });
-function renderProducts() {
+/* ================= SEARCH LOGIC ================= */
+function renderProducts(productsList = allProducts) {
     productsContainer.innerHTML = "";
-    allProducts.forEach(product => {
-        if (currentCategory !== "" &&
-            product.category !== currentCategory) {
-            return;
-        }
+
+    productsList.forEach(product => {
+        if (currentCategory !== "" && product.category !== currentCategory) return;
         renderProductCard(product.id, product);
     });
 }
+/* ================= SEARCH LOGIC END ================= */
 /* ================= IMAGE POPUP LOGIC ================= */
 
 const imageModal = document.getElementById("imageModal");
@@ -1720,7 +1720,24 @@ window.addEventListener("load", () => {
 
     }, 2000); // 2 seconds
 });
+// ================= SEARCH FUNCTIONALITY =================
+// SEARCH BAR FUNCTIONALITY
+const searchInput = document.querySelector("#searchBar .search-input");
 
+if (searchInput) {
+    searchInput.addEventListener("input", function() {
+        const query = this.value.trim().toLowerCase();
+
+        const filteredProducts = allProducts.filter(product => {
+            return (
+                product.description.toLowerCase().includes(query) ||
+                (product.category && product.category.toLowerCase().includes(query))
+            );
+        });
+
+        renderProducts(filteredProducts);
+    });
+}
 
 
 
