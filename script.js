@@ -949,11 +949,20 @@ myOrdersLink.addEventListener("click", async function() {
                     <td>${qty}</td>
                     <td>₹${order.total}</td>
                     <td>${order.address}</td>
-                    <td>${date}</td>
                     <td>
-                        <select 
-                        ${order.cancelledBy==="Customer" ? "disabled" : ""}
-                        onchange="updateOrderStatus('${id}', this.value)">
+${date}<br>
+<small>
+${order.lastUpdatedBy ? 
+`Updated by ${order.lastUpdatedBy}<br>
+${new Date(order.lastUpdatedAt).toLocaleString()}`
+: ""}
+</small>
+</td>
+                    <td>
+                    <select
+                    class="status-${order.status.toLowerCase().replaceAll(" ","-")}"
+                    ${order.cancelledBy==="Customer" ? "disabled" : ""}
+                    onchange="updateOrderStatus('${id}', this.value)">
                             <option ${order.status==="Order Placed"?"selected":""}>Order Placed</option>
                             <option ${order.status==="Items Bagged"?"selected":""}>Items Bagged</option>
                             <option ${order.status==="Shipped"?"selected":""}>Shipped</option>
@@ -1523,14 +1532,18 @@ stickyCheckoutBtn.addEventListener("click",function(){
 
 window.updateOrderStatus = async function(id,status){
 
+const isAdmin = localStorage.getItem("isAdmin") === "true";
+
 await updateDoc(doc(db,"orders",id),{
     status: status,
-    cancelledBy: status === "Cancelled" ? "Admin" : null
+    cancelledBy: status === "Cancelled" ? "Admin" : null,
+    lastUpdatedBy: isAdmin ? "Admin" : "System",
+    lastUpdatedAt: Date.now()
 });
 
 alert("Order status updated");
-document.getElementById("myOrdersLink").click();
 
+document.getElementById("myOrdersLink").click();
 };
 
 
@@ -1565,6 +1578,7 @@ alert("Order deleted successfully");
 // refresh orders
 document.getElementById("myOrdersLink").click();
 };
+
 
 
 
