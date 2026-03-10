@@ -961,6 +961,7 @@ submitOrderBtn.textContent = "Submit Order";
 }
 
 });
+}
 /* ================= MY ORDERS ================= */
 
 const myOrdersLink = document.getElementById("myOrdersLink");
@@ -1763,6 +1764,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
