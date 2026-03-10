@@ -1052,31 +1052,61 @@ ${new Date(order.lastUpdatedAt).toLocaleString()}`
         } else {
             // Customer card (no change)
             const cardContainer = document.getElementById("customerOrders");
-            let step = 1;
-            if(order.status === "Items Bagged") step = 2;
-            if(order.status === "Shipped") step = 3;
-            if(order.status === "Delivered") step = 4;
-            if(order.status === "Closed") step = 4;
 
-            cardContainer.innerHTML += `
-                <div class="order-card">
-                    <div class="order-header">
-                        <span class="order-id">Order #${order.orderId}</span>
-                        <span>${date}</span>
-                    </div>
-                    <div class="order-items"><b>Items:</b><br>${items}</div>
-                    <div class="order-items"><b>Address:</b> ${order.address}</div>
-                    <div class="order-footer">
-                        <div class="order-total">₹${order.total}</div>
-                        <div class="order-status status-${order.status.toLowerCase().replaceAll(" ","-")}">${order.status}</div>
-                    </div>
-                    <button class="cancel-btn"
-                        onclick="cancelOrder('${id}','${order.status}')"
-                        ${order.status !== "Order Placed" ? "disabled" : ""}>
-                        Cancel Order
-                    </button>
-                </div>
-            `;
+let step = 1;
+if(order.status === "Items Bagged") step = 2;
+if(order.status === "Shipped") step = 3;
+if(order.status === "Delivered") step = 4;
+if(order.status === "Closed") step = 4;
+
+cardContainer.innerHTML += `
+<div class="order-card">
+
+<div class="order-header">
+    <span class="order-id">Order #${order.orderId}</span>
+    <span>${date}</span>
+</div>
+
+<div class="order-tracker">
+
+    <div class="tracker-step ${step>=1 ? "active" : ""}">
+        <div class="circle"></div>
+        <p>Placed</p>
+    </div>
+
+    <div class="tracker-step ${step>=2 ? "active" : ""}">
+        <div class="circle"></div>
+        <p>Bagged</p>
+    </div>
+
+    <div class="tracker-step ${step>=3 ? "active" : ""}">
+        <div class="circle"></div>
+        <p>Shipped</p>
+    </div>
+
+    <div class="tracker-step ${step>=4 ? "active" : ""}">
+        <div class="circle"></div>
+        <p>Delivered</p>
+    </div>
+
+</div>
+
+<div class="order-items"><b>Items:</b><br>${items}</div>
+<div class="order-items"><b>Address:</b> ${order.address}</div>
+
+<div class="order-footer">
+    <div class="order-total">₹${order.total}</div>
+    <div class="order-status status-${order.status.toLowerCase().replaceAll(" ","-")}">${order.status}</div>
+</div>
+
+<button class="cancel-btn"
+onclick="cancelOrder('${id}','${order.status}')"
+${order.status !== "Order Placed" ? "disabled" : ""}>
+Cancel Order
+</button>
+
+</div>
+`;
         }
     });
 
@@ -1744,6 +1774,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
