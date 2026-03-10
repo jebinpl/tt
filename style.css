@@ -1614,7 +1614,12 @@ cursor:not-allowed;
         font-size: 13px;
         padding: 8px;
     }
+    .modal-content,
+.profile-box {
+    border-radius: 16px;
 }
+}
+
 
 
 
