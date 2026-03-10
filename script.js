@@ -42,6 +42,41 @@ let isAdmin = localStorage.getItem("isAdmin") === "true";
 if (isAdmin) {
     document.body.classList.add("admin-mode");
 }
+/* ================= ADMIN ORDER NOTIFICATION ================= */
+
+const badge = document.getElementById("adminOrderBadge");
+
+if (isAdmin && badge) {
+
+    onSnapshot(collection(db, "orders"), (snapshot) => {
+
+        let newOrdersCount = 0;
+
+        snapshot.forEach(docSnap => {
+
+            const order = docSnap.data();
+
+            // ✅ count only ACTIVE orders
+            if (
+                order.status !== "Delivered" &&
+                order.status !== "Closed" &&
+                order.status !== "Cancelled"
+            ) {
+                newOrdersCount++;
+            }
+
+        });
+
+        // ✅ Update badge
+        if (newOrdersCount > 0) {
+            badge.style.display = "flex";
+            badge.textContent = newOrdersCount;
+        } else {
+            badge.style.display = "none";
+        }
+
+    });
+}
 let currentCategory = "";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
@@ -65,31 +100,7 @@ else {
 if (adminPanel) {
     adminPanel.style.display = isAdmin ? "block" : "none";
 }
-/* ================= ADMIN ORDER BADGE ================= */
 
-const ordersBadge = document.getElementById("adminOrderBadge");
-
-if (isAdmin && ordersBadge) {
-
-    const q = query(
-        collection(db, "orders"),
-        where("status", "==", "Order Placed")
-    );
-
-    onSnapshot(q, (snapshot) => {
-
-        const count = snapshot.size;
-
-        console.log("New Orders:", count); // ✅ DEBUG
-
-        if (count > 0) {
-            ordersBadge.style.display = "flex";
-            ordersBadge.textContent = count;
-        } else {
-            ordersBadge.style.display = "none";
-        }
-    });
-}
 /*------------------------------------------Login Button------------------------------------------------------*/
 
 if (loginBtn) {
@@ -934,12 +945,15 @@ myOrdersLink.addEventListener("click", async function() {
                     <td>${order.address}</td>
                     <td>${date}</td>
                     <td>
-                        <select onchange="updateOrderStatus('${id}', this.value)">
+                        <select 
+                        ${order.status==="Cancelled"?"disabled":""}
+                        onchange="updateOrderStatus('${id}', this.value)">
                             <option ${order.status==="Order Placed"?"selected":""}>Order Placed</option>
                             <option ${order.status==="Items Bagged"?"selected":""}>Items Bagged</option>
                             <option ${order.status==="Shipped"?"selected":""}>Shipped</option>
                             <option ${order.status==="Delivered"?"selected":""}>Delivered</option>
                             <option ${order.status==="Closed"?"selected":""}>Closed</option>
+                            <option ${order.status==="Cancelled"?"selected":""}>Cancelled</option>
                         </select>
                     </td>
                     <td>
@@ -1447,7 +1461,14 @@ document.addEventListener("DOMContentLoaded", function(){
 // ================= MAXIMIZE ORDERS MODAL =================
 const maximizeBtn = document.getElementById("maximizeOrders");
 
-maximizeBtn.addEventListener("click", () => {
+if (maximizeBtn && isAdmin) {
+    maximizeBtn.addEventListener("click", () => {
+        ordersModal.classList.toggle("fullscreen");
+
+        maximizeBtn.textContent =
+            ordersModal.classList.contains("fullscreen") ? "❐" : "□";
+    });
+}
 
     ordersModal.classList.toggle("fullscreen");
 
@@ -1515,6 +1536,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
