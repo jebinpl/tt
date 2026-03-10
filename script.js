@@ -1491,6 +1491,38 @@ location.reload();
 };
 
 
+// ================= ADMIN ORDER NOTIFICATION =================
+
+import {
+    collection,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const badge = document.getElementById("adminOrderBadge");
+
+// listen orders collection
+onSnapshot(collection(db, "orders"), (snapshot) => {
+
+    let newOrdersCount = 0;
+
+    snapshot.forEach(doc => {
+        const order = doc.data();
+
+        // count only new / placed orders
+        if (order.status === "Placed") {
+            newOrdersCount++;
+        }
+    });
+
+    // update badge
+    if (newOrdersCount > 0) {
+        badge.style.display = "flex";
+        badge.textContent = newOrdersCount;
+    } else {
+        badge.style.display = "none";
+    }
+
+});
 
 
 
