@@ -159,13 +159,13 @@ if (adminLink) {
             location.reload();
         } else {
             // ✅ Open login modal
-            adminModal.style.display = "block";
+            openModal(adminModal);
         }
     });
 }
 if (closeAdmin) {
     closeAdmin.addEventListener("click", function() {
-        adminModal.style.display = "none";
+        closeModal(adminModal);
     });
 }
 
@@ -477,7 +477,7 @@ if (customerLink) {
     customerLink.addEventListener("click", function (e) {
         e.preventDefault();
         closeDropdown();
-        customerModal.style.display = "flex";
+        openModal(customerModal);
     });
     document.addEventListener("click", function (e) {
 
@@ -495,7 +495,7 @@ if (customerLink) {
 /* Close Customer Modal */
 if (closeCustomer) {
     closeCustomer.addEventListener("click", function () {
-        customerModal.style.display = "none";
+        closeModal(customerModal);
         phoneSection.style.display = "block";
         otpSection.style.display = "none";
     });
@@ -650,13 +650,13 @@ const cartTotal = document.getElementById("cartTotal");
 if (cartLink) {
     cartLink.addEventListener("click", function(e){
     e.preventDefault();
-    cartModal.style.display = "flex";
+    openModal(cartModal);
 });}
 
 /* Close Cart */
 if (closeCart) {
     closeCart.addEventListener("click", function(){
-        cartModal.style.display = "none";
+        closeModal(cartModal);
     });
 }
 
@@ -867,7 +867,7 @@ checkoutModal.style.display="flex";
 
 if(closeCheckout){
 closeCheckout.onclick=function(){
-checkoutModal.style.display="none";
+closeModal(checkoutModal);
 };
 }
 /* ================= PLACE ORDER ================= */
@@ -918,7 +918,7 @@ if (stickyBar) {
     stickyBar.style.display = "none";
 }
 
-checkoutModal.style.display="none";
+closeModal(checkoutModal);
 });
 }
 /* ================= MY ORDERS ================= */
@@ -1598,7 +1598,7 @@ const stickyCheckoutBtn = document.getElementById("stickyCheckoutBtn");
 
 if(stickyCheckoutBtn){
 stickyCheckoutBtn.addEventListener("click",function(){
-    cartModal.style.display="flex";
+    openModal(cartModal);
 });
 }
 /* ================= UPDATE ORDER STATUS ================= */
@@ -1670,6 +1670,7 @@ function closeModal(modal) {
         modal.style.display = "none";
     }, 250);
 }
+
 
 
 
