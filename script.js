@@ -665,7 +665,7 @@ const cartTotal = document.getElementById("cartTotal");
 if (cartLink) {
     cartLink.addEventListener("click", function(e){
     e.preventDefault();
-    checkoutBtn.click();
+    openModal(cartModal);
 });}
 
 /* Close Cart */
@@ -1744,6 +1744,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
