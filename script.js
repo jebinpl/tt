@@ -20,7 +20,22 @@ import {
     orderBy,
     getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// ================= GLOBAL MODAL SYSTEM =================
 
+window.openModal = function(modal) {
+    if (!modal) return;
+
+    openModal(modal)
+    document.body.classList.add("modal-open");
+};
+
+window.closeModal = function(modal) {
+    if (!modal) return;
+
+    closeModal(modal)
+    document.body.classList.remove("modal-open");
+};
+// ================= GLOBAL MODAL SYSTEM END=================
 import { 
     ref, 
     uploadBytes, 
@@ -566,7 +581,7 @@ cartListener = onSnapshot(doc(db,"carts",phoneNumber),(snap)=>{
         } else {
 
             // 🆕 First time user → open profile modal
-            profileModal.style.display = "flex";
+            openModal(profileModal);
 
             // Clear fields
             document.getElementById("editName").value = "";
@@ -1437,7 +1452,7 @@ if (myProfileLink) {
                 profileView.style.display = "block";
                 profileEdit.style.display = "none";
 
-                profileModal.style.display = "flex";
+                openModal(profileModal);
             }
         } catch (error) {
             alert("Network error. Please check internet.");
@@ -1695,6 +1710,7 @@ window.addEventListener("load", () => {
 
     }, 2000); // 2 seconds
 });
+
 
 
 
