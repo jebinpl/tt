@@ -1393,7 +1393,50 @@ cursor:not-allowed;
 #adminOrdersList {
   display: table-row-group;
 }
+/* ================= MAXIMIZE MODAL ================= */
 
+.modal-controls{
+    position:absolute;
+    top:10px;
+    right:15px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+/* maximize icon */
+.maximize-btn{
+    font-size:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* FULLSCREEN MODE */
+.modal.fullscreen{
+    padding:0;
+}
+
+.modal.fullscreen .modal-content{
+    width:100vw;
+    height:100vh;
+    max-width:none;
+    max-height:none;
+    border-radius:0;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+}
+
+/* Orders content expands */
+.modal.fullscreen #adminOrdersSection{
+    flex:1;
+    overflow:auto;
+}
+
+/* table fills screen */
+.modal.fullscreen .table-wrapper{
+    height:100%;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1474,6 +1517,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
