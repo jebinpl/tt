@@ -1175,7 +1175,13 @@ margin-top:5px;
 #ordersList {
     text-align: left;
     max-height: 400px;
+    flex:1;
     overflow-y: auto;
+}
+.modal.fullscreen .orders-header{
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
 .order-card {
@@ -1723,6 +1729,7 @@ font-weight:bold;
     border-radius: 16px;
 }
 }
+
 
 
 
