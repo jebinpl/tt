@@ -62,6 +62,29 @@ else {
 if (adminPanel) {
     adminPanel.style.display = isAdmin ? "block" : "none";
 }
+/* ================= ADMIN ORDER BADGE ================= */
+
+const ordersBadge = document.getElementById("ordersBadge");
+
+if (localStorage.getItem("isAdmin") === "true" && ordersBadge) {
+
+    const q = query(
+        collection(db, "orders"),
+        where("status", "==", "Order Placed")
+    );
+
+    onSnapshot(q, (snapshot) => {
+
+        const count = snapshot.size;
+
+        if (count > 0) {
+            ordersBadge.style.display = "block";
+            ordersBadge.textContent = count;
+        } else {
+            ordersBadge.style.display = "none";
+        }
+    });
+}
 /*------------------------------------------Login Button------------------------------------------------------*/
 
 if (loginBtn) {
@@ -1523,6 +1546,7 @@ onSnapshot(collection(db, "orders"), (snapshot) => {
     }
 
 });
+
 
 
 
