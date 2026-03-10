@@ -1395,23 +1395,33 @@ cursor:not-allowed;
   display: table-row-group;
 }
 /* ================= MAXIMIZE MODAL ================= */
-
-.modal-controls{
-    position:absolute;
-    top:10px;
-    right:15px;
+/* Header row */
+.orders-header{
     display:flex;
-    gap:12px;
+    justify-content:space-between;
     align-items:center;
+    border-bottom:1px solid #ddd;
+    padding:10px 15px;
+}
+/* Right-side buttons */
+.modal-controls{
+    display:flex;
+    gap:10px;
 }
 
+/* Buttons */
 /* maximize icon */
-.maximize-btn{
-    font-size:20px;
+.maximize-btn,
+.close{
     cursor:pointer;
-    font-weight:bold;
+    font-size:20px;
+    padding:5px 8px;
 }
-
+.maximize-btn:hover,
+.close:hover{
+    background:#f2f2f2;
+    border-radius:5px;
+}
 /* FULLSCREEN MODE */
 .modal.fullscreen{
     padding:0;
@@ -1549,6 +1559,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
