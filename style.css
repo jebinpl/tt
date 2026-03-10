@@ -1381,40 +1381,45 @@ font-size:16px;
 /* STATUS BADGES */
 
 .order-status{
-padding:5px 12px;
+padding:5px 10px;
 border-radius:20px;
 font-size:12px;
 font-weight:600;
+display:inline-block;
 }
 
 /* STATUS COLORS */
 
+/* ORDER STATUS COLORS */
+
 .status-order-placed{
-    background:#fff3cd;
-    color:#856404;
+background:#fff3cd;
+color:#856404;
 }
 
 .status-items-bagged{
-    background:#d1ecf1;
-    color:#0c5460;
+background:#cce5ff;
+color:#004085;
 }
 
 .status-shipped{
-    background:#cce5ff;
-    color:#004085;
+background:#d4edda;
+color:#155724;
 }
 
 .status-delivered{
-    background:#d4edda;
-    color:#155724;
+background:#d1ecf1;
+color:#0c5460;
 }
+
 .status-closed{
-    background:#e2e3e5;
-    color:#383d41;
+background:#e2e3e5;
+color:#383d41;
 }
+
 .status-cancelled{
-    background:#f8d7da;
-    color:#721c24;
+background:#f8d7da;
+color:#721c24;
 }
 
 /* CANCEL BUTTON */
@@ -1694,6 +1699,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
