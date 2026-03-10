@@ -963,7 +963,8 @@ myOrdersLink.addEventListener("click", async function() {
                         </select>
                     </td>
                     <td>
-                        <button onclick="deleteOrder('${id}', '${order.status}')">Delete</button>
+                        <button ${(order.status==="Closed" || order.status==="Cancelled") ? "" : "disabled"}
+                        onclick="deleteOrder('${id}', '${order.status}')"> Delete </button>
                     </td>
                 </tr>
             `;
@@ -1528,10 +1529,21 @@ alert("Order status updated");
 
 window.deleteOrder = async function(id,status){
 
-if(status!=="Closed"){
-alert("Order must be CLOSED before deleting");
-return;
+// ✅ allow Closed OR Cancelled
+if(status !== "Closed" && status !== "Cancelled"){
+    alert("Only Closed or Cancelled orders can be deleted");
+    return;
 }
+
+if(!confirm("Delete this order?")) return;
+
+await deleteDoc(doc(db,"orders",id));
+
+alert("Order deleted successfully");
+
+// refresh orders list without reload
+document.getElementById("myOrdersLink").click();
+};
 
 if(!confirm("Delete this order?")) return;
 
@@ -1542,6 +1554,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
