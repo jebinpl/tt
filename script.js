@@ -1416,6 +1416,22 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 });
+// ================= MAXIMIZE ORDERS MODAL =================
+
+const ordersModal = document.getElementById("ordersModal");
+const maximizeBtn = document.getElementById("maximizeOrders");
+
+maximizeBtn.addEventListener("click", () => {
+
+    ordersModal.classList.toggle("fullscreen");
+
+    // change icon
+    if (ordersModal.classList.contains("fullscreen")) {
+        maximizeBtn.textContent = "❐"; // restore icon
+    } else {
+        maximizeBtn.textContent = "□";
+    }
+});
 /* ================= CANCEL ORDER ================= */
 
 window.cancelOrder = async function(id,status){
@@ -1473,6 +1489,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
