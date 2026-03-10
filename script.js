@@ -665,7 +665,7 @@ const cartTotal = document.getElementById("cartTotal");
 if (cartLink) {
     cartLink.addEventListener("click", function(e){
     e.preventDefault();
-    openModal(cartModal);
+    checkoutBtn.click();
 });}
 
 /* Close Cart */
@@ -847,7 +847,7 @@ if (changeAddressBtn) {
         }
     });
 }
-if(checkoutBtn){
+if (checkoutBtn) {
 checkoutBtn.addEventListener("click", async function(){
 
 const phone = localStorage.getItem("customerPhone");
@@ -857,10 +857,12 @@ alert("Please login first");
 return;
 }
 
-if(cart.length===0){
+if(cart.length === 0){
 alert("Cart is empty");
 return;
 }
+
+try{
 
 const userSnap = await getDoc(doc(db,"customers",phone));
 
@@ -874,12 +876,16 @@ const data = userSnap.data();
 document.getElementById("checkoutAddress").textContent = data.address;
 document.getElementById("checkoutTotal").textContent = cartTotal.textContent;
 
-cartModal.style.display="none";
-checkoutModal.style.display="flex";
+// ✅ correct modal switching
+closeModal(cartModal);
+openModal(checkoutModal);
+
+}catch(error){
+alert("Checkout failed. Please try again.");
+}
 
 });
 }
-
 if(closeCheckout){
 closeCheckout.onclick=function(){
 closeModal(checkoutModal);
@@ -1623,7 +1629,7 @@ const stickyCheckoutBtn = document.getElementById("stickyCheckoutBtn");
 
 if(stickyCheckoutBtn){
 stickyCheckoutBtn.addEventListener("click",function(){
-    openModal(cartModal);
+    checkoutBtn.click();
 });
 }
 /* ================= UPDATE ORDER STATUS ================= */
@@ -1738,6 +1744,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
