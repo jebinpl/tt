@@ -1525,9 +1525,8 @@ window.updateOrderStatus = async function(id,status){
 await updateDoc(doc(db,"orders",id),{
 status:status
 });
-
 alert("Order status updated");
-
+document.getElementById("myOrdersLink").click();
 };
 
 
@@ -1562,6 +1561,7 @@ alert("Order deleted successfully");
 // refresh orders
 document.getElementById("myOrdersLink").click();
 };
+
 
 
 
