@@ -402,12 +402,12 @@ transition:opacity 0.25s ease, visibility 0.25s ease;
 
 /* Close Button */
 .close{
-position:absolute;
-top:10px;
-right:15px;
-font-size:24px;
 cursor:pointer;
-z-index:21000;
+font-size:22px;
+padding:5px 8px;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 /* Phone Input Section */
@@ -1459,6 +1459,19 @@ padding:10px;
     gap:10px;
 }
 
+.modal-controls span{
+    width:32px;
+    height:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+.modal-controls span:hover{
+background:#f2f2f2;
+border-radius:5px;
+}
+
 /* Buttons */
 /* maximize icon */
 .maximize-btn{
@@ -1706,6 +1719,7 @@ font-weight:bold;
     border-radius: 16px;
 }
 }
+
 
 
 
