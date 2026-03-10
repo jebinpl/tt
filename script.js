@@ -1468,7 +1468,6 @@ document.addEventListener("DOMContentLoaded", function(){
 // ================= MAXIMIZE ORDERS MODAL =================
 
 const maximizeBtn = document.getElementById("maximizeOrders");
-const ordersModal = document.getElementById("ordersModal");
 
 if (maximizeBtn && isAdmin && ordersModal) {
 
@@ -1543,6 +1542,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
