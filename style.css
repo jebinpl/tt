@@ -401,14 +401,13 @@ transition:opacity 0.25s ease, visibility 0.25s ease;
 }
 
 /* Close Button */
-.close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 26px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 21000;
+.close{
+position:absolute;
+top:10px;
+right:15px;
+font-size:24px;
+cursor:pointer;
+z-index:21000;
 }
 
 /* Phone Input Section */
@@ -1415,8 +1414,8 @@ font-size:13px;
 .cancel-btn:disabled{
 background:#aaa;
 cursor:not-allowed;
-}sor:not-allowed;
 }
+
 /* ADMIN ORDERS TABLE */
 .table-wrapper {
   width: 100%;
@@ -1454,12 +1453,15 @@ cursor:not-allowed;
 }
 /* ================= MAXIMIZE MODAL ================= */
 /* Header row */
-.orders-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid #ddd;
-    padding:10px 15px;
+.orders-header{ 
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+background:white;
+z-index:10;
+padding:10px;
 }
 /* Right-side buttons */
 .modal-controls{
@@ -1469,11 +1471,10 @@ cursor:not-allowed;
 
 /* Buttons */
 /* maximize icon */
-.maximize-btn,
-.close{
-    cursor:pointer;
-    font-size:20px;
-    padding:5px 8px;
+.maximize-btn{
+cursor:pointer;
+font-size:20px;
+padding:5px 8px;
 }
 .maximize-btn:hover,
 .close:hover{
@@ -1715,6 +1716,7 @@ font-weight:bold;
     border-radius: 16px;
 }
 }
+
 
 
 
