@@ -900,6 +900,10 @@ if(submitOrderBtn){
 submitOrderBtn.addEventListener("click", async function(){
 
 if(isPlacingOrder) return;
+if(cart.length === 0){
+alert("Cart is empty");
+return;
+}
 isPlacingOrder = true;
 
 submitOrderBtn.disabled = true;
@@ -912,11 +916,11 @@ const phone = localStorage.getItem("customerPhone");
 const orderId = "ORD" + Date.now();
 
 const address = document.getElementById("checkoutAddress").textContent;
-
+const orderItems = JSON.parse(JSON.stringify(cart));
 await addDoc(collection(db,"orders"),{
 orderId: orderId,
 phone: phone,
-items: cart,
+items: orderItems,
 total: parseFloat(cartTotal.textContent),
 address: address,
 status: "Order Placed",
@@ -1759,6 +1763,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
