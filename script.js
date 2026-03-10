@@ -1,5 +1,7 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let editingProductId = null;
+let cartListener = null;
+let ordersListener = null;
 import { getDoc, setDoc } from 
 "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 // ================= FIREBASE IMPORTS =================
@@ -47,8 +49,9 @@ if (isAdmin) {
 const badge = document.getElementById("adminOrderBadge");
 
 if (isAdmin && badge) {
-
-    onSnapshot(collection(db, "orders"), (snapshot) => {
+// ✅ stop previous listener (prevents duplicates)
+    if (ordersListener) ordersListener();
+    ordersListener = onSnapshot(collection(db, "orders"), (snapshot) => {
 
         let newOrdersCount = 0;
 
@@ -538,7 +541,10 @@ verifyBtn.addEventListener("click", async function () {
 localStorage.setItem("customerPhone", phoneNumber);
 
 // 🔥 REALTIME CART SYNC
-onSnapshot(doc(db,"carts",phoneNumber),(snap)=>{
+// remove old listener first
+if (cartListener) cartListener();
+
+cartListener = onSnapshot(doc(db,"carts",phoneNumber),(snap)=>{
     if(snap.exists()){
         cart = snap.data().items || [];
         updateCart();
@@ -1306,12 +1312,12 @@ if (cancelLogoutBtn) {
 if (confirmLogoutBtn) {
     confirmLogoutBtn.addEventListener("click", async function () {
 
-        const phone = localStorage.getItem("customerPhone");
+        if (cartListener) {
+            cartListener();
+            cartListener = null;
+        }
 
         localStorage.removeItem("customerPhone");
-
-        // ❌ Do NOT delete Firebase cart
-        // await deleteDoc(doc(db,"carts",phone));
 
         cart = [];
         updateCart();
@@ -1320,7 +1326,6 @@ if (confirmLogoutBtn) {
             logoutModal.style.display = "none";
             location.reload();
         });
-
     });
 }
 
@@ -1446,39 +1451,41 @@ document.addEventListener("DOMContentLoaded", function(){
 
     if(phone){
 
-        onSnapshot(doc(db,"carts",phone),(snap)=>{
+        // remove old listener
+        if (cartListener) cartListener();
+
+        cartListener = onSnapshot(doc(db,"carts",phone),(snap)=>{
             if(snap.exists()){
                 cart = snap.data().items || [];
                 updateCart();
             }
         });
 
-    }else{
+    } else {
         updateCart();
     }
-
 });
 // ================= MAXIMIZE ORDERS MODAL =================
-const maximizeBtn = document.getElementById("maximizeOrders");
 
-if (maximizeBtn && isAdmin) {
+const maximizeBtn = document.getElementById("maximizeOrders");
+const ordersModal = document.getElementById("ordersModal");
+
+if (maximizeBtn && isAdmin && ordersModal) {
+
     maximizeBtn.addEventListener("click", () => {
+
         ordersModal.classList.toggle("fullscreen");
 
-        maximizeBtn.textContent =
-            ordersModal.classList.contains("fullscreen") ? "❐" : "□";
+        // change icon
+        if (ordersModal.classList.contains("fullscreen")) {
+            maximizeBtn.textContent = "❐";
+        } else {
+            maximizeBtn.textContent = "□";
+        }
+
     });
+
 }
-
-    ordersModal.classList.toggle("fullscreen");
-
-    // change icon
-    if (ordersModal.classList.contains("fullscreen")) {
-        maximizeBtn.textContent = "❐"; // restore icon
-    } else {
-        maximizeBtn.textContent = "□";
-    }
-});
 /* ================= CANCEL ORDER ================= */
 
 window.cancelOrder = async function(id,status){
@@ -1536,6 +1543,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
