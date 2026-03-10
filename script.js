@@ -69,7 +69,7 @@ if (adminPanel) {
 
 const ordersBadge = document.getElementById("ordersBadge");
 
-if (localStorage.getItem("isAdmin") === "true" && ordersBadge) {
+if (isAdmin && ordersBadge) {
 
     const q = query(
         collection(db, "orders"),
@@ -80,8 +80,10 @@ if (localStorage.getItem("isAdmin") === "true" && ordersBadge) {
 
         const count = snapshot.size;
 
+        console.log("New Orders:", count); // ✅ DEBUG
+
         if (count > 0) {
-            ordersBadge.style.display = "block";
+            ordersBadge.style.display = "flex";
             ordersBadge.textContent = count;
         } else {
             ordersBadge.style.display = "none";
@@ -1513,6 +1515,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
