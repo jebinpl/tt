@@ -786,7 +786,52 @@ window.decreaseCartQty = async function(index){
 const checkoutBtn = document.getElementById("checkoutBtn");
 const checkoutModal = document.getElementById("checkoutModal");
 const closeCheckout = document.getElementById("closeCheckout");
+const changeAddressBtn = document.getElementById("changeAddressBtn");
 
+if (changeAddressBtn) {
+    changeAddressBtn.addEventListener("click", async function () {
+
+        const phone = localStorage.getItem("customerPhone");
+
+        if (!phone) {
+            alert("Please login first");
+            return;
+        }
+
+        // ✅ remember checkout return
+        localStorage.setItem("returnToCheckout", "true");
+
+        // 🔹 Close checkout modal
+        checkoutModal.style.display = "none";
+
+        try {
+            const userRef = doc(db, "customers", phone);
+            const userSnap = await getDoc(userRef);
+
+            if (userSnap.exists()) {
+
+                const data = userSnap.data();
+
+                // ✅ get profile elements safely
+                const profileModal = document.getElementById("profileModal");
+                const profileView = document.getElementById("profileView");
+                const profileEdit = document.getElementById("profileEdit");
+
+                // Fill edit fields
+                document.getElementById("editName").value = data.name || "";
+                document.getElementById("editAddress").value = data.address || "";
+
+                // Open EDIT mode directly
+                profileView.style.display = "none";
+                profileEdit.style.display = "block";
+                profileModal.style.display = "flex";
+            }
+
+        } catch (error) {
+            alert("Unable to load profile");
+        }
+    });
+}
 if(checkoutBtn){
 checkoutBtn.addEventListener("click", async function(){
 
@@ -1429,15 +1474,43 @@ if (saveProfileBtn) {
         }
 
         try {
-            await setDoc(doc(db, "customers", phone), {
-                name: name,
-                address: address
-            });
+        await setDoc(
+            doc(db, "customers", phone),
+            {
+                name,
+                address
+            },
+            { merge: true }
+        );
 
+            // ✅ Close profile modal
+            const profileModal = document.getElementById("profileModal");
             profileModal.style.display = "none";
 
+            // ✅ Update welcome message
             document.getElementById("welcomeMessage").textContent =
                 `Hi ${name} 👋`;
+
+            // ===============================
+            // RETURN TO CHECKOUT (NEW PART)
+            // ===============================
+            const returnToCheckout =
+                localStorage.getItem("returnToCheckout");
+
+            if (returnToCheckout === "true") {
+
+                localStorage.removeItem("returnToCheckout");
+
+                const checkoutModal =
+                    document.getElementById("checkoutModal");
+
+                // update checkout address text
+                document.getElementById("checkoutAddress").textContent =
+                    address;
+
+                // reopen checkout
+                checkoutModal.style.display = "flex";
+            }
 
         } catch (error) {
             alert("Failed to save profile.");
@@ -1578,6 +1651,7 @@ alert("Order deleted successfully");
 // refresh orders
 document.getElementById("myOrdersLink").click();
 };
+
 
 
 
