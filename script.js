@@ -1088,7 +1088,7 @@ ${new Date(order.lastUpdatedAt).toLocaleString()}`
                     <div class="order-items"><b>Address:</b> ${order.address}</div>
                     <div class="order-footer">
                         <div class="order-total">₹${order.total}</div>
-                        <div class="order-status status-${order.status.toLowerCase()}">${order.status}</div>
+                        <div class="order-status status-${order.status.toLowerCase().replaceAll(" ","-")}">${order.status}</div>
                     </div>
                     <button class="cancel-btn"
                         onclick="cancelOrder('${id}','${order.status}')"
@@ -1764,6 +1764,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
