@@ -1545,15 +1545,8 @@ alert("Order deleted successfully");
 document.getElementById("myOrdersLink").click();
 };
 
-if(!confirm("Delete this order?")) return;
 
-await deleteDoc(doc(db,"orders",id));
 
-alert("Order deleted");
-
-location.reload();
-
-};
 
 
 
