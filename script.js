@@ -905,6 +905,8 @@ isPlacingOrder = true;
 submitOrderBtn.disabled = true;
 submitOrderBtn.textContent = "Processing...";
 
+try{
+
 const phone = localStorage.getItem("customerPhone");
 
 const orderId = "ORD" + Date.now();
@@ -923,25 +925,38 @@ createdAt: Date.now()
 
 alert("Order placed successfully");
 
-/* 🔹 CLEAR FIREBASE CART */
+/* clear firebase cart */
 await setDoc(doc(db,"carts",phone),{
 items:[]
 },{merge:true});
 
-/* 🔹 CLEAR LOCAL CART */
+/* clear local cart */
 cart = [];
 localStorage.setItem("cart", JSON.stringify(cart));
 
 updateCart();
 
-const stickyBar = document.getElementById("stickyCartBar");
-if (stickyBar) {
-    stickyBar.style.display = "none";
+closeModal(checkoutModal);
+
+/* reset button */
+isPlacingOrder = false;
+submitOrderBtn.disabled = false;
+submitOrderBtn.textContent = "Submit Order";
+
+}
+catch(error){
+
+console.error(error);
+
+alert("Order failed. Try again");
+
+isPlacingOrder = false;
+submitOrderBtn.disabled = false;
+submitOrderBtn.textContent = "Submit Order";
+
 }
 
-closeModal(checkoutModal);
 });
-}
 /* ================= MY ORDERS ================= */
 
 const myOrdersLink = document.getElementById("myOrdersLink");
@@ -1744,6 +1759,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
