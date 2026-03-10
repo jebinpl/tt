@@ -67,7 +67,7 @@ if (adminPanel) {
 }
 /* ================= ADMIN ORDER BADGE ================= */
 
-const ordersBadge = document.getElementById("ordersBadge");
+const ordersBadge = document.getElementById("adminOrderBadge");
 
 if (isAdmin && ordersBadge) {
 
@@ -1515,6 +1515,7 @@ alert("Order deleted");
 location.reload();
 
 };
+
 
 
 
