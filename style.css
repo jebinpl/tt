@@ -1314,29 +1314,32 @@ font-weight:600;
 
 /* STATUS COLORS */
 
-.status-placed{
-background:#fff3cd;
-color:#b78103;
+.status-order-placed{
+    background:#fff3cd;
+    color:#856404;
 }
 
-.status-bagged{
-background:#e3f2fd;
-color:#1565c0;
+.status-items-bagged{
+    background:#d1ecf1;
+    color:#0c5460;
 }
 
 .status-shipped{
-background:#ede7f6;
-color:#5e35b1;
+    background:#cce5ff;
+    color:#004085;
 }
 
 .status-delivered{
-background:#e8f5e9;
-color:#2e7d32;
+    background:#d4edda;
+    color:#155724;
 }
-
+.status-closed{
+    background:#e2e3e5;
+    color:#383d41;
+}
 .status-cancelled{
-background:#ffebee;
-color:#c62828;
+    background:#f8d7da;
+    color:#721c24;
 }
 
 /* CANCEL BUTTON */
@@ -1506,6 +1509,7 @@ cursor:not-allowed;
 .delete-order-btn:hover{
     background:#c62828;
 }
+
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1586,6 +1590,7 @@ cursor:not-allowed;
         padding: 8px;
     }
 }
+
 
 
 
