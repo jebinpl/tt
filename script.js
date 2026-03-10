@@ -1059,12 +1059,12 @@ ${new Date(order.lastUpdatedAt).toLocaleString()}`
         }
     });
 
-    ordersModal.style.display="flex";
+    openModal(ordersModal);
 });}
 
 if(closeOrders){
 closeOrders.onclick=function(){
-ordersModal.style.display="none";
+closeModal(ordersModal);
 };
 }
 /*----------------------------------------------------------------*/
@@ -1670,6 +1670,7 @@ function closeModal(modal) {
         modal.style.display = "none";
     }, 250);
 }
+
 
 
 
