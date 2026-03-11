@@ -1147,8 +1147,11 @@ ${new Date(order.lastUpdatedAt).toLocaleString()}`
                         <span class="order-id">Order #${order.orderId}</span>
                         <span>${date}</span>
                     </div>
+                    <hr>
                     <div class="order-items"><b>Items:</b><br>${items}</div>
+                    <hr>
                     <div class="order-items"><b>Address:</b> ${order.address}</div>
+                    <hr>
                     <div class="order-footer">
                         <div class="order-total">₹${order.total}</div>
                         <div class="order-status status-${order.status.toLowerCase().replaceAll(" ","-")}">${order.status}</div>
@@ -1978,6 +1981,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
