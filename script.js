@@ -1486,37 +1486,76 @@ const closeProfile = document.getElementById("closeProfile");
 
 /* OPEN PROFILE */
 if (myProfileLink) {
-    myProfileLink.addEventListener("click", async function () {
+    myProfileLink.addEventListener("click", async () => {
 
-        const phone = localStorage.getItem("customerPhone");
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    const phone = localStorage.getItem("customerPhone");
 
-        if (!phone) {
-            alert("Please login first");
-            return;
-        }
+    const adminView = document.getElementById("adminCustomersView");
 
-        try {
-            const userRef = doc(db, "customers", phone);
-            const userSnap = await getDoc(userRef);
+    /* ========= ADMIN ========= */
+    if (isAdmin) {
 
-            if (userSnap.exists()) {
+        profileView.style.display = "none";
+        profileEdit.style.display = "none";
+        adminView.style.display = "block";
 
-                const data = userSnap.data();
+        await loadAllCustomersForAdmin();
 
-                profileGreeting.textContent = `Hi ${data.name} 👋`;
-                profileAddress.textContent = data.address;
+        openModal(profileModal);
+        return;
+    }
 
-                profileView.style.display = "block";
-                profileEdit.style.display = "none";
+    /* ========= CUSTOMER ========= */
+    if (!phone) {
+        alert("Please login first");
+        return;
+    }
 
-                openModal(profileModal);
-            }
-        } catch (error) {
-            alert("Network error. Please check internet.");
-        }
+    const snap = await getDoc(doc(db,"customers",phone));
+
+    if (snap.exists()) {
+        const data = snap.data();
+
+        profileGreeting.textContent = `Hi ${data.name} 👋`;
+        profileAddress.textContent = data.address;
+
+        adminView.style.display="none";
+        profileView.style.display="block";
+        profileEdit.style.display="none";
+
+        openModal(profileModal);
+    }
+});
+}
+/* CUSTOMER LOADER FUNCTION */
+async function loadAllCustomersForAdmin(){
+
+    const body = document.getElementById("customersTableBody");
+    body.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+
+    const snapshot = await getDocs(collection(db,"customers"));
+
+    body.innerHTML = "";
+
+    let i = 1;
+
+    snapshot.forEach(docSnap => {
+
+        const data = docSnap.data();
+        const phone = docSnap.id;
+
+        body.innerHTML += `
+            <tr>
+                <td>${i++}</td>
+                <td>${data.name || "-"}</td>
+                <td>${phone}</td>
+                <td>${data.address || "-"}</td>
+            </tr>
+        `;
     });
 }
-
+/* CUSTOMER LOADER FUNCTION  END */
 /* SWITCH TO EDIT MODE */
 if (editProfileBtn) {
     editProfileBtn.addEventListener("click", function () {
@@ -1785,6 +1824,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
