@@ -39,7 +39,8 @@ window.closeModal = function(modal) {
 import { 
     ref, 
     uploadBytes, 
-    getDownloadURL 
+    getDownloadURL,
+    deleteObject
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 //============== otp ==============
 import { 
@@ -384,13 +385,31 @@ if (editingProductId) {
     };
 
     // If new image selected
-    if (file) {
-        const imageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
-        const compressedImage = await compressImage(file, 30);
-        await uploadBytes(imageRef, compressedImage);
-        const imageURL = await getDownloadURL(imageRef);
-        updateData.image = imageURL;
+if (file) {
+
+    // 🔹 get existing product
+    const snap = await getDoc(doc(db,"products",editingProductId));
+
+    if(snap.exists()){
+        const data = snap.data();
+
+        // 🔹 delete old image if exists
+        if(data.imagePath){
+            const oldImageRef = ref(storage, data.imagePath);
+            await deleteObject(oldImageRef);
+        }
     }
+
+    // 🔹 upload new image
+    const imageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
+    const compressedImage = await compressImage(file, 30);
+    await uploadBytes(imageRef, compressedImage);
+
+    const imageURL = await getDownloadURL(imageRef);
+
+    updateData.image = imageURL;
+    updateData.imagePath = imageRef.fullPath;
+}
 
     await updateDoc(doc(db, "products", editingProductId), updateData);
 
@@ -431,6 +450,7 @@ const snapshot = await getDocs(productsRef);
 
 await addDoc(productsRef, {
     image: imageURL,
+    imagePath: imageRef.fullPath,
     description: description,
     price: parseFloat(price),
     category: category,
@@ -1269,7 +1289,42 @@ window.deleteProduct = async function(id){
 
     if(!confirm("Delete this product?")) return;
 
-    await deleteDoc(doc(db, "products", id));
+    try{
+
+        const snap = await getDoc(doc(db,"products",id));
+
+        if(snap.exists()){
+
+            const data = snap.data();
+
+            // 🔹 NEW products (with imagePath)
+            if(data.imagePath){
+                const imageRef = ref(storage, data.imagePath);
+                await deleteObject(imageRef);
+            }
+
+            // 🔹 OLD products (only image URL stored)
+            else if(data.image){
+                const url = data.image;
+
+                const path = decodeURIComponent(
+                    url.split("/o/")[1].split("?")[0]
+                );
+
+                const imageRef = ref(storage, path);
+
+                await deleteObject(imageRef);
+            }
+        }
+
+        await deleteDoc(doc(db,"products",id));
+
+        alert("Product deleted successfully");
+
+    }catch(error){
+        console.error(error);
+        alert("Delete failed");
+    }
 }
 /*--------------------------------------Edit Product (Use Add UI)---------------------*/
 window.editProduct = function(id){
@@ -1923,6 +1978,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
