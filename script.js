@@ -1824,9 +1824,38 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+// ================= ADD EXPORT FUNCTION =================
+function exportCustomersToExcel() {
 
+    const table = document.getElementById("customersExcelTable");
 
+    if (!table) {
+        alert("No data to export");
+        return;
+    }
 
+    // Convert HTML table → worksheet
+    const workbook = XLSX.utils.table_to_book(table, {
+        sheet: "Customers"
+    });
+
+    // Download file
+    XLSX.writeFile(
+        workbook,
+        "Thomas_Traders_Customers.xlsx"
+    );
+}
+
+// ================= EXPORT BUTTON CONNECT =================
+document.addEventListener("DOMContentLoaded", () => {
+
+    const exportBtn = document.getElementById("exportCustomersBtn");
+
+    if (exportBtn) {
+        exportBtn.addEventListener("click", exportCustomersToExcel);
+    }
+
+});
 
 
 
