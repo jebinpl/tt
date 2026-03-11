@@ -1141,47 +1141,25 @@ ${new Date(order.lastUpdatedAt).toLocaleString()}`
             if(order.status === "Delivered") step = 4;
             if(order.status === "Closed") step = 4;
 
-cardContainer.innerHTML += `
-<div class="order-card">
-
-<div class="order-header">
-    <span class="order-id">Order #${order.orderId}</span>
-    <span class="order-date">${date}</span>
-</div>
-
-<hr>
-
-<div class="order-section">
-<b>Items</b><br>
-${items}
-</div>
-
-<hr>
-
-<div class="order-section">
-<b>Delivery Address</b><br>
-${order.address}
-</div>
-
-<hr>
-
-<div class="order-footer">
-<div class="order-total">Amount : ₹${order.total}</div>
-<div class="order-status status-${order.status.toLowerCase().replaceAll(" ","-")}">
-${order.status}
-</div>
-</div>
-
-<div class="order-actions">
-<button class="cancel-btn"
-onclick="cancelOrder('${id}','${order.status}')"
-${order.status !== "Order Placed" ? "disabled" : ""}>
-Cancel Order
-</button>
-</div>
-
-</div>
-`;
+            cardContainer.innerHTML += `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Order #${order.orderId}</span>
+                        <span>${date}</span>
+                    </div>
+                    <div class="order-items"><b>Items:</b><br>${items}</div>
+                    <div class="order-items"><b>Address:</b> ${order.address}</div>
+                    <div class="order-footer">
+                        <div class="order-total">₹${order.total}</div>
+                        <div class="order-status status-${order.status.toLowerCase().replaceAll(" ","-")}">${order.status}</div>
+                    </div>
+                    <button class="cancel-btn"
+                        onclick="cancelOrder('${id}','${order.status}')"
+                        ${order.status !== "Order Placed" ? "disabled" : ""}>
+                        Cancel Order
+                    </button>
+                </div>
+            `;
         }
     });
 
@@ -2000,7 +1978,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
-
 
 
 
