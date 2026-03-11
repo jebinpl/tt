@@ -216,7 +216,9 @@
 
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script type="module" src="script.js"></script>
+
 <!-- Bottom Navigation -->
 <div id="welcomeMessage" class="welcome-message">
     Welcome to Thomas Traders Online Shopping Portal.
@@ -323,7 +325,9 @@
 <div id="adminCustomersView" style="display:none;">
 
     <h2>Customer Profiles</h2>
-
+<button id="exportCustomersBtn" class="admin-btn">
+    Export to Excel
+</button>
     <div class="table-wrapper">
         <table id="customersExcelTable">
             <thead>
@@ -392,6 +396,7 @@
     
 </body>
 </html>
+
 
 
 
