@@ -234,7 +234,9 @@ if (adminLoginBtn) {
 
 // CATEGORY SELECTION FUNCTION
 function selectCategory(categoryName) {
-
+if(categoryName === "ALL"){
+    categoryName = "All Products";
+}
     currentCategory = categoryName;
     renderProducts();
     let isAdmin = localStorage.getItem("isAdmin") === "true";
@@ -271,8 +273,23 @@ if (cancelProductBtn) {
 }
 document.querySelectorAll(".category-link").forEach(link => {
     link.addEventListener("click", function () {
+
         const category = this.dataset.category;
-        selectCategory(category);
+
+        // ✅ ALL PRODUCTS
+        if (category === "ALL") {
+            currentCategory = "";
+            renderProducts();   // show everything
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+            selectCategory(category);
+        }
+
+        // hide menu
+        const menu = document.getElementById("menuDropdown");
+        if (menu) menu.style.display = "none";
+    });
+});
 
         // ✅ Hide menu after selecting category
         const menu = document.getElementById("menuDropdown");
@@ -1906,6 +1923,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
