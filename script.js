@@ -1845,20 +1845,52 @@ function exportCustomersToExcel() {
         "Thomas_Traders_Customers.xlsx"
     );
 }
+// ================= EXPORT ORDERS =================
+function exportOrdersToExcel() {
 
-// ================= EXPORT BUTTON CONNECT =================
+    const table = document.getElementById("adminOrdersTablePanel");
+
+    if (!table) {
+        alert("No orders to export");
+        return;
+    }
+
+    const workbook = XLSX.utils.table_to_book(table, {
+        sheet: "Orders"
+    });
+
+    XLSX.writeFile(
+        workbook,
+        "Thomas_Traders_Orders.xlsx"
+    );
+}
+
+// ================= CONNECT EXPORT BUTTONS =================
 document.addEventListener("DOMContentLoaded", () => {
 
-    const exportBtn = document.getElementById("exportCustomersBtn");
+    // Customers Export
+    const exportCustomersBtn =
+        document.getElementById("exportCustomersBtn");
 
-    if (exportBtn) {
-        exportBtn.addEventListener("click", exportCustomersToExcel);
+    if (exportCustomersBtn) {
+        exportCustomersBtn.addEventListener(
+            "click",
+            exportCustomersToExcel
+        );
+    }
+
+    // Orders Export
+    const exportOrdersBtn =
+        document.getElementById("exportOrdersBtn");
+
+    if (exportOrdersBtn) {
+        exportOrdersBtn.addEventListener(
+            "click",
+            exportOrdersToExcel
+        );
     }
 
 });
-
-
-
 
 
 
