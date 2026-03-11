@@ -808,6 +808,11 @@ font-size:11px;
 margin-top:5px;
 
 }
+.order-card hr{
+border:none;
+border-top:1px solid #eee;
+margin:10px 0;
+}
 /* HOVER EFFECT */
 @media (hover: hover) {
     .home-btn:hover {
@@ -1742,6 +1747,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
