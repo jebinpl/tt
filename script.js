@@ -283,7 +283,7 @@ document.querySelectorAll(".category-link").forEach(link => {
 });
 /* ================= IMAGE AUTO COMPRESS ================= */
 
-async function compressImage(file, maxSizeKB = 300) {
+async function compressImage(file, maxSizeKB = 30) {
     return new Promise((resolve) => {
 
         const reader = new FileReader();
@@ -300,8 +300,19 @@ async function compressImage(file, maxSizeKB = 300) {
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
 
-                canvas.width = img.width;
-                canvas.height = img.height;
+// ===== AUTO RESIZE IMAGE =====
+const maxWidth = 900; // resize large camera images
+
+let width = img.width;
+let height = img.height;
+
+if (width > maxWidth) {
+    height = height * (maxWidth / width);
+    width = maxWidth;
+}
+
+canvas.width = width;
+canvas.height = height;
 
                 ctx.drawImage(img, 0, 0);
 
@@ -317,7 +328,7 @@ async function compressImage(file, maxSizeKB = 300) {
                             resolve(blob);
                         }
 
-                    }, "image/jpeg", quality);
+                    }, "image/webp", quality);
                 }
 
                 reduceQuality();
@@ -342,6 +353,10 @@ if(!currentCategory){
     alert("Please select category first");
     return;
 }
+        if (!editingProductId && !file) {
+    alert("Please select product image");
+    return;
+}
 
 if(!description || !price){
     alert("Fill all product fields");
@@ -363,7 +378,7 @@ if (editingProductId) {
     // If new image selected
     if (file) {
         const imageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
-        const compressedImage = await compressImage(file, 300);
+        const compressedImage = await compressImage(file, 30);
         await uploadBytes(imageRef, compressedImage);
         const imageURL = await getDownloadURL(imageRef);
         updateData.image = imageURL;
@@ -394,7 +409,7 @@ if (editingProductId) {
             const imageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
 
             // 🔹 Upload image to Firebase Storage
-            const compressedImage = await compressImage(file, 300);
+            const compressedImage = await compressImage(file, 30);
             await uploadBytes(imageRef, compressedImage);
 
             // 🔹 Get image URL
@@ -1891,6 +1906,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
