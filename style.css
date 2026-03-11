@@ -1080,8 +1080,6 @@ margin-top:5px;
     object-fit:contain;
     border-radius:8px;
 }
-
-
 .image-modal img {
     max-width: 90%;
     max-height: 90%;
@@ -1366,30 +1364,11 @@ color:#333;
 /* ITEMS */
 
 .order-items{
-text-align:left;
 margin:10px 0;
 line-height:1.6;
 font-size:14px;
 }
-.order-item{
-padding:4px 0;
-font-size:14px;
-}
-.order-address{
-text-align:left;
-font-size:14px;
-margin-top:10px;
-color:#444;
-}
-.order-card hr{
-border:none;
-border-top:1px solid #eee;
-margin:10px 0;
-}
-.order-date{
-color:#777;
-font-size:13px;
-}
+
 /* FOOTER */
 
 .order-footer{
@@ -1763,9 +1742,6 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
-
-
-
 
 
 
