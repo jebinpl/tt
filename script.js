@@ -1341,11 +1341,20 @@ onSnapshot(collection(db, "products"), (snapshot) => {
 /* ================= SEARCH LOGIC ================= */
 function renderProducts(productsList = allProducts) {
     productsContainer.innerHTML = "";
-
+    let found = false;
     productsList.forEach(product => {
         if (currentCategory !== "" && product.category !== currentCategory) return;
         renderProductCard(product.id, product);
+        found = true;
     });
+    // If no products found
+    if (!found) {
+        productsContainer.innerHTML = `
+            <div class="no-results">
+                Products not found
+            </div>
+        `;
+    }
 }
 /* ================= SEARCH LOGIC END ================= */
 /* ================= IMAGE POPUP LOGIC ================= */
@@ -1914,6 +1923,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
