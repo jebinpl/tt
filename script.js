@@ -99,21 +99,30 @@ let currentCategory = "";
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
 const dropdown = document.querySelector(".dropdown");
+// ================= LOGIN UI STATE =================
+function updateLoginUI() {
+
+    const customerPhone = localStorage.getItem("customerPhone");
+    const isAdminNow = localStorage.getItem("isAdmin") === "true";
+
+    if (!loginBtn) return;
+
+    if (isAdminNow) {
+        loginBtn.textContent = "Admin";
+    }
+    else if (customerPhone) {
+        loginBtn.textContent = "Logout";
+    }
+    else {
+        loginBtn.textContent = "Login";
+    }
+}
+updateLoginUI();
+// ================= LOGIN UI STATE END =================
 function closeDropdown() {
     if (dropdown) {
         dropdown.style.display = "none";
     }
-}
-let customerPhone = localStorage.getItem("customerPhone");
-
-if (isAdmin) {
-    loginBtn.textContent = "Admin";
-}
-else if (customerPhone) {
-    loginBtn.textContent = "Logout";
-}
-else {
-    loginBtn.textContent = "Login";
 }
 if (adminPanel) {
     adminPanel.style.display = isAdmin ? "block" : "none";
@@ -121,15 +130,6 @@ if (adminPanel) {
 
 /*------------------------------------------Login Button------------------------------------------------------*/
 
-if (loginBtn) {
-    if (isAdmin) {
-        loginBtn.textContent = "Admin";
-    } else if (customerPhone) {
-        loginBtn.textContent = "Logout";
-    } else {
-        loginBtn.textContent = "Login";
-    }
-}
 if (loginBtn) {
 loginBtn.addEventListener("click", function () {
 
@@ -554,7 +554,7 @@ verifyBtn.addEventListener("click", async function () {
         const phoneNumber = user.phoneNumber;
 
 localStorage.setItem("customerPhone", phoneNumber);
-
+updateLoginUI();
 // 🔥 REALTIME CART SYNC
 // remove old listener first
 if (cartListener) cartListener();
@@ -1430,7 +1430,7 @@ if (confirmLogoutBtn) {
         }
 
         localStorage.removeItem("customerPhone");
-
+        updateLoginUI();
         cart = [];
         updateCart();
 
@@ -1764,6 +1764,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
