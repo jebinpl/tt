@@ -813,6 +813,11 @@ border:none;
 border-top:1px solid #eee;
 margin:10px 0;
 }
+.order-items b{
+display:block;
+margin-bottom:5px;
+color:#444;
+}
 /* HOVER EFFECT */
 @media (hover: hover) {
     .home-btn:hover {
@@ -1747,6 +1752,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
