@@ -276,10 +276,9 @@ document.querySelectorAll(".category-link").forEach(link => {
 
         const category = this.dataset.category;
 
-        // ✅ ALL PRODUCTS
         if (category === "ALL") {
             currentCategory = "";
-            renderProducts();   // show everything
+            renderProducts();
             window.scrollTo({ top: 0, behavior: "smooth" });
         } else {
             selectCategory(category);
@@ -288,14 +287,6 @@ document.querySelectorAll(".category-link").forEach(link => {
         // hide menu
         const menu = document.getElementById("menuDropdown");
         if (menu) menu.style.display = "none";
-    });
-});
-
-        // ✅ Hide menu after selecting category
-        const menu = document.getElementById("menuDropdown");
-        if (menu) {
-            menu.style.display = "none";
-        }
     });
 });
 /* ================= IMAGE AUTO COMPRESS ================= */
@@ -1923,6 +1914,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
