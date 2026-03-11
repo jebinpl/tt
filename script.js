@@ -49,12 +49,29 @@ import {
     signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 const auth = getAuth();
-window.recaptchaVerifier = new RecaptchaVerifier(auth, 'getOtpBtn', {
-    'size': 'invisible',
-    'callback': (response) => {
-        console.log("reCAPTCHA solved");
+auth.useDeviceLanguage();
+// ================= RESET RECAPTCHA =================
+function resetRecaptcha() {
+
+    // destroy old captcha
+    if (window.recaptchaVerifier) {
+        window.recaptchaVerifier.clear();
+        window.recaptchaVerifier = null;
     }
-});
+
+    // create new captcha
+    window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "getOtpBtn",   // attach to OTP button
+        {
+            size: "invisible",
+            callback: () => {
+                console.log("reCAPTCHA solved");
+            }
+        }
+    );
+}
+// ================= RESET RECAPTCHA END =================
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 if (isAdmin) {
     document.body.classList.add("admin-mode");
@@ -520,13 +537,16 @@ if (closeCustomer) {
 if(getOtpBtn){
 getOtpBtn.addEventListener("click", async function () {
     const phoneNumber = "+91" + document.getElementById("phoneNumber").value;
+    // ⭐ CREATE NEW CAPTCHA EACH TIME
+    resetRecaptcha();
     const appVerifier = window.recaptchaVerifier;
     try {
         const confirmationResult = await signInWithPhoneNumber(
             auth,
             phoneNumber,
             appVerifier
-        );
+        ); 
+        
         window.confirmationResult = confirmationResult;
         phoneSection.style.display = "none";
         otpSection.style.display = "block";
@@ -1430,6 +1450,7 @@ if (confirmLogoutBtn) {
         }
 
         localStorage.removeItem("customerPhone");
+        resetRecaptcha(); 
         updateLoginUI();
         cart = [];
         updateCart();
@@ -1764,6 +1785,7 @@ if (searchInput) {
         renderProducts(filteredProducts);
     });
 }
+
 
 
 
