@@ -1363,6 +1363,16 @@ window.editProduct = function(id){
     if(!card || !product) return;
 
     const descDiv = card.querySelector(".product-description");
+    const imageBox = card.querySelector(".product-image-box");
+    imageBox.innerHTML = `
+    <input type="file"
+        class="image-input"
+        accept="image/*"
+        onchange="previewInlineImage(event,this)">
+
+    <img src="${product.image}"
+         class="clickable-image preview-inline">
+`;
     const priceDiv = card.querySelector(".product-price");
     const actions = card.querySelector(".admin-actions");
 
@@ -1384,7 +1394,7 @@ window.editProduct = function(id){
         </button>
 
         <button class="cancel-btn"
-            onclick="renderProducts()">
+            onclick="renderProducts(allProducts)">
             Cancel
         </button>
 
@@ -1412,10 +1422,31 @@ window.saveInlineEdit = async function(id, btn){
 
     try{
 
-        await updateDoc(doc(db,"products",id),{
-            description: newDesc,
-            price: newPrice
-        });
+let updatedData = {
+    description: newDesc,
+    price: newPrice
+};
+
+const imageInput = card.querySelector(".image-input");
+
+if(imageInput && imageInput.files[0]){
+
+    const file = imageInput.files[0];
+
+    const imageRef =
+        ref(storage,"products/"+Date.now()+"_"+file.name);
+
+    const compressedImage = await compressImage(file,30);
+
+    await uploadBytes(imageRef, compressedImage);
+
+    const imageURL = await getDownloadURL(imageRef);
+
+    updatedData.image = imageURL;
+    updatedData.imagePath = imageRef.fullPath;
+}
+
+await updateDoc(doc(db,"products",id), updatedData);
 
         alert("Product updated ✅");
 
@@ -1425,6 +1456,22 @@ window.saveInlineEdit = async function(id, btn){
     }
 };
 /*--------------------------ADD SAVE FUNCTION END--------------------------*/
+/*--------------------------ADD IMAGE PREVIEW FUNCTION--------------------------*/
+window.previewInlineImage = function(event,input){
+
+    const file = event.target.files[0];
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+        input.parentElement
+            .querySelector(".preview-inline")
+            .src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+};
 /*--------------------------Quantity Buttons--------------------------*/
 window.increaseQty = function(btn){
     const qty = btn.parentElement.querySelector(".qty");
@@ -2153,6 +2200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
