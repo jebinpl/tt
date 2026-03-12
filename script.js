@@ -1156,11 +1156,12 @@ ${new Date(order.lastUpdatedAt).toLocaleString()}`
                         <div class="order-total">₹${order.total}</div>
                         <div class="order-status status-${order.status.toLowerCase().replaceAll(" ","-")}">${order.status}</div>
                     </div>
-                    <button class="cancel-btn"
-                        onclick="cancelOrder('${id}','${order.status}')"
-                        ${order.status !== "Order Placed" ? "disabled" : ""}>
-                        Cancel Order
-                    </button>
+${order.status === "Order Placed" ? `
+<button class="cancel-btn"
+    onclick="cancelOrder('${id}','${order.status}')">
+    Cancel Order
+</button>
+` : ""}
                 </div>
             `;
         }
@@ -2348,6 +2349,7 @@ window.deleteCustomerAdmin = async function(phone){
         alert("Delete failed");
     }
 };
+
 
 
 
