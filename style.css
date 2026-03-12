@@ -1108,15 +1108,6 @@ color:#444;
     font-weight: bold;
 }
 
-.edit-btn {
-    background: #3498db;
-    color: white;
-}
-
-.delete-btn {
-    background: #e74c3c;
-    color: white;
-}
 .product-card {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -1124,6 +1115,34 @@ color:#444;
 .product-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+/* ================= ADMIN BUTTONS BELOW CARD ================= */
+
+.admin-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:10px;
+    border-top:1px solid #eee;
+    padding-top:10px;
+}
+
+.admin-actions button{
+    border:none;
+    padding:6px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.edit-btn{
+    background:#3498db;
+    color:white;
+}
+
+.delete-btn{
+    background:#e74c3c;
+    color:white;
 }
 /* ================= IMAGE POPUP ================= */
 
@@ -1807,6 +1826,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
