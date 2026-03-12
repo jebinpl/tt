@@ -1239,78 +1239,12 @@ function renderProductCard(id, product) {
     const card = document.createElement("div");
     card.className = "product-card";
 
-   /* ===== UNIVERSAL PRODUCT VIEW (CUSTOMER + ADMIN) ===== */
+    if (isAdmin) {
+        card.setAttribute("draggable", true);
+        card.dataset.id = id;
+    }
 
-if (isAdmin) {
-    card.setAttribute("draggable", true);
-    card.dataset.id = id;
-}
-
-card.innerHTML = `
-<div class="product-row">
-
-    <!-- LEFT IMAGE -->
-    <div class="product-image-box">
-        <img src="${product.image}" class="clickable-image"
-            onclick="openImageModal('${product.image}', '${id}')">
-    </div>
-
-    <!-- RIGHT CONTENT -->
-    <div class="product-details">
-
-        <div class="product-description">
-            ${product.description}
-        </div>
-
-        <div class="product-bottom">
-
-            <div class="product-price">
-                ₹${product.price}
-            </div>
-
-            <div class="product-actions">
-
-                ${
-                    isAdmin
-                    ? ""
-                    : `
-                    <div class="qty-control">
-                        <button onclick="decreaseQty(this)">−</button>
-                        <span class="qty">1</span>
-                        <button onclick="increaseQty(this)">+</button>
-                    </div>
-
-                    <button class="buy-btn"
-                        onclick="addToCart(this, '${product.description}', ${product.price})">
-                        Buy
-                    </button>
-                    `
-                }
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-${
-    isAdmin
-    ? `
-    <div class="admin-actions">
-        <button class="edit-btn"
-            onclick="editProduct('${id}')">Edit</button>
-
-        <button class="delete-btn"
-            onclick="deleteProduct('${id}')">Delete</button>
-    </div>
-    `
-    : ""
-}
-`;
-/* ===== CUSTOMER VIEW ===== */
-card.innerHTML = `
+    card.innerHTML = `
     <div class="product-row">
 
         <!-- LEFT IMAGE -->
@@ -1334,16 +1268,22 @@ card.innerHTML = `
 
                 <div class="product-actions">
 
-                    <div class="qty-control">
-                        <button onclick="decreaseQty(this)">−</button>
-                        <span class="qty">1</span>
-                        <button onclick="increaseQty(this)">+</button>
-                    </div>
+                    ${
+                        isAdmin
+                        ? ""
+                        : `
+                        <div class="qty-control">
+                            <button onclick="decreaseQty(this)">−</button>
+                            <span class="qty">1</span>
+                            <button onclick="increaseQty(this)">+</button>
+                        </div>
 
-                    <button class="buy-btn"
-                        onclick="addToCart(this, '${product.description}', ${product.price})">
-                        Buy
-                    </button>
+                        <button class="buy-btn"
+                            onclick="addToCart(this, '${product.description}', ${product.price})">
+                            Buy
+                        </button>
+                        `
+                    }
 
                 </div>
 
@@ -1352,8 +1292,21 @@ card.innerHTML = `
         </div>
 
     </div>
-`;
+
+    ${
+        isAdmin
+        ? `
+        <div class="admin-actions">
+            <button class="edit-btn"
+                onclick="editProduct('${id}')">Edit</button>
+
+            <button class="delete-btn"
+                onclick="deleteProduct('${id}')">Delete</button>
+        </div>
+        `
+        : ""
     }
+    `;
 
     productsContainer.appendChild(card);
 }
@@ -1446,6 +1399,8 @@ window.toggleMenu = function(e) {
 
 const productsContainer = document.getElementById("productsContainer");
 let allProducts = [];
+// ⭐ NEW — smart realtime cache
+let productMap = new Map();
 // ================= PRODUCT SHUFFLE SYSTEM =================
 
 function shuffleArray(array) {
@@ -1471,34 +1426,54 @@ function saveShuffleTime() {
 // ================= PRODUCT SHUFFLE SYSTEM =================
 onSnapshot(collection(db, "products"), (snapshot) => {
 
-    allProducts = [];
+    snapshot.docChanges().forEach(change => {
 
-    snapshot.forEach(docSnap => {
-        const data = docSnap.data();
+        const id = change.doc.id;
+        const data = change.doc.data();
 
-        allProducts.push({
-            id: docSnap.id,
-            position: data.position || 0, // fallback if missing
+        const product = {
+            id,
+            position: data.position || 0,
             ...data
-        });
+        };
+
+        if (change.type === "added") {
+            productMap.set(id, product);
+        }
+
+        if (change.type === "modified") {
+            productMap.set(id, product);
+        }
+
+        if (change.type === "removed") {
+            productMap.delete(id);
+
+            const oldCard =
+                productsContainer.querySelector(`[data-id="${id}"]`);
+
+            if (oldCard) oldCard.remove();
+        }
     });
 
-    // sort manually instead of Firestore
-allProducts.sort((a, b) => a.position - b.position);
+    // map → array
+    allProducts = Array.from(productMap.values());
 
-// ✅ Shuffle only for customers
-if (!isAdmin && shouldShuffle()) {
-    allProducts = shuffleArray(allProducts);
-    saveShuffleTime();
-}
+    // keep admin drag order
+    allProducts.sort((a,b)=>a.position-b.position);
 
-renderProducts();
+    // shuffle customers only
+    if (!isAdmin && shouldShuffle()) {
+        allProducts = shuffleArray(allProducts);
+        saveShuffleTime();
+    }
+
+    renderProducts();
 });
 
 /* ================= SEARCH LOGIC ================= */
 function renderProducts(productsList = allProducts) {
 
-    productsContainer.innerHTML = "";
+    productsContainer.replaceChildren();
 
     // ✅ Recently viewed priority (CORRECT PLACE)
     if (!isAdmin) {
@@ -2129,6 +2104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
