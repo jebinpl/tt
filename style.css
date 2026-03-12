@@ -3,6 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* ===== GLOBAL BUTTON BEHAVIOR ===== */
+button{
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:0.9;
+}
 /* ================= PREMIUM SPLASH SCREEN ================= */
 
 #splashScreen{
@@ -1853,6 +1861,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
