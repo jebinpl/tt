@@ -1394,7 +1394,7 @@ window.editProduct = function(id){
         </button>
 
         <button class="cancel-btn"
-            onclick="renderProducts(allProducts)">
+            onclick="cancelInlineEdit('${id}')">
             Cancel
         </button>
 
@@ -1405,55 +1405,50 @@ window.editProduct = function(id){
     `;
 };
 /*--------------------------ADD SAVE FUNCTION START--------------------------*/
-window.saveInlineEdit = async function(id, btn){
 
-    const card = btn.closest(".product-card");
 
-    const newDesc =
-        card.querySelector(".desc-input").value.trim();
+window.cancelInlineEdit = function(id){
 
-    const newPrice =
-        parseFloat(card.querySelector(".price-input").value);
+    const product = allProducts.find(p => p.id === id);
+    if(!product) return;
 
-    if(!newDesc || !newPrice){
-        alert("Fill all fields");
-        return;
-    }
+    const card =
+        document.querySelector(`[data-id="${id}"]`);
+    if(!card) return;
 
-    try{
+    card.innerHTML = `
+    <div class="product-row">
 
-let updatedData = {
-    description: newDesc,
-    price: newPrice
-};
+        <div class="product-image-box">
+            <img src="${product.image}" class="clickable-image"
+                onclick="openImageModal('${product.image}', '${id}')">
+        </div>
 
-const imageInput = card.querySelector(".image-input");
+        <div class="product-details">
 
-if(imageInput && imageInput.files[0]){
+            <div class="product-description">
+                ${product.description}
+            </div>
 
-    const file = imageInput.files[0];
+            <div class="product-bottom">
 
-    const imageRef =
-        ref(storage,"products/"+Date.now()+"_"+file.name);
+                <div class="product-price">
+                    ₹${product.price}
+                </div>
 
-    const compressedImage = await compressImage(file,30);
+            </div>
 
-    await uploadBytes(imageRef, compressedImage);
+        </div>
+    </div>
 
-    const imageURL = await getDownloadURL(imageRef);
+    <div class="admin-actions">
+        <button class="edit-btn"
+            onclick="editProduct('${id}')">Edit</button>
 
-    updatedData.image = imageURL;
-    updatedData.imagePath = imageRef.fullPath;
-}
-
-await updateDoc(doc(db,"products",id), updatedData);
-
-        alert("Product updated ✅");
-
-    }catch(error){
-        console.error(error);
-        alert("Update failed");
-    }
+        <button class="delete-btn"
+            onclick="deleteProduct('${id}')">Delete</button>
+    </div>
+    `;
 };
 /*--------------------------ADD SAVE FUNCTION END--------------------------*/
 /*--------------------------ADD IMAGE PREVIEW FUNCTION--------------------------*/
@@ -2200,6 +2195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
