@@ -1240,11 +1240,11 @@ function renderProductCard(id, product) {
     card.className = "product-card";
 
     if (isAdmin) {
-    card.setAttribute("draggable", true);
-    card.dataset.id = id;
-}
+        card.setAttribute("draggable", true);
+        card.dataset.id = id;
+    }
 
-card.innerHTML = `
+    card.innerHTML = `
 <div class="product-row">
 
     <!-- LEFT IMAGE -->
@@ -1303,8 +1303,8 @@ card.innerHTML = `
 
 </div>
 `;
-}; 
-productsContainer.appendChild(card);
+
+    productsContainer.appendChild(card);
 }
 /*--------------------------------Delete Product(Admin)--------------------*/
 window.deleteProduct = async function(id){
@@ -2261,6 +2261,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
