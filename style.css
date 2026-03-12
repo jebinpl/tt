@@ -153,6 +153,11 @@ body {
     flex-direction: column;
     align-items: flex-end;
 }
+#recaptcha-container{
+    margin:10px 0;
+    display:flex;
+    justify-content:center;
+}
 /* Cart Link */
 .cart-link {
     display: block;
@@ -1869,6 +1874,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
