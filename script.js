@@ -1246,7 +1246,7 @@ function renderProductCard(id, product) {
         /* ===== ADMIN VIEW ===== */
         card.innerHTML = `
             <img src="${product.image}" class="clickable-image"
-                onclick="openImageModal('${product.image}')">      
+                onclick="openImageModal('${product.image}', '${id}')">      
             <div class="product-info">
                 <strong>${product.description}</strong>
                 <p>₹${product.price}</p>
@@ -1270,7 +1270,7 @@ card.innerHTML = `
         <!-- LEFT IMAGE -->
         <div class="product-image-box">
             <img src="${product.image}" class="clickable-image"
-                onclick="openImageModal('${product.image}')">
+                onclick="openImageModal('${product.image}', '${id}')">
         </div>
 
         <!-- RIGHT CONTENT -->
@@ -1400,7 +1400,29 @@ window.toggleMenu = function(e) {
 
 const productsContainer = document.getElementById("productsContainer");
 let allProducts = [];
+// ================= PRODUCT SHUFFLE SYSTEM =================
 
+function shuffleArray(array) {
+    const arr = [...array]; // avoid modifying original
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function shouldShuffle() {
+    const last = localStorage.getItem("lastShuffleTime");
+    if (!last) return true;
+
+    const diff = Date.now() - Number(last);
+    return diff > 30 * 60 * 1000; // 30 minutes
+}
+
+function saveShuffleTime() {
+    localStorage.setItem("lastShuffleTime", Date.now());
+}
+// ================= PRODUCT SHUFFLE SYSTEM =================
 onSnapshot(collection(db, "products"), (snapshot) => {
 
     allProducts = [];
@@ -1416,10 +1438,38 @@ onSnapshot(collection(db, "products"), (snapshot) => {
     });
 
     // sort manually instead of Firestore
-    allProducts.sort((a, b) => a.position - b.position);
+allProducts.sort((a, b) => a.position - b.position);
 
-    renderProducts();
+// ✅ Shuffle only for customers
+if (!isAdmin && shouldShuffle()) {
+    allProducts = shuffleArray(allProducts);
+    saveShuffleTime();
+}
+
+renderProducts();
 });
+
+// ✅ Recently viewed priority
+if (!isAdmin) {
+
+    const viewed =
+        JSON.parse(localStorage.getItem("recentlyViewed")) || [];
+
+    if (viewed.length > 0) {
+
+        productsList = [...productsList].sort((a, b) => {
+
+            const aIndex = viewed.indexOf(a.id);
+            const bIndex = viewed.indexOf(b.id);
+
+            if (aIndex === -1 && bIndex === -1) return 0;
+            if (aIndex === -1) return 1;
+            if (bIndex === -1) return -1;
+
+            return aIndex - bIndex;
+        });
+    }
+}
 /* ================= SEARCH LOGIC ================= */
 function renderProducts(productsList = allProducts) {
     productsContainer.innerHTML = "";
@@ -1445,9 +1495,31 @@ const imageModal = document.getElementById("imageModal");
 const modalImage = document.getElementById("modalImage");
 const closeImageBtn = document.querySelector(".close-image");
 
-window.openImageModal = function(imageSrc){
+window.openImageModal = function(imageSrc, productId){
+
     modalImage.src = imageSrc;
     imageModal.style.display = "flex";
+
+    // ✅ Save recently viewed (customer only)
+    if (!isAdmin && productId) {
+
+        let viewed =
+            JSON.parse(localStorage.getItem("recentlyViewed")) || [];
+
+        // remove duplicate
+        viewed = viewed.filter(id => id !== productId);
+
+        // add to front
+        viewed.unshift(productId);
+
+        // keep only last 10
+        viewed = viewed.slice(0, 10);
+
+        localStorage.setItem(
+            "recentlyViewed",
+            JSON.stringify(viewed)
+        );
+    }
 };
 
 if(closeImageBtn){
@@ -2005,6 +2077,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
