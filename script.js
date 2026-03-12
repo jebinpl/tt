@@ -1303,7 +1303,7 @@ card.innerHTML = `
 
 </div>
 `;
-
+}; 
 productsContainer.appendChild(card);
 }
 /*--------------------------------Delete Product(Admin)--------------------*/
@@ -2260,6 +2260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
