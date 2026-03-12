@@ -956,8 +956,9 @@ color:#444;
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit:contain;
     border-radius: 12px;
+    background: #fff;
     display: none;
 }
 /* ===== CLOSE BUTTON (TOP RIGHT EDGE OF BOX) ===== */
@@ -1037,15 +1038,18 @@ color:#444;
 
 /* LEFT IMAGE */
 .product-image-box{
-    width:110px;
-    min-width:110px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
 }
 
 .product-image-box img{
     width:100%;
     height:110px;
-    object-fit:cover;
+    object-fit:contain;
     border-radius:8px;
+    background:#fff;
 }
 
 /* RIGHT SIDE */
@@ -1861,6 +1865,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
