@@ -1449,43 +1449,49 @@ if (!isAdmin && shouldShuffle()) {
 renderProducts();
 });
 
-// ✅ Recently viewed priority
-if (!isAdmin) {
-
-    const viewed =
-        JSON.parse(localStorage.getItem("recentlyViewed")) || [];
-
-    if (viewed.length > 0) {
-
-        productsList = [...productsList].sort((a, b) => {
-
-            const aIndex = viewed.indexOf(a.id);
-            const bIndex = viewed.indexOf(b.id);
-
-            if (aIndex === -1 && bIndex === -1) return 0;
-            if (aIndex === -1) return 1;
-            if (bIndex === -1) return -1;
-
-            return aIndex - bIndex;
-        });
-    }
-}
 /* ================= SEARCH LOGIC ================= */
 function renderProducts(productsList = allProducts) {
+
     productsContainer.innerHTML = "";
+
+    // ✅ Recently viewed priority (CORRECT PLACE)
+    if (!isAdmin) {
+
+        const viewed =
+            JSON.parse(localStorage.getItem("recentlyViewed")) || [];
+
+        if (viewed.length > 0) {
+
+            productsList = [...productsList].sort((a, b) => {
+
+                const aIndex = viewed.indexOf(a.id);
+                const bIndex = viewed.indexOf(b.id);
+
+                if (aIndex === -1 && bIndex === -1) return 0;
+                if (aIndex === -1) return 1;
+                if (bIndex === -1) return -1;
+
+                return aIndex - bIndex;
+            });
+        }
+    }
+
     let found = false;
+
     productsList.forEach(product => {
-        if (currentCategory !== "" && product.category !== currentCategory) return;
+
+        if (
+            currentCategory !== "" &&
+            product.category !== currentCategory
+        ) return;
+
         renderProductCard(product.id, product);
         found = true;
     });
-    // If no products found
+
     if (!found) {
-        productsContainer.innerHTML = `
-            <div class="no-results">
-                Products not found
-            </div>
-        `;
+        productsContainer.innerHTML =
+            `<div class="no-results">Products not found</div>`;
     }
 }
 /* ================= SEARCH LOGIC END ================= */
@@ -2077,6 +2083,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
