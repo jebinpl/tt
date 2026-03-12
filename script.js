@@ -63,7 +63,7 @@ function resetRecaptcha() {
     // create new captcha
     window.recaptchaVerifier = new RecaptchaVerifier(
         auth,
-        "getOtpBtn",   // attach to OTP button
+        "recaptcha-container",   // attach to OTP button
         {
             size: "invisible",
             callback: () => {
@@ -2348,6 +2348,7 @@ window.deleteCustomerAdmin = async function(phone){
         alert("Delete failed");
     }
 };
+
 
 
 
