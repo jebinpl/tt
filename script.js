@@ -1467,6 +1467,62 @@ window.previewInlineImage = function(event,input){
 
     reader.readAsDataURL(file);
 };
+/* ================= SAVE INLINE EDIT ================= */
+window.saveInlineEdit = async function(id, btn){
+    const card = btn.closest(".product-card");
+    const desc =
+        card.querySelector(".desc-input")?.value.trim();
+    const price =
+        card.querySelector(".price-input")?.value.trim();
+    const imageInput =
+        card.querySelector(".image-input");
+    if(!desc || !price){
+        alert("Fill all fields");
+        return;
+    }
+    btn.innerText = "Saving...";
+    btn.disabled = true;
+    try{
+        // get existing product
+        const snap = await getDoc(doc(db,"products",id));
+        let imageURL = snap.data().image;
+        let imagePath = snap.data().imagePath;
+
+        /* ===== IMAGE UPDATED ? ===== */
+        if(imageInput && imageInput.files.length > 0){
+            const file = imageInput.files[0];
+            // delete old image
+            if(imagePath){
+                await deleteObject(ref(storage,imagePath));
+            }
+            // upload new image
+            const imageRef =
+                ref(storage,"products/"+Date.now()+"_"+file.name);
+
+            const compressed =
+                await compressImage(file,30);
+
+            await uploadBytes(imageRef,compressed);
+
+            imageURL =
+                await getDownloadURL(imageRef);
+
+            imagePath = imageRef.fullPath;
+        }
+        /* ===== UPDATE FIRESTORE ===== */
+        await updateDoc(doc(db,"products",id),{
+            description: desc,
+            price: Number(price),
+            image: imageURL,
+            imagePath: imagePath
+        });
+    }catch(err){
+        console.error(err);
+        alert("Update failed");
+    }
+    btn.innerText = "Save";
+    btn.disabled = false;
+};
 /*--------------------------Quantity Buttons--------------------------*/
 window.increaseQty = function(btn){
     const qty = btn.parentElement.querySelector(".qty");
@@ -2195,6 +2251,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
