@@ -1902,7 +1902,7 @@ if (myProfileLink) {
 async function loadAllCustomersForAdmin(){
 
     const body = document.getElementById("customersTableBody");
-    body.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+    body.innerHTML = "<tr><td colspan='5'>Loading...</td></tr>";
 
     const snapshot = await getDocs(collection(db,"customers"));
 
@@ -1916,11 +1916,21 @@ async function loadAllCustomersForAdmin(){
         const phone = docSnap.id;
 
         body.innerHTML += `
-            <tr>
+            <tr data-phone="${phone}">
                 <td>${i++}</td>
-                <td>${data.name || "-"}</td>
+
+                <td class="view-name">${data.name || "-"}</td>
+
                 <td>${phone}</td>
-                <td>${data.address || "-"}</td>
+
+                <td class="view-address">${data.address || "-"}</td>
+
+                <td>
+                    <button onclick="editCustomer('${phone}')">Edit</button>
+                    <button onclick="deleteCustomerAdmin('${phone}')">
+                        Delete
+                    </button>
+                </td>
             </tr>
         `;
     });
@@ -2262,10 +2272,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+/* ================= ADMIN EDIT CUSTOMER ================= */
 
+window.editCustomer = async function(phone){
 
+    const row =
+        document.querySelector(`tr[data-phone="${phone}"]`);
 
+    const nameCell = row.querySelector(".view-name");
+    const addressCell = row.querySelector(".view-address");
 
+    const currentName = nameCell.textContent;
+    const currentAddress = addressCell.textContent;
+
+    nameCell.innerHTML =
+        `<input id="editName-${phone}" value="${currentName}">`;
+
+    addressCell.innerHTML =
+        `<input id="editAddress-${phone}" value="${currentAddress}">`;
+
+    row.querySelector("td:last-child").innerHTML = `
+        <button onclick="saveCustomer('${phone}')">Save</button>
+        <button onclick="loadAllCustomersForAdmin()">Cancel</button>
+    `;
+};
+/* ================= ADD SAVE FUNCTION ================= */
+window.saveCustomer = async function(phone){
+
+    const name =
+        document.getElementById(`editName-${phone}`).value;
+
+    const address =
+        document.getElementById(`editAddress-${phone}`).value;
+
+    try{
+
+        await updateDoc(doc(db,"customers",phone),{
+            name,
+            address
+        });
+
+        alert("Customer updated ✅");
+
+        loadAllCustomersForAdmin();
+
+    }catch(err){
+        alert("Update failed");
+    }
+};
+/* ================= ADD DELETE FUNCTION ================= */
+window.deleteCustomerAdmin = async function(phone){
+
+    if(!confirm("Delete this customer?")) return;
+
+    try{
+
+        await deleteDoc(doc(db,"customers",phone));
+
+        alert("Customer deleted");
+
+        loadAllCustomersForAdmin();
+
+    }catch(err){
+        alert("Delete failed");
+    }
+};
 
 
 
