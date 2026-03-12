@@ -1263,26 +1263,50 @@ function renderProductCard(id, product) {
 
     } else {
 
-        /* ===== CUSTOMER VIEW ===== */
-        card.innerHTML = `
+/* ===== CUSTOMER VIEW ===== */
+card.innerHTML = `
+    <div class="product-row">
+
+        <!-- LEFT IMAGE -->
+        <div class="product-image-box">
             <img src="${product.image}" class="clickable-image"
-                onclick="openImageModal('${product.image}')">    
-            <div class="product-info">
-                <strong>${product.description}</strong>
-                <p>₹${product.price}</p>
+                onclick="openImageModal('${product.image}')">
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="product-details">
+
+            <div class="product-description">
+                ${product.description}
             </div>
 
-            <div class="product-actions">
-                <button onclick="decreaseQty(this)">-</button>
-                <span class="qty">1</span>
-                <button onclick="increaseQty(this)">+</button>
+            <div class="product-bottom">
 
-                <button class="buy-btn"
-                    onclick="addToCart(this, '${product.description}', ${product.price})">
-                    Buy Now
-                </button>
+                <div class="product-price">
+                    ₹${product.price}
+                </div>
+
+                <div class="product-actions">
+
+                    <div class="qty-control">
+                        <button onclick="decreaseQty(this)">−</button>
+                        <span class="qty">1</span>
+                        <button onclick="increaseQty(this)">+</button>
+                    </div>
+
+                    <button class="buy-btn"
+                        onclick="addToCart(this, '${product.description}', ${product.price})">
+                        Buy
+                    </button>
+
+                </div>
+
             </div>
-        `;
+
+        </div>
+
+    </div>
+`;
     }
 
     productsContainer.appendChild(card);
@@ -1981,6 +2005,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
