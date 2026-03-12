@@ -1446,6 +1446,7 @@ window.cancelInlineEdit = function(id){
 
 </div>
 `;
+};
 /*--------------------------ADD SAVE FUNCTION END--------------------------*/
 /*--------------------------ADD IMAGE PREVIEW FUNCTION--------------------------*/
 window.previewInlineImage = function(event,input){
@@ -2260,6 +2261,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
