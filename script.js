@@ -2349,13 +2349,14 @@ window.deleteCustomerAdmin = async function(phone){
     }
 };
 /* ================= HOME TOGGLE MENU ANIMATION ================= */
-function toggleHomeMenu() {
+window.toggleHomeMenu = function() {
 
     const menu = document.getElementById("homeDropup");
 
     menu.classList.toggle("show");
 
 }
+
 
 
 
