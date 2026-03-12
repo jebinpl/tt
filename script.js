@@ -1150,7 +1150,7 @@ ${new Date(order.lastUpdatedAt).toLocaleString()}`
                     <hr>
                     <div class="order-items"><b>Items:</b><br>${items}</div>
                     <hr>
-                    <div class="order-items"><b>Address:</b> ${order.address}</div>
+                    <div class="order-items"><b>Delivery Address:</b> ${order.address}</div>
                     <hr>
                     <div class="order-footer">
                         <div class="order-total">₹${order.total}</div>
@@ -2349,6 +2349,7 @@ window.deleteCustomerAdmin = async function(phone){
         alert("Delete failed");
     }
 };
+
 
 
 
