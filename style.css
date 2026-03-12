@@ -1059,7 +1059,7 @@ color:#444;
 .product-bottom{
     display:flex;
     justify-content:space-between;
-    align-items:flex-end;
+    align-items:center;
 }
 
 /* PRICE */
@@ -1074,6 +1074,54 @@ color:#444;
     display:flex;
     align-items:center;
     gap:8px;
+}
+/* ================= MODERN ADMIN BUTTONS ================= */
+
+.product-actions .edit-btn,
+.product-actions .delete-btn,
+.product-actions .save-btn,
+.product-actions .cancel-btn{
+    border:none;
+    padding:6px 14px;
+    border-radius:8px;
+    font-size:13px;
+    cursor:pointer;
+    font-weight:600;
+    transition:all 0.2s ease;
+}
+
+/* EDIT */
+.product-actions .edit-btn{
+    background:linear-gradient(135deg,#4CAF50,#2e7d32);
+    color:#fff;
+}
+
+.product-actions .edit-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* DELETE */
+.product-actions .delete-btn{
+    background:linear-gradient(135deg,#ff4d4d,#c62828);
+    color:#fff;
+}
+
+.product-actions .delete-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 4px 10px rgba(0,0,0,0.25);
+}
+
+/* SAVE */
+.product-actions .save-btn{
+    background:linear-gradient(135deg,#2196f3,#1565c0);
+    color:white;
+}
+
+/* CANCEL */
+.product-actions .cancel-btn{
+    background:#777;
+    color:white;
 }
 
 /* COUNTER */
@@ -1122,32 +1170,7 @@ color:#444;
 }
 /* ================= ADMIN BUTTONS BELOW CARD ================= */
 
-.admin-actions{
-    display:flex;
-    justify-content:flex-end;
-    gap:10px;
-    margin-top:10px;
-    border-top:1px solid #eee;
-    padding-top:10px;
-}
 
-.admin-actions button{
-    border:none;
-    padding:6px 14px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:13px;
-}
-
-.edit-btn{
-    background:#3498db;
-    color:white;
-}
-
-.delete-btn{
-    background:#e74c3c;
-    color:white;
-}
 /* ================= IMAGE POPUP ================= */
 
 .image-modal{
@@ -1830,6 +1853,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
