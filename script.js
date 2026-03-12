@@ -2274,26 +2274,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ================= ADMIN EDIT CUSTOMER ================= */
 
-window.editCustomer = async function(phone){
+window.editCustomer = function(phone){
 
-    const row =
-        document.querySelector(`tr[data-phone="${phone}"]`);
+    const row = document.querySelector(`tr[data-phone="${phone}"]`);
 
     const nameCell = row.querySelector(".view-name");
     const addressCell = row.querySelector(".view-address");
 
-    const currentName = nameCell.textContent;
-    const currentAddress = addressCell.textContent;
+    const originalName = nameCell.textContent;
+    const originalAddress = addressCell.textContent;
 
     nameCell.innerHTML =
-        `<input id="editName-${phone}" value="${currentName}">`;
+        `<input id="editName-${phone}" value="${originalName}">`;
 
     addressCell.innerHTML =
-        `<input id="editAddress-${phone}" value="${currentAddress}">`;
+        `<input id="editAddress-${phone}" value="${originalAddress}">`;
 
     row.querySelector("td:last-child").innerHTML = `
         <button onclick="saveCustomer('${phone}')">Save</button>
-        <button onclick="loadAllCustomersForAdmin()">Cancel</button>
+        <button onclick="cancelCustomerEdit('${phone}','${originalName}','${originalAddress}')">Cancel</button>
     `;
 };
 /* ================= ADD SAVE FUNCTION ================= */
@@ -2320,6 +2319,18 @@ window.saveCustomer = async function(phone){
         alert("Update failed");
     }
 };
+window.cancelCustomerEdit = function(phone,name,address){
+
+    const row = document.querySelector(`tr[data-phone="${phone}"]`);
+
+    row.querySelector(".view-name").textContent = name;
+    row.querySelector(".view-address").textContent = address;
+
+    row.querySelector("td:last-child").innerHTML = `
+        <button onclick="editCustomer('${phone}')">Edit</button>
+        <button onclick="deleteCustomerAdmin('${phone}')">Delete</button>
+    `;
+};
 /* ================= ADD DELETE FUNCTION ================= */
 window.deleteCustomerAdmin = async function(phone){
 
@@ -2337,6 +2348,7 @@ window.deleteCustomerAdmin = async function(phone){
         alert("Delete failed");
     }
 };
+
 
 
 
