@@ -1467,61 +1467,74 @@ window.previewInlineImage = function(event,input){
 
     reader.readAsDataURL(file);
 };
-/* ================= SAVE INLINE EDIT ================= */
+/* ================= SAVE INLINE EDIT (ADMIN) ================= */
+
 window.saveInlineEdit = async function(id, btn){
-    const card = btn.closest(".product-card");
-    const desc =
-        card.querySelector(".desc-input")?.value.trim();
-    const price =
-        card.querySelector(".price-input")?.value.trim();
-    const imageInput =
-        card.querySelector(".image-input");
-    if(!desc || !price){
-        alert("Fill all fields");
-        return;
-    }
-    btn.innerText = "Saving...";
-    btn.disabled = true;
-    try{
-        // get existing product
-        const snap = await getDoc(doc(db,"products",id));
-        let imageURL = snap.data().image;
-        let imagePath = snap.data().imagePath;
 
-        /* ===== IMAGE UPDATED ? ===== */
-        if(imageInput && imageInput.files.length > 0){
-            const file = imageInput.files[0];
-            // delete old image
-            if(imagePath){
-                await deleteObject(ref(storage,imagePath));
-            }
-            // upload new image
-            const imageRef =
-                ref(storage,"products/"+Date.now()+"_"+file.name);
+    try {
 
-            const compressed =
-                await compressImage(file,30);
+        const card = document.querySelector(`[data-id="${id}"]`);
+        if(!card) return;
 
-            await uploadBytes(imageRef,compressed);
+        const descInput = card.querySelector(".desc-input");
+        const priceInput = card.querySelector(".price-input");
+        const fileInput = card.querySelector(".image-input");
 
-            imageURL =
-                await getDownloadURL(imageRef);
+        const newDescription = descInput.value.trim();
+        const newPrice = parseFloat(priceInput.value);
 
-            imagePath = imageRef.fullPath;
+        if(!newDescription || !newPrice){
+            alert("Fill all fields");
+            return;
         }
-        /* ===== UPDATE FIRESTORE ===== */
-        await updateDoc(doc(db,"products",id),{
-            description: desc,
-            price: Number(price),
-            image: imageURL,
-            imagePath: imagePath
-        });
-    }catch(err){
-        console.error(err);
+
+        let updateData = {
+            description: newDescription,
+            price: newPrice
+        };
+
+        /* ===== IMAGE UPDATE ===== */
+        if(fileInput && fileInput.files.length > 0){
+
+            const file = fileInput.files[0];
+
+            // get old product
+            const snap = await getDoc(doc(db,"products",id));
+
+            if(snap.exists()){
+                const data = snap.data();
+
+                // delete old image
+                if(data.imagePath){
+                    const oldRef = ref(storage, data.imagePath);
+                    await deleteObject(oldRef);
+                }
+            }
+
+            // upload new image
+            const imageRef = ref(
+                storage,
+                "products/" + Date.now() + "_" + file.name
+            );
+
+            const compressedImage = await compressImage(file,30);
+            await uploadBytes(imageRef, compressedImage);
+
+            const imageURL = await getDownloadURL(imageRef);
+
+            updateData.image = imageURL;
+            updateData.imagePath = imageRef.fullPath;
+        }
+
+        // 🔥 UPDATE FIRESTORE
+        await updateDoc(doc(db,"products",id), updateData);
+
+        alert("Product updated ✅");
+
+    } catch(error){
+        console.error(error);
         alert("Update failed");
     }
-    btn.innerText = "Save";
-    btn.disabled = false;
 };
 /*--------------------------Quantity Buttons--------------------------*/
 window.increaseQty = function(btn){
@@ -2251,6 +2264,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
