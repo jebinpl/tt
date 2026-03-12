@@ -2348,14 +2348,8 @@ window.deleteCustomerAdmin = async function(phone){
         alert("Delete failed");
     }
 };
-/* ================= HOME TOGGLE MENU ANIMATION ================= */
-window.toggleHomeMenu = function() {
 
-    const menu = document.getElementById("homeDropup");
 
-    menu.classList.toggle("show");
-
-}
 
 
 
