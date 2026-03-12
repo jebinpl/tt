@@ -1784,103 +1784,7 @@ cursor:not-allowed;
     padding:40px;
     font-weight:500;
 }
-/* ====================Floating Home Menu======================= */
 
-.home-dropup{
-    position:absolute;
-    bottom:70px;
-    left:50%;
-    transform:translateX(-50%);
-    display:flex;
-    gap:60px;
-    pointer-events:none;
-}
-
-/* Floating bubbles */
-
-.home-dropup a{
-
-    backdrop-filter:blur(10px);
-    background:rgba(255,255,255,0.15);
-    border:1px solid rgba(255,255,255,0.3);
-
-    padding:12px 20px;
-    border-radius:30px;
-
-    color:#fff;
-    font-size:14px;
-    text-decoration:none;
-
-    box-shadow:0 8px 20px rgba(0,0,0,0.25);
-
-    opacity:0;
-
-}
-
-/* profile bubble */
-
-.home-dropup a:first-child{
-    transform:translateY(40px) translateX(40px);
-}
-
-/* orders bubble */
-
-.home-dropup a:last-child{
-    transform:translateY(40px) translateX(-40px);
-}
-
-/* show animation */
-
-.home-dropup.show a:first-child{
-    animation:popLeft 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
-}
-
-.home-dropup.show a:last-child{
-    animation:popRight 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
-}
-
-/* left bubble */
-
-@keyframes popLeft{
-
-    0%{
-        transform:translateY(40px) translateX(40px) scale(0.6);
-        opacity:0;
-    }
-
-    70%{
-        transform:translateY(-20px) translateX(-10px) scale(1.1);
-        opacity:1;
-    }
-
-    100%{
-        transform:translateY(0) translateX(0) scale(1);
-        opacity:1;
-    }
-
-}
-
-/* right bubble */
-
-@keyframes popRight{
-
-    0%{
-        transform:translateY(40px) translateX(-40px) scale(0.6);
-        opacity:0;
-    }
-
-    70%{
-        transform:translateY(-20px) translateX(10px) scale(1.1);
-        opacity:1;
-    }
-
-    100%{
-        transform:translateY(0) translateX(0) scale(1);
-        opacity:1;
-    }
-
-}
-/* ====================Floating Home Menu END======================= */
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1965,6 +1869,7 @@ cursor:not-allowed;
     border-radius: 16px;
 }
 }
+
 
 
 
