@@ -1239,30 +1239,76 @@ function renderProductCard(id, product) {
     const card = document.createElement("div");
     card.className = "product-card";
 
-    if (isAdmin) {
-        card.setAttribute("draggable", true);
-        card.dataset.id = id;
+   /* ===== UNIVERSAL PRODUCT VIEW (CUSTOMER + ADMIN) ===== */
 
-        /* ===== ADMIN VIEW ===== */
-        card.innerHTML = `
-            <img src="${product.image}" class="clickable-image"
-                onclick="openImageModal('${product.image}', '${id}')">      
-            <div class="product-info">
-                <strong>${product.description}</strong>
-                <p>₹${product.price}</p>
+if (isAdmin) {
+    card.setAttribute("draggable", true);
+    card.dataset.id = id;
+}
+
+card.innerHTML = `
+<div class="product-row">
+
+    <!-- LEFT IMAGE -->
+    <div class="product-image-box">
+        <img src="${product.image}" class="clickable-image"
+            onclick="openImageModal('${product.image}', '${id}')">
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="product-details">
+
+        <div class="product-description">
+            ${product.description}
+        </div>
+
+        <div class="product-bottom">
+
+            <div class="product-price">
+                ₹${product.price}
             </div>
 
             <div class="product-actions">
-                <button class="edit-btn"
-                    onclick="editProduct('${id}')">Edit</button>
 
-                <button class="delete-btn"
-                    onclick="deleteProduct('${id}')">Delete</button>
+                ${
+                    isAdmin
+                    ? ""
+                    : `
+                    <div class="qty-control">
+                        <button onclick="decreaseQty(this)">−</button>
+                        <span class="qty">1</span>
+                        <button onclick="increaseQty(this)">+</button>
+                    </div>
+
+                    <button class="buy-btn"
+                        onclick="addToCart(this, '${product.description}', ${product.price})">
+                        Buy
+                    </button>
+                    `
+                }
+
             </div>
-        `;
 
-    } else {
+        </div>
 
+    </div>
+
+</div>
+
+${
+    isAdmin
+    ? `
+    <div class="admin-actions">
+        <button class="edit-btn"
+            onclick="editProduct('${id}')">Edit</button>
+
+        <button class="delete-btn"
+            onclick="deleteProduct('${id}')">Delete</button>
+    </div>
+    `
+    : ""
+}
+`;
 /* ===== CUSTOMER VIEW ===== */
 card.innerHTML = `
     <div class="product-row">
@@ -2083,6 +2129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
