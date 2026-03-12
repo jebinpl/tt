@@ -1240,38 +1240,48 @@ function renderProductCard(id, product) {
     card.className = "product-card";
 
     if (isAdmin) {
-        card.setAttribute("draggable", true);
-        card.dataset.id = id;
-    }
+    card.setAttribute("draggable", true);
+    card.dataset.id = id;
+}
 
-    card.innerHTML = `
-    <div class="product-row">
+card.innerHTML = `
+<div class="product-row">
 
-        <!-- LEFT IMAGE -->
-        <div class="product-image-box">
-            <img src="${product.image}" class="clickable-image"
-                onclick="openImageModal('${product.image}', '${id}')">
+    <!-- LEFT IMAGE -->
+    <div class="product-image-box">
+        <img src="${product.image}" class="clickable-image"
+            onclick="openImageModal('${product.image}', '${id}')">
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="product-details">
+
+        <div class="product-description">
+            ${product.description}
         </div>
 
-        <!-- RIGHT CONTENT -->
-        <div class="product-details">
+        <div class="product-bottom">
 
-            <div class="product-description">
-                ${product.description}
+            <div class="product-price">
+                ₹${product.price}
             </div>
 
-            <div class="product-bottom">
+            <div class="product-actions">
 
-                <div class="product-price">
-                    ₹${product.price}
-                </div>
+                ${
+                    isAdmin
+                    ? `
+                        <button class="edit-btn"
+                            onclick="editProduct('${id}')">
+                            Edit
+                        </button>
 
-                <div class="product-actions">
-
-                    ${
-                        isAdmin
-                        ? ""
-                        : `
+                        <button class="delete-btn"
+                            onclick="deleteProduct('${id}')">
+                            Delete
+                        </button>
+                      `
+                    : `
                         <div class="qty-control">
                             <button onclick="decreaseQty(this)">−</button>
                             <span class="qty">1</span>
@@ -1282,10 +1292,8 @@ function renderProductCard(id, product) {
                             onclick="addToCart(this, '${product.description}', ${product.price})">
                             Buy
                         </button>
-                        `
-                    }
-
-                </div>
+                      `
+                }
 
             </div>
 
@@ -1293,22 +1301,10 @@ function renderProductCard(id, product) {
 
     </div>
 
-    ${
-        isAdmin
-        ? `
-        <div class="admin-actions">
-            <button class="edit-btn"
-                onclick="editProduct('${id}')">Edit</button>
+</div>
+`;
 
-            <button class="delete-btn"
-                onclick="deleteProduct('${id}')">Delete</button>
-        </div>
-        `
-        : ""
-    }
-    `;
-
-    productsContainer.appendChild(card);
+productsContainer.appendChild(card);
 }
 /*--------------------------------Delete Product(Admin)--------------------*/
 window.deleteProduct = async function(id){
@@ -1374,7 +1370,7 @@ window.editProduct = function(id){
          class="clickable-image preview-inline">
 `;
     const priceDiv = card.querySelector(".product-price");
-    const actions = card.querySelector(".admin-actions");
+    const actions = card.querySelector(".product-actions");
 
     // Convert text → inputs
     descDiv.innerHTML =
@@ -1417,39 +1413,39 @@ window.cancelInlineEdit = function(id){
     if(!card) return;
 
     card.innerHTML = `
-    <div class="product-row">
+<div class="product-row">
 
-        <div class="product-image-box">
-            <img src="${product.image}" class="clickable-image"
-                onclick="openImageModal('${product.image}', '${id}')">
-        </div>
-
-        <div class="product-details">
-
-            <div class="product-description">
-                ${product.description}
-            </div>
-
-            <div class="product-bottom">
-
-                <div class="product-price">
-                    ₹${product.price}
-                </div>
-
-            </div>
-
-        </div>
+    <div class="product-image-box">
+        <img src="${product.image}" class="clickable-image"
+            onclick="openImageModal('${product.image}', '${id}')">
     </div>
 
-    <div class="admin-actions">
-        <button class="edit-btn"
-            onclick="editProduct('${id}')">Edit</button>
+    <div class="product-details">
 
-        <button class="delete-btn"
-            onclick="deleteProduct('${id}')">Delete</button>
+        <div class="product-description">
+            ${product.description}
+        </div>
+
+        <div class="product-bottom">
+
+            <div class="product-price">
+                ₹${product.price}
+            </div>
+
+            <div class="product-actions">
+                <button class="edit-btn"
+                    onclick="editProduct('${id}')">Edit</button>
+
+                <button class="delete-btn"
+                    onclick="deleteProduct('${id}')">Delete</button>
+            </div>
+
+        </div>
+
     </div>
-    `;
-};
+
+</div>
+`;
 /*--------------------------ADD SAVE FUNCTION END--------------------------*/
 /*--------------------------ADD IMAGE PREVIEW FUNCTION--------------------------*/
 window.previewInlineImage = function(event,input){
@@ -2264,6 +2260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
