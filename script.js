@@ -1353,29 +1353,78 @@ window.deleteProduct = async function(id){
     }
 }
 /*--------------------------------------Edit Product (Use Add UI)---------------------*/
+/* ================= INLINE EDIT PRODUCT (ADMIN) ================= */
+
 window.editProduct = function(id){
 
+    const card = document.querySelector(`[data-id="${id}"]`);
     const product = allProducts.find(p => p.id === id);
-    if (!product) return;
 
-    editingProductId = id;
+    if(!card || !product) return;
 
-    // Show Add Product UI
-    addProductSection.style.display = "block";
+    const descDiv = card.querySelector(".product-description");
+    const priceDiv = card.querySelector(".product-price");
+    const actions = card.querySelector(".admin-actions");
 
-    // Fill existing data
-    document.getElementById("productDescription").value = product.description;
-    document.getElementById("productPrice").value = product.price;
+    // Convert text → inputs
+    descDiv.innerHTML =
+        `<input class="inline-input desc-input"
+            value="${product.description}">`;
 
-    // Show existing image preview
-    previewImage.src = product.image;
-    previewImage.style.display = "block";
-    removeBtn.style.display = "flex";
-    document.querySelector(".upload-placeholder").style.display = "none";
+    priceDiv.innerHTML =
+        `₹ <input type="number"
+            class="inline-input price-input"
+            value="${product.price}">`;
 
-    // Change button text
-    addProductBtn.textContent = "Update Product";
+    // Replace buttons
+    actions.innerHTML = `
+        <button class="save-btn"
+            onclick="saveInlineEdit('${id}', this)">
+            Save
+        </button>
+
+        <button class="cancel-btn"
+            onclick="renderProducts()">
+            Cancel
+        </button>
+
+        <button class="delete-btn"
+            onclick="deleteProduct('${id}')">
+            Delete
+        </button>
+    `;
 };
+/*--------------------------ADD SAVE FUNCTION START--------------------------*/
+window.saveInlineEdit = async function(id, btn){
+
+    const card = btn.closest(".product-card");
+
+    const newDesc =
+        card.querySelector(".desc-input").value.trim();
+
+    const newPrice =
+        parseFloat(card.querySelector(".price-input").value);
+
+    if(!newDesc || !newPrice){
+        alert("Fill all fields");
+        return;
+    }
+
+    try{
+
+        await updateDoc(doc(db,"products",id),{
+            description: newDesc,
+            price: newPrice
+        });
+
+        alert("Product updated ✅");
+
+    }catch(error){
+        console.error(error);
+        alert("Update failed");
+    }
+};
+/*--------------------------ADD SAVE FUNCTION END--------------------------*/
 /*--------------------------Quantity Buttons--------------------------*/
 window.increaseQty = function(btn){
     const qty = btn.parentElement.querySelector(".qty");
@@ -2104,6 +2153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
 
 
 
