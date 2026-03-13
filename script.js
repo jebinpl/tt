@@ -1176,11 +1176,11 @@ closeModal(ordersModal);
 };
 }
 /* ================= HOME BUTTON WELCOME VOICE ================= */
-window.openIOSHome = function() {
-
+window.goHome = function() {
     currentCategory = "";
     renderProducts();
 
+    // Scroll to top
     window.scrollTo({
         top: 0,
         behavior: "smooth"
@@ -1193,13 +1193,13 @@ window.openIOSHome = function() {
 
     setTimeout(() => message.classList.remove("show"), 2000);
 
-    // 🎙 Voice Welcome (unchanged)
+    // 🎙 Voice Welcome with 5-minute cooldown
     if ('speechSynthesis' in window) {
         const lastPlayed = localStorage.getItem("homeVoiceLastPlayed");
         const now = Date.now();
 
+        // 5 minutes = 5 * 60 * 1000 ms
         if (!lastPlayed || now - lastPlayed > 5 * 60 * 1000) {
-
             const speech = new SpeechSynthesisUtterance(
                 "Welcome to Thomas Traders Online Shopping Portal."
             );
@@ -1214,57 +1214,26 @@ window.openIOSHome = function() {
             window.speechSynthesis.cancel();
             window.speechSynthesis.speak(speech);
 
+            // ✅ update timestamp
             localStorage.setItem("homeVoiceLastPlayed", now);
         }
     }
 
-    // ⭐ OPEN IOS POPUP
-    const iosPopup = document.getElementById("iosHomeOverlay");
-    if (iosPopup) iosPopup.classList.add("show");
+    // Toggle dropup open/close
+    const dropup = document.getElementById("homeDropup");
+    dropup.classList.toggle("show");
 };
 /* ================= HOME BUTTON WELCOME VOICE END ================= */
 
-/* ================= IOS HOME POPUP ================= */
+document.addEventListener("click", function (e) {
 
-const iosOverlay = document.getElementById("iosHomeOverlay");
-const profileOption = document.getElementById("profileOption");
-const ordersOption = document.getElementById("ordersOption");
+    const dropup = document.getElementById("homeDropup");
+    const homeBtn = document.querySelector(".home-btn");
 
-if (iosOverlay) {
-
-    iosOverlay.addEventListener("click", function(e){
-        if(e.target === iosOverlay){
-            iosOverlay.classList.remove("show");
-        }
-    });
-
-}
-
-if(profileOption){
-profileOption.addEventListener("click",function(){
-
-    iosOverlay.classList.remove("show");
-
-    const isAdmin = localStorage.getItem("isAdmin") === "true";
-
-    if(isAdmin){
-        document.getElementById("myProfileLink").click();
-    }else{
-        document.getElementById("myProfileLink").click();
+    if (!dropup.contains(e.target) && !homeBtn.contains(e.target)) {
+        dropup.classList.remove("show");
     }
-
 });
-}
-
-if(ordersOption){
-ordersOption.addEventListener("click",function(){
-
-    iosOverlay.classList.remove("show");
-
-    document.getElementById("myOrdersLink").click();
-
-});
-}
 /*-------------------------------------------------------Product Card UI Generator---------------------------------------------------------------------*/
 function renderProductCard(id, product) {
 
@@ -2380,7 +2349,6 @@ window.deleteCustomerAdmin = async function(phone){
         alert("Delete failed");
     }
 };
-
 
 
 
