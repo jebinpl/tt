@@ -990,7 +990,8 @@ status: "Order Placed",
 createdAt: Date.now()
 });
 
-alert("Order placed successfully");
+alert("Order placed successfully 🎉");
+celebrateOrder();
 
 /* clear firebase cart */
 await setDoc(doc(db,"carts",phone),{
@@ -2349,7 +2350,24 @@ window.deleteCustomerAdmin = async function(phone){
         alert("Delete failed");
     }
 };
+/* ================= CONFETTI FUNCTION ================= */
+function celebrateOrder(){
 
+confetti({
+    particleCount: 100,
+    angle: 60,
+    spread: 70,
+    origin: { x: 0 }
+});
+
+confetti({
+    particleCount: 100,
+    angle: 120,
+    spread: 70,
+    origin: { x: 1 }
+});
+
+}
 
 
 
