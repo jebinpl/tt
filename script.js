@@ -269,6 +269,23 @@ if (addProductsBtn) {
 
 if (cancelProductBtn) {
     cancelProductBtn.addEventListener("click", function () {
+
+        // ✅ reset edit mode
+        editingProductId = null;
+        addProductBtn.textContent = "Add Product";
+
+        // ✅ clear inputs
+        document.getElementById("productImage").value = "";
+        document.getElementById("productDescription").value = "";
+        document.getElementById("productPrice").value = "";
+
+        // ✅ reset preview
+        previewImage.src = "";
+        previewImage.style.display = "none";
+        removeBtn.style.display = "none";
+        document.querySelector(".upload-placeholder").style.display = "block";
+
+        // ✅ hide form
         addProductSection.style.display = "none";
     });
 }
@@ -537,7 +554,56 @@ if (addProductSection) {
 }
     });
 }
+/* ================= OPEN EDIT PRODUCT ================= */
 
+window.openEditProduct = async function(productId){
+
+    try{
+
+        const snap = await getDoc(doc(db,"products",productId));
+
+        if(!snap.exists()){
+            alert("Product not found");
+            return;
+        }
+
+        const product = snap.data();
+
+        // ✅ enable update mode
+        editingProductId = productId;
+
+        // ✅ open add product form (same as Add Product card)
+        addProductSection.style.display = "block";
+
+        // ✅ fill fields
+        document.getElementById("productDescription").value =
+            product.description || "";
+
+        document.getElementById("productPrice").value =
+            product.price || "";
+
+        // ✅ image preview
+        if(product.image){
+            previewImage.src = product.image;
+            previewImage.style.display = "block";
+            removeBtn.style.display = "flex";
+            document.querySelector(".upload-placeholder").style.display = "none";
+        }
+
+        // ✅ change button text
+        addProductBtn.textContent = "Update Product";
+
+        // ✅ mobile scroll fix
+        addProductSection.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+    }catch(err){
+        console.error(err);
+        alert("Failed to load product");
+    }
+};
 /* ================= CUSTOMER MODAL ================= */
 
 const customerLink = document.getElementById("customerLink");
@@ -1274,7 +1340,7 @@ function renderProductCard(id, product) {
                     isAdmin
                     ? `
                         <button class="edit-btn"
-                            onclick="editProduct('${id}')">
+                            onclick="openEditProduct('${doc.id}')">
                             Edit
                         </button>
 
