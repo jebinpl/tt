@@ -1059,6 +1059,8 @@ color:#444;
 /* MAIN ROW */
 .product-row{
     display:flex;
+       width:100%;
+    overflow:hidden; 
     gap:12px;
     align-items:stretch;
 }
@@ -1087,6 +1089,7 @@ color:#444;
 .product-details{
     flex:1;
     min-width:0;
+    overflow:hidden;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
@@ -1120,7 +1123,9 @@ color:#444;
     align-items:center;
     gap:6px;
     flex-wrap: wrap;
+    width:100%;  
     justify-content:flex-end;
+    box-sizing:border-box;
 }
 /* ================= MODERN ADMIN BUTTONS ================= */
 
@@ -1849,9 +1854,25 @@ cursor:not-allowed;
     }
 
     .product-actions button{
-        flex: 1 1 auto;   /* buttons resize properly */
+        max-width:100%;
+        flex: 1 1 45%;   /* buttons resize properly */
         font-size: 11px;
+        box-sizing:border-box;
         padding: 5px 6px;
+    }
+        .product-bottom{
+        flex-direction: column;     /* 🔥 STACK */
+        align-items: flex-start;    /* align left */
+        gap: 6px;
+    }
+
+    .product-price{
+        width:100%;
+    }
+
+    .product-actions{
+        width:100%;
+        justify-content:flex-start;  /* buttons left */
     }
 /*---------------------------------------------search--------------------------------------*/
     .search-bar-container {
