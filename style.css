@@ -1005,8 +1005,8 @@ color:#444;
 /* ===== CLOSE BUTTON (TOP RIGHT EDGE OF BOX) ===== */
 .remove-image {
     position: absolute;
-    top: 6px;      /* outside box */
-    right: 6px;    /* outside box */
+top: 4px;
+right: 4px;
 
     width: 32px;
     height: 32px;
@@ -1840,6 +1840,11 @@ cursor:not-allowed;
         height: 100px;
         padding: 0 15px;
     }
+        .product-form-row{
+        flex-direction: column;   /* stack vertically */
+        align-items: center;
+        padding: 12px;
+    }
 /*---------------------------------------------search--------------------------------------*/
     .search-bar-container {
         top: 100px;
@@ -1890,16 +1895,12 @@ cursor:not-allowed;
         padding: 6px 14px;
         font-size: 14px;
     }
-    .product-form-row {
-        display: flex;
-        flex-direction: row;   /* Force side-by-side */
-        gap: 10px;
-        padding: 10px;
-    }
 
-    .upload-box {
-        width: 110px;
-        height: 110px;
+
+    .upload-box{
+        width:100%;
+        max-width:220px;
+        height:180px;
     }
         .product-fields input {
         font-size: 13px;
@@ -1911,6 +1912,9 @@ cursor:not-allowed;
 .profile-box {
     border-radius: 16px;
 }
+        .product-fields{
+        width:100%;
+    }
 }
 
 
