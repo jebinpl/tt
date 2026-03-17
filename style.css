@@ -1826,6 +1826,10 @@ cursor:not-allowed;
     font-weight:500;
 }
 
+.image-editor-container {
+    width: 100%;
+    overflow: visible;
+}
 /*--------------------------------------------------------------------------------------------------------*/
 /* Mobile adjustment */
 @media (max-width: 600px) {
@@ -1840,10 +1844,13 @@ cursor:not-allowed;
         height: 100px;
         padding: 0 15px;
     }
-        .product-form-row{
-        flex-direction: column;   /* stack vertically */
-        align-items: center;
+    .product-form-row {
+        display: flex;
+        flex-direction: column;   /* ✅ stack vertically */
+        align-items: stretch;
+        gap: 12px;
         padding: 12px;
+        width: 100%;
     }
 /*---------------------------------------------search--------------------------------------*/
     .search-bar-container {
