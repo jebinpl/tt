@@ -1116,6 +1116,39 @@ color:#444;
     align-items:center;
     gap:8px;
 }
+/* ===== NEW CARD STRUCTURE (UPDATED LAYOUT) ===== */
+
+.product-card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-top {
+    display: flex;
+    gap: 12px;
+}
+
+.product-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-price {
+    font-weight: bold;
+    margin-top: auto;
+}
+
+/* 🔥 BOTTOM BUTTONS */
+.card-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
 /* ================= MODERN ADMIN BUTTONS ================= */
 
 .product-actions .edit-btn,
