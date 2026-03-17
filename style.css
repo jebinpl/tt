@@ -344,11 +344,12 @@ body {
 }
 
 /* RIGHT SIDE FIELDS */
-.product-fields {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.product-fields{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    min-width:0;   /* ⭐ prevents flex squeezing */
 }
 
 .product-fields input{
@@ -372,6 +373,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 10px;
+    flex-wrap:wrap;
     margin-top: 10px;
 }
 
@@ -1902,6 +1904,8 @@ cursor:not-allowed;
         .product-fields input {
         font-size: 13px;
         padding: 8px;
+        width:100%;
+        min-width:0;
     }
     .modal-content,
 .profile-box {
