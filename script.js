@@ -1246,60 +1246,64 @@ function renderProductCard(id, product) {
         card.dataset.id = id;
     }
 
-    card.innerHTML = `
-<div class="product-row">
+card.innerHTML = `
+<div class="product-card-inner">
 
-    <!-- LEFT IMAGE -->
-    <div class="product-image-box">
-        <img src="${product.image}" class="clickable-image"
-            onclick="openImageModal('${product.image}', '${id}')">
-    </div>
+    <!-- TOP SECTION -->
+    <div class="card-top">
 
-    <!-- RIGHT CONTENT -->
-    <div class="product-details">
-
-        <div class="product-description">
-            ${product.description}
+        <!-- IMAGE LEFT -->
+        <div class="product-image-box">
+            <img src="${product.image}" class="clickable-image"
+                onclick="openImageModal('${product.image}', '${id}')">
         </div>
 
-        <div class="product-bottom">
+        <!-- RIGHT SIDE -->
+        <div class="product-details">
 
+            <!-- DESCRIPTION -->
+            <div class="product-description">
+                ${product.description}
+            </div>
+
+            <!-- PRICE BELOW -->
             <div class="product-price">
                 ₹${product.price}
             </div>
 
-            <div class="product-actions">
-
-                ${
-                    isAdmin
-                    ? `
-                        <button class="edit-btn"
-                            onclick="editProduct('${id}')">
-                            Edit
-                        </button>
-
-                        <button class="delete-btn"
-                            onclick="deleteProduct('${id}')">
-                            Delete
-                        </button>
-                      `
-                    : `
-                        <div class="qty-control">
-                            <button onclick="decreaseQty(this)">−</button>
-                            <span class="qty">1</span>
-                            <button onclick="increaseQty(this)">+</button>
-                        </div>
-
-                        <button class="buy-btn"
-                            onclick="addToCart(this, '${product.description}', ${product.price})">
-                            Buy
-                        </button>
-                      `
-                }
-
-            </div>
-
         </div>
+
+    </div>
+
+    <!-- 🔥 BOTTOM ACTIONS -->
+    <div class="card-actions">
+
+        ${
+            isAdmin
+            ? `
+                <button class="edit-btn"
+                    onclick="editProduct('${id}')">
+                    Edit
+                </button>
+
+                <button class="delete-btn"
+                    onclick="deleteProduct('${id}')">
+                    Delete
+                </button>
+              `
+            : `
+                <div class="qty-control">
+                    <button onclick="decreaseQty(this)">−</button>
+                    <span class="qty">1</span>
+                    <button onclick="increaseQty(this)">+</button>
+                </div>
+
+                <button class="buy-btn"
+                    onclick="addToCart(this, '${product.description}', ${product.price})">
+                    Buy
+                </button>
+              `
+        }
 
     </div>
 
@@ -1372,7 +1376,7 @@ window.editProduct = function(id){
          class="clickable-image preview-inline">
 `;
     const priceDiv = card.querySelector(".product-price");
-    const actions = card.querySelector(".product-actions");
+    const actions = card.querySelector(".card-actions");
 
     // Convert text → inputs
     descDiv.innerHTML =
@@ -1415,7 +1419,7 @@ window.cancelInlineEdit = function(id){
     if(!card) return;
 
     card.innerHTML = `
-<div class="product-row">
+const actions = card.querySelector(".card-actions");
 
     <div class="product-image-box">
         <img src="${product.image}" class="clickable-image"
