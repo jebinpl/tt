@@ -350,12 +350,54 @@ body {
     gap: 12px;
 }
 
+/* ================= PREMIUM ADMIN INPUT ================= */
+
 .product-fields input {
     width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 14px;
+    padding: 14px 16px;
+
+    font-size: 15px;
+    font-family: inherit;
+    color: #2c3e50;
+
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    outline: none;
+
+    transition: all 0.25s ease;
+
+    /* remove browser default style */
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* focus animation */
+.product-fields input:focus {
+    background: #ffffff;
+    border-color: #f01818;
+    box-shadow: 0 0 0 3px rgba(240,24,24,0.15);
+}
+
+/* hover */
+.product-fields input:hover {
+    border-color: #cbd5e1;
+}
+
+/* placeholder */
+.product-fields input::placeholder {
+    color: #94a3b8;
+}
+
+/* remove number arrows */
+.product-fields input[type="number"]::-webkit-inner-spin-button,
+.product-fields input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.product-form-row{
+    backdrop-filter: blur(6px);
 }
 .form-buttons {
     display: flex;
