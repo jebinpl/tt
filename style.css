@@ -350,54 +350,12 @@ body {
     gap: 12px;
 }
 
-/* ================= PREMIUM ADMIN INPUT ================= */
-
 .product-fields input {
     width: 100%;
-    padding: 14px 16px;
-
-    font-size: 15px;
-    font-family: inherit;
-    color: #2c3e50;
-
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-
-    outline: none;
-
-    transition: all 0.25s ease;
-
-    /* remove browser default style */
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-/* focus animation */
-.product-fields input:focus {
-    background: #ffffff;
-    border-color: #f01818;
-    box-shadow: 0 0 0 3px rgba(240,24,24,0.15);
-}
-
-/* hover */
-.product-fields input:hover {
-    border-color: #cbd5e1;
-}
-
-/* placeholder */
-.product-fields input::placeholder {
-    color: #94a3b8;
-}
-
-/* remove number arrows */
-.product-fields input[type="number"]::-webkit-inner-spin-button,
-.product-fields input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-.product-form-row{
-    backdrop-filter: blur(6px);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
 }
 .form-buttons {
     display: flex;
@@ -1027,7 +985,7 @@ color:#444;
     object-fit:contain;
     border-radius: 12px;
     background: #fff;
-    display: block;
+    display: none;
 }
 /* ===== CLOSE BUTTON (TOP RIGHT EDGE OF BOX) ===== */
 .remove-image {
@@ -1091,7 +1049,6 @@ color:#444;
 /* CARD */
 .product-card{
     background:#f2e7e7;
-    overflow:hidden;
     margin:12px 0;
     padding:12px;
     border-radius:10px;
@@ -1101,8 +1058,6 @@ color:#444;
 /* MAIN ROW */
 .product-row{
     display:flex;
-       width:100%;
-    overflow:hidden; 
     gap:12px;
     align-items:stretch;
 }
@@ -1110,8 +1065,7 @@ color:#444;
 /* LEFT IMAGE */
 .product-image-box{
     width: 120px;
-    min-height: 120px;
-    height: auto;
+    height: 120px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -1130,12 +1084,9 @@ color:#444;
 /* RIGHT SIDE */
 .product-details{
     flex:1;
-    min-width:0;
-    overflow:hidden;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
-    min-width:0;
 }
 
 /* DESCRIPTION TOP RIGHT */
@@ -1163,11 +1114,7 @@ color:#444;
 .product-actions{
     display:flex;
     align-items:center;
-    gap:6px;
-    flex-wrap: wrap;
-    width:100%;  
-    justify-content:flex-end;
-    box-sizing:border-box;
+    gap:8px;
 }
 /* ================= MODERN ADMIN BUTTONS ================= */
 
@@ -1176,9 +1123,9 @@ color:#444;
 .product-actions .save-btn,
 .product-actions .cancel-btn{
     border:none;
-    padding:6px 10px;
+    padding:6px 14px;
     border-radius:8px;
-    font-size:12px;
+    font-size:13px;
     cursor:pointer;
     font-weight:600;
     transition:all 0.2s ease;
@@ -1877,44 +1824,6 @@ cursor:not-allowed;
     .top-container {
         height: 100px;
         padding: 0 15px;
-    }
-        .product-row{
-        flex-direction: row;
-        align-items: flex-start;
-    }
-
-    .product-image-box{
-        width: 90px;
-        min-height: 90px;
-    }
-
-    .product-actions{
-        width: 100%;              /* 🔥 take full width */
-        justify-content: flex-start; /* move buttons left */
-        flex-wrap: wrap;
-        margin-top: 6px;
-    }
-
-    .product-actions button{
-        max-width:100%;
-        flex: 1 1 45%;   /* buttons resize properly */
-        font-size: 11px;
-        box-sizing:border-box;
-        padding: 5px 6px;
-    }
-        .product-bottom{
-        flex-direction: column;     /* 🔥 STACK */
-        align-items: flex-start;    /* align left */
-        gap: 6px;
-    }
-
-    .product-price{
-        width:100%;
-    }
-
-    .product-actions{
-        width:100%;
-        justify-content:flex-start;  /* buttons left */
     }
 /*---------------------------------------------search--------------------------------------*/
     .search-bar-container {
