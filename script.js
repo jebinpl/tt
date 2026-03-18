@@ -114,6 +114,12 @@ if (isAdmin && badge) {
     });
 }
 let currentCategory = "";
+// ================= ADVERTISEMENT SYSTEM =================
+let editingAdId = null;
+let ads = [];
+let adSlideIndex = 0;
+let adInterval = null;
+
 const adminPanel = document.getElementById("adminPanel");
 const loginBtn = document.querySelector(".login-btn");
 const dropdown = document.querySelector(".dropdown");
@@ -257,6 +263,22 @@ if(categoryName === "ALL"){
 }
 
 const addProductsBtn = document.getElementById("addProductsBtn");
+const addAdBtn = document.getElementById("addAdBtn");
+const addAdSection = document.getElementById("addAdSection");
+const cancelAdBtn = document.getElementById("cancelAdBtn");
+
+if(addAdBtn){
+    addAdBtn.onclick = () => {
+        addAdSection.style.display = "block";
+    };
+}
+
+if(cancelAdBtn){
+    cancelAdBtn.onclick = () => {
+        addAdSection.style.display = "none";
+        editingAdId = null;
+    };
+}
 const cancelProductBtn = document.getElementById("cancelProductBtn");
 const addProductSection = document.getElementById("addProductSection");
 
@@ -371,6 +393,128 @@ if(!description || !price){
     alert("Fill all product fields");
     return;
 }
+  // ================= SAVE ADVERTISEMENT PRODUCT =================      
+const saveAdBtn = document.getElementById("saveAdBtn");
+
+if(saveAdBtn){
+saveAdBtn.addEventListener("click", async ()=>{
+
+const file = adInput.files[0];
+
+if(!editingAdId && !file){
+    alert("Choose advertisement image");
+    return;
+}
+
+try{
+
+let imageURL = null;
+let imagePath = null;
+
+if(file){
+    const imageRef = ref(storage,"ads/"+Date.now()+"_"+file.name);
+
+    const compressed = await compressImage(file,40);
+    await uploadBytes(imageRef,compressed);
+
+    imageURL = await getDownloadURL(imageRef);
+    imagePath = imageRef.fullPath;
+}
+
+if(editingAdId){
+
+    await updateDoc(doc(db,"ads",editingAdId),{
+        ...(imageURL && {image:imageURL}),
+        ...(imagePath && {imagePath})
+    });
+
+    alert("Advertisement Updated ✅");
+    editingAdId=null;
+
+}else{
+
+    await addDoc(collection(db,"ads"),{
+        image:imageURL,
+        imagePath:imagePath,
+        createdAt:Date.now()
+    });
+
+    alert("Advertisement Added ✅");
+}
+
+addAdSection.style.display="none";
+adInput.value="";
+adPreview.src="";
+loadAdvertisements();
+
+}catch(err){
+alert(err.message);
+}
+
+});
+} 
+   // ================= LOAD ADVERTISEMENT REALTIME =================            
+        function loadAdvertisements(){
+
+onSnapshot(collection(db,"ads"), snapshot=>{
+
+ads = [];
+
+snapshot.forEach(docSnap=>{
+    ads.push({
+        id:docSnap.id,
+        ...docSnap.data()
+    });
+});
+
+renderAdBanner();
+
+});
+}
+
+loadAdvertisements();
+// ================= AUTO SLIDING BANNER =================
+function renderAdBanner(){
+
+const banner = document.getElementById("adBanner");
+if(!banner) return;
+
+banner.innerHTML="";
+
+if(ads.length===0) return;
+
+ads.forEach(ad=>{
+    const img=document.createElement("img");
+    img.src=ad.image;
+    img.className="ad-slide";
+    banner.appendChild(img);
+});
+
+startAdSlider();
+}
+
+function startAdSlider(){
+
+const slides=document.querySelectorAll(".ad-slide");
+if(!slides.length) return;
+
+slides.forEach(s=>s.style.display="none");
+
+adSlideIndex=0;
+slides[0].style.display="block";
+
+if(adInterval) clearInterval(adInterval);
+
+adInterval=setInterval(()=>{
+
+slides[adSlideIndex].style.display="none";
+
+adSlideIndex=(adSlideIndex+1)%slides.length;
+
+slides[adSlideIndex].style.display="block";
+
+},5000);
+}
 // ================= UPDATE MODE =================
 if (editingProductId) {
 
@@ -474,6 +618,23 @@ await addDoc(productsRef, {
         } catch (error) {
             alert(error.message);
         }
+    });
+}
+/*-------------------------------ADDVERTISEMENT image PREVIEW------------------------*/
+const adInput = document.getElementById("adImage");
+const adPreview = document.getElementById("adPreviewImage");
+
+if(adInput){
+    adInput.addEventListener("change", ()=>{
+        const file = adInput.files[0];
+        if(!file) return;
+
+        const reader = new FileReader();
+        reader.onload = e=>{
+            adPreview.src = e.target.result;
+            adPreview.style.display="block";
+        };
+        reader.readAsDataURL(file);
     });
 }
 /*-------------------------------square box image------------------------*/
@@ -1658,16 +1819,34 @@ function renderProducts(productsList = allProducts) {
 
     let found = false;
 
-    productsList.forEach(product => {
+ productsList.forEach((product, index) => {
 
-        if (
-            currentCategory !== "" &&
-            product.category !== currentCategory
-        ) return;
+    if (
+        currentCategory !== "" &&
+        product.category !== currentCategory
+    ) return;
 
-        renderProductCard(product.id, product);
-        found = true;
-    });
+    // ===== PRODUCT CARD =====
+    renderProductCard(product.id, product);
+    found = true;
+
+    // ✅ INSERT ADVERTISEMENT AFTER FIRST PRODUCT
+    if (index === 0 && ads.length > 0) {
+
+        const adWrapper = document.createElement("div");
+        adWrapper.className = "ad-banner-wrapper";
+
+        adWrapper.innerHTML = `
+            <div id="adBanner" class="ad-banner"></div>
+        `;
+
+        productsContainer.appendChild(adWrapper);
+
+        // render slider after DOM added
+        setTimeout(renderAdBanner, 100);
+    }
+
+});
 
     if (!found) {
         productsContainer.innerHTML =
