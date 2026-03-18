@@ -87,8 +87,8 @@ button:hover{
 }
 /* ================= SPLASH SCREEN END ================= */
 body {
-    padding-top: 180px; /* header (120) + search bar (60) */
-    padding-bottom: 80px;
+    padding-top: 180px;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
 }
 #tagline {
     color: #fdfdfd;
@@ -691,7 +691,7 @@ body {
 
 .bottom-nav {
     position: fixed;
-    bottom: 0;
+    bottom: env(safe-area-inset-bottom);
     left: 0;
     width: 100%;
     height: 65px;
@@ -1401,7 +1401,7 @@ color:#444;
 
 .sticky-cart {
     position: fixed;
-    bottom: 70px; /* above bottom nav */
+    bottom: calc(70px + env(safe-area-inset-bottom));
     left: 50%;
     transform: translateX(-50%);
 
