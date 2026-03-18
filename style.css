@@ -1413,6 +1413,22 @@ color:#444;
     background: #aaa;
     cursor: not-allowed;
 }
+.ad-slide-wrapper{
+    position:relative;
+}
+
+.delete-ad-btn{
+    position:absolute;
+    top:8px;
+    right:8px;
+    background:red;
+    color:#fff;
+    border:none;
+    padding:5px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    z-index:10;
+}
 /* ================= STICKY CART BAR ================= */
 
 .sticky-cart {
