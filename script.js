@@ -514,6 +514,33 @@ fileInput.addEventListener("change", () => {
         document.querySelector(".upload-placeholder").style.display = "block";
     });
 }
+// ================= OPEN EDIT PRODUCT =================
+window.openEditProduct = async function(productId){
+
+    editingProductId = productId;
+
+    const snap = await getDoc(doc(db,"products",productId));
+
+    if(!snap.exists()){
+        alert("Product not found");
+        return;
+    }
+
+    const data = snap.data();
+
+    // ✅ LOAD IMAGE PREVIEW
+    previewImage.src = data.image;
+    previewImage.style.display = "block";
+    removeBtn.style.display = "flex";
+    document.querySelector(".upload-placeholder").style.display = "none";
+
+    // Load fields
+    document.getElementById("productDescription").value = data.description;
+    document.getElementById("productPrice").value = data.price;
+
+    addProductBtn.textContent = "Update Product";
+    addProductSection.style.display = "block";
+};
 /*-------------------------------cancel button--------------------*/
 
 
