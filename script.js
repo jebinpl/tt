@@ -2,6 +2,7 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let editingProductId = null;
 let cartListener = null;
 let ordersListener = null;
+let welcomeAudio = new Audio("welcome.mp3");
 import { getDoc, setDoc } from 
 "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 // ================= FIREBASE IMPORTS =================
@@ -1444,24 +1445,22 @@ window.goHome = function() {
     message.classList.add("show");
 
     setTimeout(() => message.classList.remove("show"), 2000);
-    
-    // 🔊 Welcome Voice using MP3 (with 5 min cooldown)
-const lastPlayed = localStorage.getItem("homeVoiceLastPlayed");
-const now = Date.now();
 
-if (!lastPlayed || now - lastPlayed > 5 * 60 * 1000) {
+    // 🔊 MP3 Welcome Voice (5 min cooldown)
+    const lastPlayed = localStorage.getItem("homeVoiceLastPlayed");
+    const now = Date.now();
 
-    let audio = new Audio("welcome.mp3");
+    if (!lastPlayed || now - lastPlayed > 5 * 60 * 1000) {
 
-    audio.play().catch(() => {
-        console.log("Audio blocked until user interaction");
-    });
+        welcomeAudio.currentTime = 0; // restart if already loaded
+        welcomeAudio.play().catch(() => {
+            console.log("Audio blocked until user interaction");
+        });
 
-    // ✅ update timestamp
-    localStorage.setItem("homeVoiceLastPlayed", now);
-}
+        localStorage.setItem("homeVoiceLastPlayed", now);
+    }
 
-    // Toggle dropup open/close
+    // Toggle dropup
     const dropup = document.getElementById("homeDropup");
     dropup.classList.toggle("show");
 };
