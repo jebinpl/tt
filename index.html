@@ -85,9 +85,10 @@
     <h2 id="categoryHeading" style="display:none;"></h2>
 
     <!-- Add Products Button -->
-    <div class="admin-buttons" id="categoryControls" style="display:none;">
-        <button id="addProductsBtn" class="admin-action-btn">Add Products</button>
-    </div>
+<div class="admin-buttons" id="categoryControls" style="display:none;">
+    <button id="addProductsBtn" class="admin-action-btn">Add Products</button>
+    <button id="manageAdsBtn" class="admin-action-btn">Advertisements</button>
+</div>
 
     <!-- Add Product Section -->
     <div id="addProductSection" class="admin-section" style="display:none;">
@@ -114,7 +115,28 @@
         </div>
 
     </div>
+<!-- ================= ADVERTISEMENT SECTION ================= -->
+<div id="adSection" class="admin-section" style="display:none;">
 
+    <div class="product-form-row">
+
+        <div class="upload-box" id="adUploadBox">
+            <img id="adPreviewImage">
+            <input type="file" id="adImageInput" accept="image/*">
+            <span class="remove-image" id="removeAdBtn">×</span>
+            <span class="upload-placeholder">Choose Advertisement</span>
+        </div>
+
+        <div class="product-fields">
+            <button id="saveAdBtn" class="add-btn">Save Advertisement</button>
+        </div>
+
+    </div>
+
+    <h3>Existing Advertisements</h3>
+    <div id="adsList"></div>
+
+</div>
     <!-- ✅ ORDERS SECTION NOW INSIDE -->
 <div id="ordersSection" class="admin-section" style="display:none;">
 
