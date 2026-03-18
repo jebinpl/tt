@@ -493,7 +493,7 @@ if(!description || !price){
     return;
 }     
 
-}
+
 
 function startAdSlider(){
 
