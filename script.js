@@ -21,9 +21,6 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 // ================= ADVERTISEMENT LOGIC =================
-import { collection, query, where, getDocs }
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
 async function showAdvertisementOnce(){
 
     // already shown this app session?
@@ -48,10 +45,13 @@ async function showAdvertisementOnce(){
 }
 
 // close button
-document.getElementById("closeAd")
-.addEventListener("click",()=>{
-    document.getElementById("adPopup").style.display="none";
-});
+const closeAdBtn = document.getElementById("closeAd");
+
+if (closeAdBtn) {
+    closeAdBtn.addEventListener("click", () => {
+        document.getElementById("adPopup").style.display = "none";
+    });
+}
 // ================= GLOBAL MODAL SYSTEM =================
 
 window.openModal = function(modal) {
@@ -168,6 +168,11 @@ function updateLoginUI() {
     }
 }
 updateLoginUI();
+// Show advertisement if already logged in
+const existingUser = localStorage.getItem("customerPhone");
+if (existingUser) {
+    showAdvertisementOnce();
+}
 // ================= LOGIN UI STATE END =================
 function closeDropdown() {
     if (dropdown) {
@@ -296,10 +301,182 @@ const addProductSection = document.getElementById("addProductSection");
 if (addProductsBtn) {
     addProductsBtn.addEventListener("click", function () {
         addProductSection.style.display = "block";
+
+        // 👇 ADD THIS
+        if (adSection) adSection.style.display = "none";
     });
 }
+// ================= MANAGE ADVERTISEMENTS =================
 
+const manageAdsBtn = document.getElementById("manageAdsBtn");
+const adSection = document.getElementById("adSection");
 
+if (manageAdsBtn && adSection) {
+    manageAdsBtn.addEventListener("click", () => {
+
+        // hide add product panel
+        if (addProductSection)
+            addProductSection.style.display = "none";
+
+        // show advertisement panel
+        adSection.style.display = "block";
+
+        // load ads from firestore
+        loadAdvertisements();
+    });
+}
+// ================= LOAD & DELETE ADVERTISEMENTS =================
+async function loadAdvertisements() {
+
+    const adsList = document.getElementById("adsList");
+    if (!adsList) return;
+
+    adsList.innerHTML = "Loading...";
+
+    try {
+
+        const snap = await getDocs(collection(db, "advertisements"));
+
+        adsList.innerHTML = "";
+
+        if (snap.empty) {
+            adsList.innerHTML = "<p>No advertisements found</p>";
+            return;
+        }
+
+        snap.forEach(docSnap => {
+
+            const data = docSnap.data();
+
+            const div = document.createElement("div");
+            div.className = "product-card";
+
+            div.innerHTML = `
+                <img src="${data.image}" 
+                     style="width:120px;height:120px;object-fit:contain;">
+                     
+                <button onclick="deleteAd('${docSnap.id}')">
+                    Delete
+                </button>
+            `;
+
+            adsList.appendChild(div);
+        });
+
+    } catch (error) {
+        console.error(error);
+        adsList.innerHTML = "<p>Failed to load ads</p>";
+    }
+}
+
+/* ================= DELETE AD ================= */
+window.deleteAd = async function (id) {
+
+    if (!confirm("Delete advertisement?")) return;
+
+    try {
+
+        const snap = await getDoc(doc(db, "advertisements", id));
+
+        if (snap.exists()) {
+
+            const data = snap.data();
+
+            // delete image from storage
+            if (data.image) {
+                const path = decodeURIComponent(
+                    data.image.split("/o/")[1].split("?")[0]
+                );
+
+                const imageRef = ref(storage, path);
+                await deleteObject(imageRef);
+            }
+        }
+
+        await deleteDoc(doc(db, "advertisements", id));
+
+        alert("Advertisement deleted ✅");
+
+        loadAdvertisements();
+
+    } catch (error) {
+        console.error(error);
+        alert("Delete failed ❌");
+    }
+};
+// ================= AD IMAGE UPLOAD & PREVIEW =================
+
+const adImageInput = document.getElementById("adImageInput");
+const adPreviewImage = document.getElementById("adPreviewImage");
+const removeAdBtn = document.getElementById("removeAdBtn");
+
+if(adImageInput && adPreviewImage && removeAdBtn){
+
+    adImageInput.addEventListener("change", () => {
+        const file = adImageInput.files[0];
+        if (!file) return;
+
+        adPreviewImage.src = URL.createObjectURL(file);
+        adPreviewImage.style.display = "block";
+        removeAdBtn.style.display = "flex";
+
+        document.querySelector("#adUploadBox .upload-placeholder")
+            .style.display = "none";
+    });
+
+    removeAdBtn.addEventListener("click", () => {
+        adImageInput.value = "";
+        adPreviewImage.src = "";
+        adPreviewImage.style.display = "none";
+        removeAdBtn.style.display = "none";
+
+        document.querySelector("#adUploadBox .upload-placeholder")
+            .style.display = "block";
+    });
+
+}
+// ================= AD IMAGE UPLOAD & PREVIEW END =================
+// ================= UPLOAD ADVERTISEMENT =================
+const saveAdBtn = document.getElementById("saveAdBtn");
+
+if (saveAdBtn) {
+    saveAdBtn.addEventListener("click", async () => {
+
+        const file = adImageInput.files[0];
+
+        if (!file) {
+            alert("Choose image first");
+            return;
+        }
+
+        try {
+            const storageRef = ref(storage, "advertisements/" + Date.now());
+
+            await uploadBytes(storageRef, file);
+
+            const imageUrl = await getDownloadURL(storageRef);
+
+            await addDoc(collection(db, "advertisements"), {
+                image: imageUrl,
+                active: true,
+                createdAt: Date.now()
+            });
+
+            alert("Advertisement Added ✅");
+
+            // Reset UI
+            adImageInput.value = "";
+            adPreviewImage.style.display = "none";
+
+            loadAdvertisements();
+
+        } catch (error) {
+            console.error(error);
+            alert("Failed to upload advertisement");
+        }
+    });
+}
+// ================= UPLOAD ADVERTISEMENT END =================
 document.querySelectorAll(".category-link").forEach(link => {
     link.addEventListener("click", function () {
 
@@ -318,6 +495,7 @@ document.querySelectorAll(".category-link").forEach(link => {
         if (menu) menu.style.display = "none";
     });
 });
+
 /* ================= IMAGE AUTO COMPRESS ================= */
 
 async function compressImage(file, maxSizeKB = 30) {
