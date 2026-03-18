@@ -481,7 +481,29 @@ const uploadBox = document.getElementById("uploadBox");
 const fileInput = document.getElementById("productImage");
 const previewImage = document.getElementById("previewImage");
 const removeBtn = document.getElementById("removeImageBtn");
+// ================= IMAGE PREVIEW UI CONTROLLER =================
+function showImagePreview(imageSrc) {
 
+    previewImage.src = imageSrc;
+    previewImage.style.display = "block";
+
+    removeBtn.style.display = "flex";
+
+    const placeholder = document.querySelector(".upload-placeholder");
+    if (placeholder) placeholder.style.display = "none";
+}
+
+function resetImagePreview() {
+
+    fileInput.value = "";
+    previewImage.src = "";
+    previewImage.style.display = "none";
+
+    removeBtn.style.display = "none";
+
+    const placeholder = document.querySelector(".upload-placeholder");
+    if (placeholder) placeholder.style.display = "block";
+}
 if (uploadBox) {
 
     uploadBox.addEventListener("click", () => {
@@ -494,25 +516,17 @@ fileInput.addEventListener("change", () => {
     if (!file) return;
     const reader = new FileReader();
 
-    reader.onload = function(e) {
-        previewImage.src = e.target.result;
-        previewImage.style.display = "block";
-        removeBtn.style.display = "flex";
-        document.querySelector(".upload-placeholder").style.display = "none";
-    };
+reader.onload = function(e) {
+    showImagePreview(e.target.result);
+};
 
     reader.readAsDataURL(file);
 });
 
-    removeBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // prevent reopening file dialog
-
-        fileInput.value = "";
-        previewImage.src = "";
-        previewImage.style.display = "none";
-        removeBtn.style.display = "none"; // ✅ hide close button
-        document.querySelector(".upload-placeholder").style.display = "block";
-    });
+removeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    resetImagePreview();
+});
 }
 // ================= OPEN EDIT PRODUCT =================
 window.openEditProduct = async function(productId){
@@ -528,11 +542,10 @@ window.openEditProduct = async function(productId){
 
     const data = snap.data();
 
-    // ✅ LOAD IMAGE PREVIEW
-    previewImage.src = data.image;
-    previewImage.style.display = "block";
-    removeBtn.style.display = "flex";
-    document.querySelector(".upload-placeholder").style.display = "none";
+    // ⭐ SAME BEHAVIOR AS ADD PRODUCT
+    if (data.image) {
+        showImagePreview(data.image);
+    }
 
     // Load fields
     document.getElementById("productDescription").value = data.description;
@@ -547,21 +560,14 @@ window.openEditProduct = async function(productId){
 if (cancelProductBtn) {
     cancelProductBtn.addEventListener("click", function () {
 
-        // Clear form fields
-        
-        document.getElementById("productImage").value = "";
-        document.getElementById("productDescription").value = "";
-        document.getElementById("productPrice").value = "";
+       resetImagePreview();          // ⭐ reset upload box UI
+editingProductId = null;      // ⭐ exit edit mode
+addProductBtn.textContent = "Add Product"; // ⭐ restore button text
 
-        // Hide preview image
-        const previewImage = document.getElementById("previewImage");
-        previewImage.src = "";
-        previewImage.style.display = "none";
+document.getElementById("productDescription").value = "";
+document.getElementById("productPrice").value = "";
 
-        // Close modal (if using modal)
-if (addProductSection) {
-    addProductSection.style.display = "none";
-}
+addProductSection.style.display = "none";
     });
 }
 
