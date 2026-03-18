@@ -1444,32 +1444,22 @@ window.goHome = function() {
     message.classList.add("show");
 
     setTimeout(() => message.classList.remove("show"), 2000);
+    
+    // 🔊 Welcome Voice using MP3 (with 5 min cooldown)
+const lastPlayed = localStorage.getItem("homeVoiceLastPlayed");
+const now = Date.now();
 
-    // 🎙 Voice Welcome with 5-minute cooldown
-    if ('speechSynthesis' in window) {
-        const lastPlayed = localStorage.getItem("homeVoiceLastPlayed");
-        const now = Date.now();
+if (!lastPlayed || now - lastPlayed > 5 * 60 * 1000) {
 
-        // 5 minutes = 5 * 60 * 1000 ms
-        if (!lastPlayed || now - lastPlayed > 5 * 60 * 1000) {
-            const speech = new SpeechSynthesisUtterance(
-                "Welcome to Thomas Traders Online Shopping Portal."
-            );
+    let audio = new Audio("welcome.mp3");
 
-            speech.lang = "en-IN";
-            speech.rate = 1;
-            speech.pitch = 1;
+    audio.play().catch(() => {
+        console.log("Audio blocked until user interaction");
+    });
 
-            const voices = window.speechSynthesis.getVoices();
-            speech.voice = voices.find(v => v.lang === "en-IN") || voices[0];
-
-            window.speechSynthesis.cancel();
-            window.speechSynthesis.speak(speech);
-
-            // ✅ update timestamp
-            localStorage.setItem("homeVoiceLastPlayed", now);
-        }
-    }
+    // ✅ update timestamp
+    localStorage.setItem("homeVoiceLastPlayed", now);
+}
 
     // Toggle dropup open/close
     const dropup = document.getElementById("homeDropup");
