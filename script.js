@@ -465,6 +465,7 @@ ads.forEach(ad=>{
 });
 
 startAdSlider();
+}
 // ================= ADD PRODUCT =================
 
 const addProductBtn = document.getElementById("addProductBtn");
