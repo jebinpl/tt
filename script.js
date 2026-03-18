@@ -420,7 +420,37 @@ addAdSection.style.display="none";
 adInput.value="";
 adPreview.src="";
 loadAdvertisements();
+// ================= DELETE ADVERTISEMENT =================
+window.deleteAd = async function(adId) {
 
+    const confirmDelete = confirm("Delete this advertisement?");
+    if (!confirmDelete) return;
+
+    try {
+
+        // 🔹 get ad data first (to delete image from storage)
+        const snap = await getDoc(doc(db, "ads", adId));
+
+        if (snap.exists()) {
+            const data = snap.data();
+
+            // delete image from storage
+            if (data.imagePath) {
+                const imageRef = ref(storage, data.imagePath);
+                await deleteObject(imageRef);
+            }
+        }
+
+        // delete firestore document
+        await deleteDoc(doc(db, "ads", adId));
+
+        alert("Advertisement deleted ✅");
+
+    } catch (err) {
+        console.error(err);
+        alert("Delete failed");
+    }
+};
 }catch(err){
 alert(err.message);
 }
@@ -457,11 +487,28 @@ banner.innerHTML="";
 
 if(ads.length===0) return;
 
-ads.forEach(ad=>{
-    const img=document.createElement("img");
-    img.src=ad.image;
-    img.className="ad-slide";
-    banner.appendChild(img);
+ads.forEach(ad => {
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "ad-slide-wrapper";
+
+    const img = document.createElement("img");
+    img.src = ad.image;
+    img.className = "ad-slide";
+
+    wrapper.appendChild(img);
+
+    // ✅ ADMIN DELETE BUTTON
+    if (isAdmin) {
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete";
+        delBtn.className = "delete-ad-btn";
+        delBtn.onclick = () => deleteAd(ad.id);
+
+        wrapper.appendChild(delBtn);
+    }
+
+    banner.appendChild(wrapper);
 });
 
 startAdSlider();
