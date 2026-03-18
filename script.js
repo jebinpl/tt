@@ -20,6 +20,38 @@ import {
     orderBy,
     getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// ================= ADVERTISEMENT LOGIC =================
+import { collection, query, where, getDocs }
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+async function showAdvertisementOnce(){
+
+    // already shown this app session?
+    if(sessionStorage.getItem("adShown")) return;
+
+    const q = query(
+        collection(db,"advertisements"),
+        where("active","==",true)
+    );
+
+    const snap = await getDocs(q);
+
+    if(snap.empty) return;
+
+    const ad = snap.docs[0].data();
+
+    document.getElementById("adImage").src = ad.image;
+    document.getElementById("adPopup").style.display = "flex";
+
+    // mark shown
+    sessionStorage.setItem("adShown","true");
+}
+
+// close button
+document.getElementById("closeAd")
+.addEventListener("click",()=>{
+    document.getElementById("adPopup").style.display="none";
+});
 // ================= GLOBAL MODAL SYSTEM =================
 
 window.openModal = function(modal) {
@@ -678,7 +710,8 @@ cartListener = onSnapshot(doc(db,"carts",phoneNumber),(snap)=>{
                 `Hi ${data.name} 👋`;
 
             customerModal.style.display = "none";
-
+    // ✅ SHOW ADVERTISEMENT (ADD THIS LINE)
+    showAdvertisementOnce();
         } else {
 
             // 🆕 First time user → open profile modal
@@ -692,6 +725,8 @@ cartListener = onSnapshot(doc(db,"carts",phoneNumber),(snap)=>{
             localStorage.setItem("firstTimeUser", "true");
 
             customerModal.style.display = "none";
+                // ✅ SHOW ADVERTISEMENT
+    showAdvertisementOnce();
         }
 
     } catch (error) {
