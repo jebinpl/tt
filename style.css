@@ -1077,8 +1077,8 @@ color:#444;
 
 .product-image-box img{
     width:100%;
-    height:100px;
-    object-fit:contain;
+    height:100%;          /* ✅ match square box */
+    object-fit:contain;   /* keeps all 4 corners visible */
     border-radius:8px;
     background:#fff;
 }
