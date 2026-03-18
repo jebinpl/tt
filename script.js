@@ -2624,8 +2624,10 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js")
   .then(() => console.log("Service Worker Registered"));
 }
-
-
+// Show on app open (guest + logged)
+document.addEventListener("DOMContentLoaded", () => {
+    showAdvertisementOnce();
+});
 
 
 
