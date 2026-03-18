@@ -1086,10 +1086,9 @@ color:#444;
 /* RIGHT SIDE */
 .product-details{
     flex:1;
-    min-width:0; 
+    min-width:0;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
 }
 
 /* DESCRIPTION TOP RIGHT */
@@ -1118,6 +1117,10 @@ color:#444;
     display:flex;
     align-items:center;
     gap:8px;
+
+    margin-top:10px;        /* keeps space from inputs */
+    flex-wrap:wrap;         /* prevents overflow */
+    align-self:flex-start;  /* keeps buttons inside card */
 }
 /* ================= MODERN ADMIN BUTTONS ================= */
 
