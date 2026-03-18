@@ -267,11 +267,7 @@ if (addProductsBtn) {
     });
 }
 
-if (cancelProductBtn) {
-    cancelProductBtn.addEventListener("click", function () {
-        addProductSection.style.display = "none";
-    });
-}
+
 document.querySelectorAll(".category-link").forEach(link => {
     link.addEventListener("click", function () {
 
@@ -560,14 +556,23 @@ window.openEditProduct = async function(productId){
 if (cancelProductBtn) {
     cancelProductBtn.addEventListener("click", function () {
 
-       resetImagePreview();          // ⭐ reset upload box UI
-editingProductId = null;      // ⭐ exit edit mode
-addProductBtn.textContent = "Add Product"; // ⭐ restore button text
+        editingProductId = null;
+        addProductBtn.textContent = "Add Product";
 
-document.getElementById("productDescription").value = "";
-document.getElementById("productPrice").value = "";
+        // Clear form
+        fileInput.value = "";
+        document.getElementById("productDescription").value = "";
+        document.getElementById("productPrice").value = "";
 
-addProductSection.style.display = "none";
+        // Reset preview UI
+        previewImage.src = "";
+        previewImage.style.display = "none";
+        removeBtn.style.display = "none";
+
+        const placeholder = document.querySelector(".upload-placeholder");
+        if (placeholder) placeholder.style.display = "block";
+
+        addProductSection.style.display = "none";
     });
 }
 
