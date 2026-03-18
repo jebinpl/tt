@@ -367,33 +367,7 @@ canvas.height = height;
         };
     });
 }
-// ================= ADD PRODUCT =================
-
-const addProductBtn = document.getElementById("addProductBtn");
-
-if (addProductBtn) {
-    addProductBtn.addEventListener("click", async function(){
-
-        
-        const file = document.getElementById("productImage").files[0];
-
-        const description = document.getElementById("productDescription").value;
-        const price = document.getElementById("productPrice").value;
-
-if(!currentCategory){
-    alert("Please select category first");
-    return;
-}
-        if (!editingProductId && !file) {
-    alert("Please select product image");
-    return;
-}
-
-if(!description || !price){
-    alert("Fill all product fields");
-    return;
-}
-  // ================= SAVE ADVERTISEMENT PRODUCT =================      
+// ================= SAVE ADVERTISEMENT PRODUCT =================
 const saveAdBtn = document.getElementById("saveAdBtn");
 
 if(saveAdBtn){
@@ -491,6 +465,33 @@ ads.forEach(ad=>{
 });
 
 startAdSlider();
+// ================= ADD PRODUCT =================
+
+const addProductBtn = document.getElementById("addProductBtn");
+
+if (addProductBtn) {
+    addProductBtn.addEventListener("click", async function(){
+
+        
+        const file = document.getElementById("productImage").files[0];
+
+        const description = document.getElementById("productDescription").value;
+        const price = document.getElementById("productPrice").value;
+
+if(!currentCategory){
+    alert("Please select category first");
+    return;
+}
+        if (!editingProductId && !file) {
+    alert("Please select product image");
+    return;
+}
+
+if(!description || !price){
+    alert("Fill all product fields");
+    return;
+}     
+
 }
 
 function startAdSlider(){
