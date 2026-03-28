@@ -2634,7 +2634,100 @@ window.alert = function(message) {
     showToast(message);
 };
 
+/* =====================================================
+   PRODUCT IMAGE OPEN + PINCH ZOOM
+===================================================== */
 
+const imageModal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+const closeImage = document.getElementById("closeImage");
+
+/* ---------- OPEN IMAGE WHEN CLICK ---------- */
+document.addEventListener("click", function(e){
+
+    if(e.target.classList.contains("product-image")){
+        imageModal.style.display = "flex";
+        modalImage.src = e.target.src;
+
+        resetZoom();
+    }
+
+});
+
+/* ---------- CLOSE ---------- */
+closeImage.onclick = () => {
+    imageModal.style.display = "none";
+    resetZoom();
+};
+
+/* ---------- PINCH ZOOM ---------- */
+
+let scale = 1;
+let startDistance = 0;
+let posX = 0;
+let posY = 0;
+let startX = 0;
+let startY = 0;
+let dragging = false;
+
+function getDistance(touches){
+    return Math.sqrt(
+        Math.pow(touches[0].clientX - touches[1].clientX,2) +
+        Math.pow(touches[0].clientY - touches[1].clientY,2)
+    );
+}
+
+function applyTransform(){
+    modalImage.style.transform =
+        `translate(${posX}px, ${posY}px) scale(${scale})`;
+}
+
+function resetZoom(){
+    scale = 1;
+    posX = 0;
+    posY = 0;
+    applyTransform();
+}
+
+modalImage.addEventListener("touchstart",(e)=>{
+
+    if(e.touches.length === 2){
+        startDistance = getDistance(e.touches);
+    }
+
+    if(e.touches.length === 1 && scale > 1){
+        dragging = true;
+        startX = e.touches[0].clientX - posX;
+        startY = e.touches[0].clientY - posY;
+    }
+
+},{passive:false});
+
+modalImage.addEventListener("touchmove",(e)=>{
+
+    e.preventDefault();
+
+    /* pinch zoom */
+    if(e.touches.length === 2){
+        const newDistance = getDistance(e.touches);
+        scale *= newDistance / startDistance;
+        scale = Math.max(1, Math.min(scale,4));
+        startDistance = newDistance;
+    }
+
+    /* drag */
+    if(e.touches.length === 1 && dragging){
+        posX = e.touches[0].clientX - startX;
+        posY = e.touches[0].clientY - startY;
+    }
+
+    applyTransform();
+
+},{passive:false});
+
+modalImage.addEventListener("touchend",()=>{
+    dragging = false;
+});
 
 
 
