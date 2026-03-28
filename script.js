@@ -2600,23 +2600,17 @@ document.addEventListener("DOMContentLoaded", () => {
 const imageModal = document.getElementById("imageModal");
 const modalImage = document.getElementById("modalImage");
 const closeImage = document.getElementById("closeImage");
+window.openImageModal = function(src){
 
+    imageModal.style.display = "flex";
+    modalImage.src = src;
+
+    resetZoom();
+};
 if(!imageModal || !modalImage || !closeImage){
     console.log("Image modal not found");
     return;
 }
-
-/* ---------- OPEN IMAGE WHEN CLICK ---------- */
-document.addEventListener("click", function(e){
-
-    if(e.target.classList.contains("product-image")){
-        imageModal.style.display = "flex";
-        modalImage.src = e.target.src;
-
-        resetZoom();
-    }
-
-});
 
 /* ---------- CLOSE ---------- */
 closeImage.onclick = () => {
