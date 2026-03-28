@@ -2595,9 +2595,16 @@ window.alert = function(message) {
    PRODUCT IMAGE OPEN + PINCH ZOOM
 ===================================================== */
 
+document.addEventListener("DOMContentLoaded", () => {
+
 const imageModal = document.getElementById("imageModal");
 const modalImage = document.getElementById("modalImage");
 const closeImage = document.getElementById("closeImage");
+
+if(!imageModal || !modalImage || !closeImage){
+    console.log("Image modal not found");
+    return;
+}
 
 /* ---------- OPEN IMAGE WHEN CLICK ---------- */
 document.addEventListener("click", function(e){
@@ -2684,6 +2691,7 @@ modalImage.addEventListener("touchmove",(e)=>{
 
 modalImage.addEventListener("touchend",()=>{
     dragging = false;
+});
 });
 
 
