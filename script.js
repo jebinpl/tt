@@ -1915,50 +1915,7 @@ function renderProducts(productsList = allProducts) {
     }
 }
 /* ================= SEARCH LOGIC END ================= */
-/* ================= IMAGE POPUP LOGIC ================= */
 
-const imageModal = document.getElementById("imageModal");
-const modalImage = document.getElementById("modalImage");
-const closeImageBtn = document.querySelector(".close-image");
-
-window.openImageModal = function(imageSrc, productId){
-
-    modalImage.src = imageSrc;
-    imageModal.style.display = "flex";
-
-    // ✅ Save recently viewed (customer only)
-    if (!isAdmin && productId) {
-
-        let viewed =
-            JSON.parse(localStorage.getItem("recentlyViewed")) || [];
-
-        // remove duplicate
-        viewed = viewed.filter(id => id !== productId);
-
-        // add to front
-        viewed.unshift(productId);
-
-        // keep only last 10
-        viewed = viewed.slice(0, 10);
-
-        localStorage.setItem(
-            "recentlyViewed",
-            JSON.stringify(viewed)
-        );
-    }
-};
-
-if(closeImageBtn){
-    closeImageBtn.addEventListener("click", function(){
-        imageModal.style.display = "none";
-    });
-}
-
-window.addEventListener("click", function(e){
-    if(e.target === imageModal){
-        imageModal.style.display = "none";
-    }
-});
 /* ================= DRAG & DROP ADMIN SORT ================= */
 
 let draggedItem = null;
